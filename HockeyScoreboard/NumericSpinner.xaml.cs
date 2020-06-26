@@ -22,7 +22,7 @@ namespace HockeyScoreboard.Controls
         {
             InitializeComponent();
 
-            tb_main.SetBinding(TextBox.TextProperty, new Binding("Value")
+            Tb_main.SetBinding(TextBox.TextProperty, new Binding("Value")
             {
                 ElementName = "root_numeric_spinner",
                 Mode = BindingMode.TwoWay,
@@ -36,7 +36,7 @@ namespace HockeyScoreboard.Controls
             DependencyPropertyDescriptor.FromProperty(MaximumProperty, typeof(NumericSpinner)).AddValueChanged(this, PropertyChanged);
 
 
-            PropertyChanged += (x, y) => validate();
+            PropertyChanged += (x, y) => Validate();
         }
 
 
@@ -59,7 +59,10 @@ namespace HockeyScoreboard.Controls
                 if (value > Maximum)
                     value = Maximum;
                 SetValue(ValueProperty, value);
-                try { ValueChanged(this, new EventArgs()); }
+                try
+                {
+                    ValueChanged(this,
+                                   new EventArgs()); }
                 catch { }
             }
         }
@@ -148,9 +151,9 @@ namespace HockeyScoreboard.Controls
         #endregion
 
         /// <summary>
-        /// Revalidate the object, whenever a value is changed...
+        /// ReValidate the object, whenever a value is changed...
         /// </summary>
-        private void validate()
+        private void Validate()
         {
             // Logically, This is not needed at all... as it's handled within other properties...
             if (Minimum > Maximum) Minimum = Maximum;
@@ -161,7 +164,7 @@ namespace HockeyScoreboard.Controls
             Value = decimal.Round(Value, Decimals);
         }
 
-        private void cmdUp_Click(object sender, RoutedEventArgs e)
+        private void CmdUp_Click(object sender, RoutedEventArgs e)
         {
             Value += Step;
         }
@@ -169,19 +172,19 @@ namespace HockeyScoreboard.Controls
 
 
 
-        private void cmdDown_Click(object sender, RoutedEventArgs e)
+        private void CmdDown_Click(object sender, RoutedEventArgs e)
         {
             Value -= Step;
         }
 
 
 
-        private void tb_main_Loaded(object sender, RoutedEventArgs e)
+        private void Tb_main_Loaded(object sender, RoutedEventArgs e)
         {
             ValueChanged(this, new EventArgs());
         }
 
-        private void tb_main_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void Tb_main_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0)
                 Value += Step;

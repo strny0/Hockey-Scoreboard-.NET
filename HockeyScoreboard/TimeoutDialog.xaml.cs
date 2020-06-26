@@ -45,7 +45,7 @@ namespace HockeyScoreboard
         {
             TimeSpan TimeoutTime = TimeSpan.FromMinutes((int)UpDownMinutes.Value) + TimeSpan.FromSeconds((int)UpDownSeconds.Value);
             Vars.Team1.HasTimeout = false; Vars.Team1.TimeoutRunning = true;
-            Vars.Game.GameState = CustomTypes.GameStates.Timeout; AnyButtonPressed = true;
+            Vars.Game.GameState = CustomTypes.GameState.Timeout; AnyButtonPressed = true;
             Vars.Game.TimeLeft = TimeoutTime; Vars.Game.LastSetTime = TimeoutTime;
             this.Close();
         }
@@ -54,7 +54,7 @@ namespace HockeyScoreboard
         {
             TimeSpan TimeoutTime = TimeSpan.FromMinutes((int)UpDownMinutes.Value) + TimeSpan.FromSeconds((int)UpDownSeconds.Value);
             Vars.Team2.HasTimeout = false; Vars.Team2.TimeoutRunning = true;
-            Vars.Game.GameState = CustomTypes.GameStates.Timeout; AnyButtonPressed = true;
+            Vars.Game.GameState = CustomTypes.GameState.Timeout; AnyButtonPressed = true;
             Vars.Game.TimeLeft = TimeoutTime; Vars.Game.LastSetTime = TimeoutTime;
             this.Close();
         }
@@ -63,7 +63,7 @@ namespace HockeyScoreboard
         {
             if (AnyButtonPressed == false)
             {
-                Vars.Game.GameState = CustomTypes.GameStates.Regular;
+                Vars.Game.GameState = CustomTypes.GameState.Regular;
             }
         }
     }

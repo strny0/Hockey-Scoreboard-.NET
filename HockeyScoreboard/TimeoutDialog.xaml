@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HockeyScoreboard"
         xmlns:Controls="clr-namespace:HockeyScoreboard.Controls" x:Class="HockeyScoreboard.TimeoutDialog"
         mc:Ignorable="d"
-        Title="Give timeout" Height="300" Width="400" Loaded="Window_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Closed="Window_Closed">
+        Title="Give timeout" Height="300" Width="400" Loaded="Window_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="Resources/DefaultIcon.ico" Closed="Window_Closed">
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource ColorBackgroundMain}"/>
     </Window.Background>
