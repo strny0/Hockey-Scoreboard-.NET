@@ -95,7 +95,7 @@ namespace HockeyScoreboard
                 sep = "|";
             }
 
-            LoadImageDialog.Filter = $"{LoadImageDialog.Filter}{sep}All Files (*.*)";
+            LoadImageDialog.Filter = $"{LoadImageDialog.Filter}{sep}All files |*.*";
 
             return LoadImageDialog;
 
