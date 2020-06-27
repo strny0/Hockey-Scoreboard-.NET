@@ -225,7 +225,7 @@
                                         <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
                                     </TextBox.Background>
                                 </TextBox>
-                                <ListBox x:Name="ListBoxTeamManager"  HorizontalAlignment="Left" Height="271" Margin="0,44,0,-9" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black"/>
+                                <ListBox x:Name="ListBoxTeamManager"  HorizontalAlignment="Left" Height="271" Margin="0,44,0,-9" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black" PreviewMouseRightButtonUp="ListBoxTeamManager_PreviewMouseRightButtonUp"/>
                                 <Border Margin="0,4,10,0" BorderThickness="1" Width="155" Height="155" HorizontalAlignment="Right" VerticalAlignment="Top">
                                     <Border.BorderBrush>
                                         <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
@@ -240,13 +240,13 @@
                                         <SolidColorBrush Color="#FF696C85"/>
                                     </Button.Background>
                                 </Button>
-                                <Button x:Name="ButtonT2" Content="Load and Edit Team" Margin="205,280,10,46" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
-                                <Button x:Name="ButtonT5" Content="Save Team" Margin="205,240,10,86" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
+                                <Button x:Name="ButtonTeamManagerLoadTeam" Content="Load and Edit Team" Click="ButtonTeamManagerLoadTeam_Click" Margin="205,280,10,46" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
+                                <Button x:Name="ButtonTeamManagerSaveTeam" Content="Save Team" Click="ButtonTeamManagerSaveTeam_Click" Margin="205,240,10,86" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
 
-                                <Button x:Name="ButtonT1" fa:Awesome.Content="Plus" Margin="205,200,231,126" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35" Width="50"/>
-                                <Button x:Name="ButtonT3" fa:Awesome.Content="Minus" Margin="0,200,170,126" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35" Width="50" HorizontalAlignment="Right"/>
+                                <Button x:Name="ButtonTeamManagerAddPlayer" Click="ButtonTeamManagerAddPlayer_Click" fa:Awesome.Content="Plus" Margin="205,200,231,126" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35" Width="50"/>
+                                <Button x:Name="ButtonTeamManagerRemovePlayer" Click="ButtonTeamManagerRemovePlayer_Click" fa:Awesome.Content="Minus" Margin="0,200,170,126" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35" Width="50" HorizontalAlignment="Right"/>
                                 <Button x:Name="ButtonT6" Content="Refresh selection" Margin="205,4,170,322" Style="{DynamicResource CustomButtonStyle}" FontSize="14"/>
-                                <Button x:Name="ButtonT7" Content="Clear list" Margin="321,200,10,126" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
+                                <Button x:Name="ButtonTeamManagerClearList" Click="ButtonTeamManagerClearList_Click" Content="Clear list" Margin="321,200,10,126" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
 
                             </Grid>
                         </GroupBox>

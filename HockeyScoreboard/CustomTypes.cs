@@ -1,24 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Documents;
 
 namespace HockeyScoreboard
 {
     public static partial class CustomTypes
     {
-        public struct PlayerTeamListType : IEquatable<PlayerTeamListType>
-        {
-            public string Number { get; set; }
-            public string Name { get; set; }
-
-            public override bool Equals(object obj) => Equals(obj);
-
-            public override int GetHashCode() => GetHashCode();
-
-            public static bool operator ==(PlayerTeamListType left, PlayerTeamListType right) => left.Equals(right);
-
-            public static bool operator !=(PlayerTeamListType left, PlayerTeamListType right) => !(left == right);
-
-            public bool Equals(PlayerTeamListType other) => Equals(other);
-        }
         public struct PlayerType : IEquatable<PlayerType>
         {
             private TimeSpan penaltyTimeLeft;

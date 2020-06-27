@@ -13,6 +13,6 @@ namespace HockeyScoreboard
 		public System.Windows.Media.ImageSource LogoSource;
 		public CustomTypes.PlayerType Player1;
 		public CustomTypes.PlayerType Player2;
-		public List<CustomTypes.PlayerTeamListType> PlayerList;
+		public List<TeamSavingClass.PlayerTeamListType> SelectedTeamList;
 	}
 }

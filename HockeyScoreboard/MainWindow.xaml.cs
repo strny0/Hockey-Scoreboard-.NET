@@ -13,6 +13,7 @@ using Brushes = System.Windows.Media.Brushes;
 using Image = System.Windows.Controls.Image;
 using System.Drawing.Imaging;
 using System.Globalization;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace HockeyScoreboard
 {
@@ -294,10 +295,52 @@ namespace HockeyScoreboard
         {
             AssignPenalty(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(4), true);
         }
+        // TEAM MANAGER
+        private void ButtonTeamManagerAddPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            AddPlayerToTeamEditor(TextBoxPlayerNameManager.Text, UpDownTeamManager.Value.ToString());
+        }
+
+        private void ButtonTeamManagerRemovePlayer_Click(object sender, RoutedEventArgs e)
+        {
+            RemovePlayerToTeamEditor(ListBoxTeamManager);
+        }
+
+        private void ButtonTeamManagerClearList_Click(object sender, RoutedEventArgs e)
+        {
+            ClearPlayerTeamEditor();
+        }
+
+        private void ListBoxTeamManager_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            RemovePlayerToTeamEditor(ListBoxTeamManager);
+        }
+        private void ButtonTeamManagerSaveTeam_Click(object sender, RoutedEventArgs e)
+        {
+            SaveTeamEditor(TextBoxTeamNameManager.Text);
+        }
+
+        private void ButtonTeamManagerLoadTeam_Click(object sender, RoutedEventArgs e)
+        {
+            LoadTeamEditor();
+        }
+
         private void ButtonTeamManagerSelectImage_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog ImageDialog = DefineImageFileDialog();
+            ImageDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            Nullable<bool> Result = ImageDialog.ShowDialog();
+            if (Result == true)
+            {
+                BitmapImage bitmap = new BitmapImage(new Uri(ImageDialog.FileName))
+                {
+                    CacheOption = BitmapCacheOption.OnLoad
+                };
+                ImageTeamManagerLogo.Source = bitmap;
+                Vars.Game.TempEditorTeam.TeamLogoPath = ImageDialog.FileName;
+            }
         }
+
         // TEAMS TAB
         // SOUND TAB
         // PREFERENCES TAB

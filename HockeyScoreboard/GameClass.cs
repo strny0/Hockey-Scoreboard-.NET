@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Documents;
 
 namespace HockeyScoreboard
 {
@@ -23,5 +25,6 @@ namespace HockeyScoreboard
         public string TimeFormatRegular { get; } = @"mm\:ss";
 
         public string TimeFormatMilisecond { get; } = @"ss\.f";
+        public TeamSavingClass TempEditorTeam { get; set; }
     }
 }
