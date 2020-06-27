@@ -35,7 +35,7 @@ namespace HockeyScoreboard
             DefineDefaultPrefs();
             InitializeTimer();
         }
-        private void MainTimer_Tick(object sender, EventArgs e)
+        private void MainTimer_Tick(object sender, EventArgs e) // TIMER
         {
             if (Vars.Game.StopwatchPeriod.IsRunning) // PERIOD RUNNING
             {
@@ -47,7 +47,7 @@ namespace HockeyScoreboard
                             Vars.Game.StopwatchPeriod.Reset();
                             Vars.Game.TimeLeft = TimeSpan.Zero;
                         }
-                        Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
+                        else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
 
                         StopPenaltyIfRanOut(Vars.Team1, true); StopPenaltyIfRanOut(Vars.Team1, false); // Stop penalty timer if time ran out
                         StopPenaltyIfRanOut(Vars.Team2, true); StopPenaltyIfRanOut(Vars.Team2, false);
@@ -63,7 +63,7 @@ namespace HockeyScoreboard
                             Vars.Game.StopwatchPeriod.Reset();
                             Vars.Game.TimeLeft = TimeSpan.Zero;
                         }
-                        Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
+                        else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
                         break;
                     case CustomTypes.GameState.Timeout:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
@@ -72,7 +72,7 @@ namespace HockeyScoreboard
                             Vars.Game.GameState = CustomTypes.GameState.Regular;
                             SetTime(Vars.Game.LastRegularTime);
                         }
-                        Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
+                        else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
                         break;
                 }
             }

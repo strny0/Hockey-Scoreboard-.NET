@@ -242,6 +242,7 @@ namespace HockeyScoreboard
                 LabelTime.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture); // update time Main window
                 Vars.Window.LabelTimeVariable.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture); // update time Secondary window
             }
+            ProgressBarGameTime.Maximum = Vars.Game.LastSetTime.TotalSeconds; ProgressBarGameTime.Value = Vars.Game.TimeLeft.TotalSeconds;
         }
         private void UpdatePenaltyUIMain()
         {
