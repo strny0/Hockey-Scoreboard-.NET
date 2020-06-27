@@ -201,7 +201,7 @@
                         </GroupBox>
                         <GroupBox Header="Team Manager" HorizontalAlignment="Left" Height="388" Margin="432,0,0,0" VerticalAlignment="Top" Width="498">
                             <Grid>
-                                <TextBox Margin="0,4,286,322" x:Name="TextBoxTeamManager" Text="Enter Team Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" >
+                                <TextBox Margin="0,4,286,322" x:Name="TextBoxTeamNameManager" Text="Enter Team Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" >
                                     <TextBox.Foreground>
                                         <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
                                     </TextBox.Foreground>
@@ -213,7 +213,17 @@
                                     </TextBox.Background>
                                 </TextBox>
                                 <Controls:NumericSpinner x:Name="UpDownTeamManager"  HorizontalAlignment="Left" Height="35" Margin="205,100,0,0" VerticalAlignment="Top" Width="91" Step="1" Maximum="99" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
-
+                                <TextBox Margin="301,100,10,226" x:Name="TextBoxPlayerNameManager" Text="Enter Player Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" >
+                                    <TextBox.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
+                                    </TextBox.Foreground>
+                                    <TextBox.BorderBrush>
+                                        <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
+                                    </TextBox.BorderBrush>
+                                    <TextBox.Background>
+                                        <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
+                                    </TextBox.Background>
+                                </TextBox>
                                 <ListBox x:Name="ListBoxTeamManager"  HorizontalAlignment="Left" Height="271" Margin="0,44,0,-9" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black"/>
                                 <Border Margin="205,4,0,0" BorderThickness="1" Width="91" Height="91" HorizontalAlignment="Left" VerticalAlignment="Top">
                                     <Border.BorderBrush>
@@ -229,12 +239,15 @@
                                         <SolidColorBrush Color="#FF696C85"/>
                                     </Button.Background>
                                 </Button>
-                                <Button x:Name="ButtonT2" Content="TBD" Margin="301,59,10,257" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="45"/>
-                                <Button x:Name="ButtonT5" Content="TBD" Margin="301,13,10,303" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="45"/>
+                                <Button x:Name="ButtonT2" Content="Load and Edit Team" Margin="205,280,10,46" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35"/>
+                                <Button x:Name="ButtonT5" Content="Save Team" Margin="205,240,10,86" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35"/>
 
-                                <Button x:Name="ButtonT1" fa:Awesome.Content="Plus" Margin="205,140,236,143" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35" Width="45"/>
-                                <Button x:Name="ButtonT3" fa:Awesome.Content="Minus" Margin="255,140,186,143" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35" Width="45"/>
-                                <Button x:Name="ButtonT4" Content="TBD" Margin="205,265,89,46" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="50"/>
+                                <Button x:Name="ButtonT1" fa:Awesome.Content="Plus" Margin="205,140,239,186" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35"/>
+                                <Button x:Name="ButtonT3" fa:Awesome.Content="Minus" Margin="252,140,191,186" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35"/>
+                                <Button x:Name="ButtonT4" Content="Team folder location" Margin="301,4,10,310" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35"/>
+                                <Button x:Name="ButtonT6" Content="Refresh team selection" Margin="301,60,10,266" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35"/>
+                                <Button x:Name="ButtonT7" Content="Clear team list" Margin="301,140,10,186" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35"/>
+
                             </Grid>
                         </GroupBox>
                     </Grid>
