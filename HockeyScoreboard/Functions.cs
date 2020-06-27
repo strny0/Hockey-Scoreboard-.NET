@@ -21,6 +21,7 @@ namespace HockeyScoreboard
     public partial class MainWindow : Window // DATA
     {
         // CONSTANTS
+        private List<string> teamLoadingFilePaths = new List<string>();
         private const string Caption = "Error";
         private const string ListboxFormat = "{0} - {1}";
         private readonly Brush ColorBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
@@ -78,6 +79,8 @@ namespace HockeyScoreboard
                 TeamLogoPath = "",
                 TeamName = ""
             };
+            Vars.Team1.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
+            Vars.Team2.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
 
         }
         private void DefineDefaultPrefs() // DEFAULT PREFERENCES
@@ -134,21 +137,24 @@ namespace HockeyScoreboard
             };
             return LoadXmlDialog;
         }
-        private void ChangeImage(TeamClass Team, Image ImageChangedMain, Image ImageChangedSecondary)
+        private string GetImageSource()
         {
             OpenFileDialog ImageDialog = DefineImageFileDialog();
             Nullable<bool> Result = ImageDialog.ShowDialog();
 
             if (Result == true)
             {
-                BitmapImage bitmap = new BitmapImage(new Uri(ImageDialog.FileName))
-                {
-                    CacheOption = BitmapCacheOption.OnLoad
-                };
-                Team.LogoSource = bitmap;
-                ImageChangedMain.Source = Team.LogoSource;
-                ImageChangedSecondary.Source = Team.LogoSource;
+                return ImageDialog.FileName;
             }
+            else return "";
+        }
+        private void ChangeImageFromPath(string ImagePath, Image ImageToChange)
+        {
+            BitmapImage bitmap = new BitmapImage(new Uri(ImagePath))
+            {
+                CacheOption = BitmapCacheOption.OnLoad
+            };
+            ImageToChange.Source = bitmap;
         }
         // UI UPDATES
         private void UpdateTimeLabel()
@@ -274,6 +280,21 @@ namespace HockeyScoreboard
                 Vars.Window.LabelT2P2TimeLeftVariable.Content = "";
                 Vars.Window.Team2Indicator2.Background = Brushes.Green;
             }
+        }
+        private void ReloadControlsUI(TeamClass Team)
+        {
+            if (Team.Index == 1)
+            {
+                ChangeImageFromPath(Team.LogoSource, ImageTeam1Logo); ChangeImageFromPath(Team.LogoSource, Vars.Window.ImageTeam1LogoView);
+                TextBoxTeam1Name.Text = Team.Name; UpDownTeam1Score.Value = Team.Score;  UpDownTeam1Shots.Value = Team.Shots;
+            }
+            else if (Team.Index == 2)
+            {
+                ChangeImageFromPath(Team.LogoSource, ImageTeam2Logo); ChangeImageFromPath(Team.LogoSource, Vars.Window.ImageTeam2LogoView);
+                TextBoxTeam2Name.Text = Team.Name; UpDownTeam2Score.Value = Team.Score; UpDownTeam2Shots.Value = Team.Shots;
+            }
+            else return;
+
         }
         private void UpdateAllUI() // ALL UI
         {
@@ -557,8 +578,9 @@ namespace HockeyScoreboard
 
             if (Team.SelectedTeamList.Count != 0 && Listbox.SelectedItems.Count != 0)
             {
-                int CheckedItemIndex = Listbox.SelectedItems.Cast<int>().ToArray().First();
-                return Team.SelectedTeamList[CheckedItemIndex].Number;
+                int SelectedIndex = Listbox.SelectedIndex;
+                Listbox.SelectedIndex = -1;
+                return Team.SelectedTeamList[SelectedIndex].Number;
             }
             else
             {
@@ -614,12 +636,12 @@ namespace HockeyScoreboard
             }
         }
         // TEAM MANAGEMENT
-        private void UpdateTeamManagementUI()
+        private void UpdateListbox(ListBox UpdatedListbox, TeamSavingClass LoadClass)
         {
-            ListBoxTeamManager.Items.Clear();
-            foreach (TeamSavingClass.PlayerTeamListType ListType in Vars.Game.TempEditorTeam.PlayerList)
+            UpdatedListbox.Items.Clear();
+            foreach (TeamSavingClass.PlayerTeamListType ListType in LoadClass.PlayerList)
             {
-                _ = ListBoxTeamManager.Items.Add(string.Format(ListboxFormat, ListType.Number, ListType.Name));
+                _ = UpdatedListbox.Items.Add(string.Format(ListboxFormat, ListType.Number, ListType.Name));
             }
         }
         private void AddPlayerToTeamEditor(string InputName, string InputNumber)
@@ -629,18 +651,18 @@ namespace HockeyScoreboard
                 Name = InputName,
                 Number = InputNumber
             };
-            Vars.Game.TempEditorTeam.PlayerList.Add(TempPlayer); UpdateTeamManagementUI();
+            Vars.Game.TempEditorTeam.PlayerList.Add(TempPlayer); UpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam);
         }
         private void RemovePlayerToTeamEditor(ListBox EditorListBox)
         {
-            try { Vars.Game.TempEditorTeam.PlayerList.RemoveAt(EditorListBox.SelectedIndex); UpdateTeamManagementUI(); }
+            try { Vars.Game.TempEditorTeam.PlayerList.RemoveAt(EditorListBox.SelectedIndex); UpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam); }
             catch {
                 MessageBox.Show("No player selected. Unable to remove.");
                 return; }
         }
         private void ClearPlayerTeamEditor()
         {
-            Vars.Game.TempEditorTeam.PlayerList.Clear(); UpdateTeamManagementUI();
+            Vars.Game.TempEditorTeam.PlayerList.Clear(); UpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam); ;
         }
         private void SaveTeamEditor(string InputTeamName)
         {
@@ -678,8 +700,72 @@ namespace HockeyScoreboard
                 };
                 ImageTeamManagerLogo.Source = bitmap;
                 TextBoxTeamNameManager.Text = Vars.Game.TempEditorTeam.TeamName;
-                UpdateTeamManagementUI();
+                UpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam); ;
             }
+        }
+        private void RefreshComboBox(ComboBox RefreshedBox)
+        {
+            RefreshedBox.Items.Clear();
+            string searchDirectory = Vars.Prefs.DefaultTeamDirectory;
+            string searchPattern = "*.xml";
+            TeamSavingClass LoadClass = new TeamSavingClass();
+            XmlSerializer Xser = new XmlSerializer(Vars.Game.TempEditorTeam.GetType());
+            teamLoadingFilePaths.Clear();
+            foreach (var filePath in Directory.GetFiles(searchDirectory, searchPattern))
+            {
+                teamLoadingFilePaths.Add(filePath);
+                using (StreamReader streamReader = new StreamReader(filePath))
+                {
+                    LoadClass = (TeamSavingClass)Xser.Deserialize(streamReader);
+                }
+                RefreshedBox.Items.Add(LoadClass.TeamName);
+            }
+        }
+        private void LoadComboBoxSelection(ListBox OutputListBox, ComboBox InputComboBox, TeamClass Team)
+        {
+            System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("This will override your current team setup. Do you wish to continue?", "Warning", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Warning);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                OutputListBox.Items.Clear();
+                TeamSavingClass LoadClass = new TeamSavingClass();
+                XmlSerializer Xser = new XmlSerializer(Vars.Game.TempEditorTeam.GetType());
+                using (StreamReader streamReader = new StreamReader(teamLoadingFilePaths[InputComboBox.SelectedIndex]))
+                {
+                    LoadClass = (TeamSavingClass)Xser.Deserialize(streamReader);
+                }
+
+                Team.Name = LoadClass.TeamName;
+                Team.LogoSource = LoadClass.TeamLogoPath;
+                Team.Score = 0;
+                Team.Shots = 0;
+                Team.TimeoutRunning = false;
+                Team.HasTimeout = true;
+                Team.Player1 = new CustomTypes.PlayerType
+                {
+                    Number = "",
+                    PenaltyTimeLeft = TimeSpan.Zero,
+                    PenaltyTimeSet = TimeSpan.Zero,
+                    PeriodIs2plus2 = false,
+                    PenaltyOffset = TimeSpan.Zero,
+                    PenaltyRunning = false,
+                    ScoreAtPeriodStart = 0
+                };
+                Team.Player2 = new CustomTypes.PlayerType
+                {
+                    Number = "",
+                    PenaltyTimeLeft = TimeSpan.Zero,
+                    PenaltyTimeSet = TimeSpan.Zero,
+                    PeriodIs2plus2 = false,
+                    PenaltyOffset = TimeSpan.Zero,
+                    PenaltyRunning = false,
+                    ScoreAtPeriodStart = 0
+
+                };
+                Team.SelectedTeamList = LoadClass.PlayerList;
+                UpdateListbox(OutputListBox, LoadClass);
+                ReloadControlsUI(Team); UpdateAllUI();
+            }
+            else return;
         }
     }
 }

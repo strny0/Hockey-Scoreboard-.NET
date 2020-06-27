@@ -14,6 +14,7 @@ using Image = System.Windows.Controls.Image;
 using System.Drawing.Imaging;
 using System.Globalization;
 using DocumentFormat.OpenXml.Bibliography;
+using System.IO;
 
 namespace HockeyScoreboard
 {
@@ -111,11 +112,16 @@ namespace HockeyScoreboard
         }
         private void ButtonTeam1SelectImage_Click(object sender, RoutedEventArgs e)
         {
-            ChangeImage(Vars.Team1, ImageTeam1Logo, Vars.Window.ImageTeam1LogoView);
+            Vars.Team1.LogoSource = GetImageSource();
+            ChangeImageFromPath(Vars.Team1.LogoSource, ImageTeam1Logo);
+            ChangeImageFromPath(Vars.Team1.LogoSource, Vars.Window.ImageTeam1LogoView);
+
         }
         private void ButtonTeam2SelectImage_Click(object sender, RoutedEventArgs e)
         {
-            ChangeImage(Vars.Team2, ImageTeam2Logo, Vars.Window.ImageTeam2LogoView);
+            Vars.Team2.LogoSource = GetImageSource();
+            ChangeImageFromPath(Vars.Team2.LogoSource, ImageTeam2Logo);
+            ChangeImageFromPath(Vars.Team2.LogoSource, Vars.Window.ImageTeam2LogoView);
         }
         private void ButtonSetTime_Click(object sender, RoutedEventArgs e)
         {
@@ -327,19 +333,42 @@ namespace HockeyScoreboard
 
         private void ButtonTeamManagerSelectImage_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ImageDialog = DefineImageFileDialog();
-            ImageDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            Nullable<bool> Result = ImageDialog.ShowDialog();
-            if (Result == true)
-            {
-                BitmapImage bitmap = new BitmapImage(new Uri(ImageDialog.FileName))
-                {
-                    CacheOption = BitmapCacheOption.OnLoad
-                };
-                ImageTeamManagerLogo.Source = bitmap;
-                Vars.Game.TempEditorTeam.TeamLogoPath = ImageDialog.FileName;
-            }
+            Vars.Game.TempEditorTeam.TeamLogoPath = GetImageSource();
+            ChangeImageFromPath(Vars.Game.TempEditorTeam.TeamLogoPath, ImageTeamManagerLogo);
         }
+
+
+        private void ComboBoxTeam1_DropDownOpened(object sender, EventArgs e)
+        {
+            RefreshComboBox(ComboBoxTeam1);
+        }
+
+        private void ComboBoxTeam2_DropDownOpened(object sender, EventArgs e)
+        {
+            RefreshComboBox(ComboBoxTeam2);
+        }
+        private void ComboBoxTeam1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadComboBoxSelection(ListBoxTeam1Players, ComboBoxTeam1, Vars.Team1);
+        }
+        private void ComboBoxTeam2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadComboBoxSelection(ListBoxTeam2Players, ComboBoxTeam2, Vars.Team2);
+
+        }
+
+        private void ListBoxTeam1Players_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ListBoxTeam1Players.SelectedIndex = -1;
+        }
+
+        private void ListBoxTeam2Players_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ListBoxTeam2Players.SelectedIndex = -1;
+        }
+
+
+
 
         // TEAMS TAB
         // SOUND TAB
