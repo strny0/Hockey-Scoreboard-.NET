@@ -154,5 +154,161 @@ namespace HockeyScoreboard.Properties {
                 this["AutomaticallyStartBreak"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\\\Documents\\\\Hockey Scoreboard\\\\Teams\\\\")]
+        public string DefaultTeamDirectory {
+            get {
+                return ((string)(this["DefaultTeamDirectory"]));
+            }
+            set {
+                this["DefaultTeamDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UsedTeamDirectory {
+            get {
+                return ((string)(this["UsedTeamDirectory"]));
+            }
+            set {
+                this["UsedTeamDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("51, 51, 51")]
+        public global::System.Drawing.Color ColorBackgroundMain {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorBackgroundMain"]));
+            }
+            set {
+                this["ColorBackgroundMain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("77, 79, 95")]
+        public global::System.Drawing.Color ColorBackgroundSecondary {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorBackgroundSecondary"]));
+            }
+            set {
+                this["ColorBackgroundSecondary"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public global::System.Drawing.Color ColorBorderBrush {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorBorderBrush"]));
+            }
+            set {
+                this["ColorBorderBrush"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Green")]
+        public global::System.Drawing.Color ColorPenaltyIndicatorFree {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorPenaltyIndicatorFree"]));
+            }
+            set {
+                this["ColorPenaltyIndicatorFree"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public global::System.Drawing.Color ColorPenaltyIndicatorOccupied {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorPenaltyIndicatorOccupied"]));
+            }
+            set {
+                this["ColorPenaltyIndicatorOccupied"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        public global::System.Drawing.Color ColorTextMain {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorTextMain"]));
+            }
+            set {
+                this["ColorTextMain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("241, 205, 70")]
+        public global::System.Drawing.Color ColorTextValues {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorTextValues"]));
+            }
+            set {
+                this["ColorTextValues"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("238, 69, 92")]
+        public global::System.Drawing.Color ColorTextTime {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorTextTime"]));
+            }
+            set {
+                this["ColorTextTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Lime")]
+        public global::System.Drawing.Color ColorTextPeriod {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorTextPeriod"]));
+            }
+            set {
+                this["ColorTextPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI, 8.25pt")]
+        public global::System.Drawing.Font DescriptiveFont {
+            get {
+                return ((global::System.Drawing.Font)(this["DescriptiveFont"]));
+            }
+            set {
+                this["DescriptiveFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI, 8.25pt")]
+        public global::System.Drawing.Font ValuesFont {
+            get {
+                return ((global::System.Drawing.Font)(this["ValuesFont"]));
+            }
+            set {
+                this["ValuesFont"] = value;
+            }
+        }
     }
 }

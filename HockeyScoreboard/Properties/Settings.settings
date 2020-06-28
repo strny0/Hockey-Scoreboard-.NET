@@ -35,5 +35,44 @@
     <Setting Name="AutomaticallyStartBreak" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="DefaultTeamDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\\Documents\\Hockey Scoreboard\\Teams\\</Value>
+    </Setting>
+    <Setting Name="UsedTeamDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ColorBackgroundMain" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">51, 51, 51</Value>
+    </Setting>
+    <Setting Name="ColorBackgroundSecondary" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">77, 79, 95</Value>
+    </Setting>
+    <Setting Name="ColorBorderBrush" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Black</Value>
+    </Setting>
+    <Setting Name="ColorPenaltyIndicatorFree" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Green</Value>
+    </Setting>
+    <Setting Name="ColorPenaltyIndicatorOccupied" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Red</Value>
+    </Setting>
+    <Setting Name="ColorTextMain" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="ColorTextValues" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">241, 205, 70</Value>
+    </Setting>
+    <Setting Name="ColorTextTime" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">238, 69, 92</Value>
+    </Setting>
+    <Setting Name="ColorTextPeriod" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Lime</Value>
+    </Setting>
+    <Setting Name="DescriptiveFont" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI, 8.25pt</Value>
+    </Setting>
+    <Setting Name="ValuesFont" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI, 8.25pt</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

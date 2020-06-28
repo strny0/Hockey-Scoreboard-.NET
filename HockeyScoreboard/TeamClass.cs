@@ -12,8 +12,8 @@ namespace HockeyScoreboard
 		public int Shots { get; set; }
 		public string LogoSource { get; set; }
 
-		public List<TeamSavingClass.PlayerTeamListType> SelectedTeamList;
-        public CustomTypes.PlayerType Player1;
-		public CustomTypes.PlayerType Player2;
-    }
+		public List<TeamSavingClass.PlayerTeamListType> SelectedTeamList { get; set; }
+        public PlayerClass Player1 { get; set; }
+		public PlayerClass Player2 { get; set; }
+}
 }

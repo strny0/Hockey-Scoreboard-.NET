@@ -28,9 +28,9 @@ namespace HockeyScoreboard
             AnyButtonPressed = false;
             ButtonSelectTeam1.Content = Vars.Team1.Name;
             ButtonSelectTeam2.Content = Vars.Team2.Name;
-            LabelMessage.Content = $"Timeout length: (default {Vars.Prefs.DefaultTimeoutTime.Minutes}:{Vars.Prefs.DefaultTimeoutTime.Seconds})";
-            UpDownMinutes.Value = Vars.Prefs.DefaultTimeoutTime.Minutes;
-            UpDownSeconds.Value = Vars.Prefs.DefaultTimeoutTime.Seconds;
+            LabelMessage.Content = $"Timeout length: (default {Properties.Settings.Default.TimeoutDuration.Minutes}:{Properties.Settings.Default.TimeoutDuration.Seconds})";
+            UpDownMinutes.Value = Properties.Settings.Default.TimeoutDuration.Minutes;
+            UpDownSeconds.Value = Properties.Settings.Default.TimeoutDuration.Seconds;
             if (Vars.Team1.HasTimeout == false)
             {
                 ButtonSelectTeam1.IsEnabled = false;
@@ -45,7 +45,7 @@ namespace HockeyScoreboard
         {
             TimeSpan TimeoutTime = TimeSpan.FromMinutes((int)UpDownMinutes.Value) + TimeSpan.FromSeconds((int)UpDownSeconds.Value);
             Vars.Team1.HasTimeout = false; Vars.Team1.TimeoutRunning = true;
-            Vars.Game.GameState = CustomTypes.GameState.Timeout; AnyButtonPressed = true;
+            Vars.Game.GameState = EnumClass.GameState.Timeout; AnyButtonPressed = true;
             Vars.Game.TimeLeft = TimeoutTime; Vars.Game.LastSetTime = TimeoutTime;
             this.Close();
         }
@@ -54,7 +54,7 @@ namespace HockeyScoreboard
         {
             TimeSpan TimeoutTime = TimeSpan.FromMinutes((int)UpDownMinutes.Value) + TimeSpan.FromSeconds((int)UpDownSeconds.Value);
             Vars.Team2.HasTimeout = false; Vars.Team2.TimeoutRunning = true;
-            Vars.Game.GameState = CustomTypes.GameState.Timeout; AnyButtonPressed = true;
+            Vars.Game.GameState = EnumClass.GameState.Timeout; AnyButtonPressed = true;
             Vars.Game.TimeLeft = TimeoutTime; Vars.Game.LastSetTime = TimeoutTime;
             this.Close();
         }
@@ -63,7 +63,7 @@ namespace HockeyScoreboard
         {
             if (AnyButtonPressed == false)
             {
-                Vars.Game.GameState = CustomTypes.GameState.Regular;
+                Vars.Game.GameState = EnumClass.GameState.Regular;
             }
         }
     }

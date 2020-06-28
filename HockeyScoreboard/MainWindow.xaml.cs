@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Globalization;
+using HockeyScoreboard.Properties;
 
 namespace HockeyScoreboard
 {
@@ -10,6 +11,8 @@ namespace HockeyScoreboard
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        #region InitializationEvents
         public MainWindow()
         {
             InitializeComponent();
@@ -17,15 +20,13 @@ namespace HockeyScoreboard
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Vars.SecondaryWindow.Show(); // launch and load view window
-            // Load operations TBD
+            
             DefineDefaultProgramState();
-            DefineDefaultPrefs();
             InitializeTimer();
         }
+        #endregion
 
-        /// <summary>
-        /// TEAM MANAGEMENT RELATED EVENTS
-        /// </summary>
+        #region TeamManagementEvents
 
         private void TextBoxTeam1Name_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -86,10 +87,10 @@ namespace HockeyScoreboard
         {
             PenaltyCancel(Vars.Team2, false);
         }
+        
+        #endregion
 
-        /// <summary>
-        /// GAME MANAGEMENT RELATED EVENTS
-        /// </summary>
+        #region GameManagementEvents
 
         private void MainTimer_Tick(object sender, EventArgs e) // TIMER
         {
@@ -97,7 +98,7 @@ namespace HockeyScoreboard
             {
                 switch (Vars.Game.GameState)
                 {
-                    case CustomTypes.GameState.Regular:
+                    case EnumClass.GameState.Regular:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
                         {
                             Vars.Game.StopwatchPeriod.Reset();
@@ -113,7 +114,7 @@ namespace HockeyScoreboard
                         PenaltyTimeProgression(Vars.Team1, Vars.Team2, true); PenaltyTimeProgression(Vars.Team1, Vars.Team2, false);   // Tick Time Down
                         PenaltyTimeProgression(Vars.Team2, Vars.Team1, true); PenaltyTimeProgression(Vars.Team2, Vars.Team1, false);   // Function checks if penalties for each player are running
                         break;
-                    case CustomTypes.GameState.Break:
+                    case EnumClass.GameState.Break:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
                         {
                             Vars.Game.StopwatchPeriod.Reset();
@@ -121,11 +122,11 @@ namespace HockeyScoreboard
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
                         break;
-                    case CustomTypes.GameState.Timeout:
+                    case EnumClass.GameState.Timeout:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
                         {
                             Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
-                            Vars.Game.GameState = CustomTypes.GameState.Regular;
+                            Vars.Game.GameState = EnumClass.GameState.Regular;
                             SetTime(Vars.Game.LastRegularTime);
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
@@ -163,48 +164,48 @@ namespace HockeyScoreboard
         {
             SetTime(Vars.Game.LastSetTime);
         }
-        private void ButtonSetTimePresetA_Click(object sender, RoutedEventArgs e) // PRESET
+        private void ButtonSetTimePresetA_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(TimeSpan.FromMinutes(1)); // temporary
+            SetTime(Settings.Default.PenaltyTimePresetA);
         }
-        private void ButtonSetTimePresetB_Click(object sender, RoutedEventArgs e) // PRESET
+        private void ButtonSetTimePresetB_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(TimeSpan.FromMinutes(2)); // temporary
+            SetTime(Settings.Default.PenaltyTimePresetB);
         }
-        private void ButtonSetTimePresetC_Click(object sender, RoutedEventArgs e) // PRESET
+        private void ButtonSetTimePresetC_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(TimeSpan.FromMinutes(5)); // temporary
+            SetTime(Settings.Default.PenaltyTimePresetC);
         }
-        private void ButtonSetTimePresetD_Click(object sender, RoutedEventArgs e) // PRESET
+        private void ButtonSetTimePresetD_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(TimeSpan.FromMinutes(10)); // temporary
+            SetTime(Settings.Default.PenaltyTimePresetD);
         }
         private void ButtonBreakMode_Click(object sender, RoutedEventArgs e)
         {
-            if (Vars.Game.GameState == CustomTypes.GameState.Break)
+            if (Vars.Game.GameState == EnumClass.GameState.Break)
             {
-                Vars.Game.GameState = CustomTypes.GameState.Regular;
+                Vars.Game.GameState = EnumClass.GameState.Regular;
                 SetTime(Vars.Game.LastRegularTime);
             }
             else
             {
                 Vars.Game.LastRegularTime = Vars.Game.TimeLeft;
-                Vars.Game.GameState = CustomTypes.GameState.Break;
-                SetTime(Vars.Prefs.DefaultBreakTime);
+                Vars.Game.GameState = EnumClass.GameState.Break;
+                SetTime(Settings.Default.BreakDuration);
             }
         }
         private void ButtonTimeout_Click(object sender, RoutedEventArgs e)
         {
-            if (Vars.Game.GameState == CustomTypes.GameState.Timeout)
+            if (Vars.Game.GameState == EnumClass.GameState.Timeout)
             {
-                Vars.Game.GameState = CustomTypes.GameState.Regular;
+                Vars.Game.GameState = EnumClass.GameState.Regular;
                 Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
                 SetTime(Vars.Game.LastRegularTime);
             }
             else
             {
                 Vars.Game.LastRegularTime = Vars.Game.TimeLeft;
-                Vars.Game.GameState = CustomTypes.GameState.Timeout;
+                Vars.Game.GameState = EnumClass.GameState.Timeout;
                 Vars.Game.StopwatchPeriod.Stop();
                 TimeoutDialog TD = new TimeoutDialog();
                 TD.ShowDialog();
@@ -233,7 +234,7 @@ namespace HockeyScoreboard
         }
         private void ButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
-            Vars.Game.Period = CustomTypes.PeriodState.First; Vars.Game.GameState = CustomTypes.GameState.Regular;
+            Vars.Game.Period = EnumClass.PeriodState.First; Vars.Game.GameState = EnumClass.GameState.Regular;
             Vars.Team1.HasTimeout = true; Vars.Team2.HasTimeout = true;
             Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
             SetTime(TimeSpan.FromMinutes(7));
@@ -245,10 +246,10 @@ namespace HockeyScoreboard
             UpDownTeam1Shots.Value = Vars.Team1.Shots; UpDownTeam2Shots.Value = Vars.Team2.Shots;
             UIUpdateAll();
         }
+        
+        #endregion
 
-        /// <summary>
-        /// PENALTY TAB RELATED EVENTS
-        /// </summary>
+        #region PenaltyTabEvents
 
         private void ButtonSetSpecificPenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
@@ -256,19 +257,19 @@ namespace HockeyScoreboard
         }
         private void ButtonSetPenaltyTeam1A_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(1), false, false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, Settings.Default.PenaltyTimePresetA, false, false);
         }
         private void ButtonSetPenaltyTeam1B_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(2), false, false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, Settings.Default.PenaltyTimePresetB, false, false);
         }
         private void ButtonSetPenaltyTeam1C_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(5), false, false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, Settings.Default.PenaltyTimePresetC, false, false);
         }
         private void ButtonSetPenaltyTeam1D_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(10), false, false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, Settings.Default.PenaltyTimePresetD, false, false);
         }
         private void ButtonSetMinorPenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
@@ -284,19 +285,19 @@ namespace HockeyScoreboard
         }
         private void ButtonSetPenaltyTeam2A_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(1), false, false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, Settings.Default.PenaltyTimePresetA, false, false);
         }
         private void ButtonSetPenaltyTeam2B_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(2), false, false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, Settings.Default.PenaltyTimePresetB, false, false);
         }
         private void ButtonSetPenaltyTeam2C_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(5), false, false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, Settings.Default.PenaltyTimePresetC, false, false);
         }
         private void ButtonSetPenaltyTeam2D_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(10), false, false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, Settings.Default.PenaltyTimePresetD, false, false);
         }
         private void ButtonSetMinorPenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
@@ -339,10 +340,10 @@ namespace HockeyScoreboard
         {
             ListBoxTeam2Players.SelectedIndex = -1;
         }
+        
+        #endregion
 
-        /// <summary>
-        /// TEAM MANAGER RELATED EVENTS
-        /// </summary>
+        #region TeamManagerEvents
 
         private void ButtonTeamManagerAddPlayer_Click(object sender, RoutedEventArgs e)
         {
@@ -374,16 +375,64 @@ namespace HockeyScoreboard
             ChangeImageFromPath(Vars.Game.TeamManagerTeamSavingClassInstance.TeamLogoPath, ImageTeamManagerLogo);
         }
 
+        #endregion
 
+        private void ButtonPreferencesSetTime_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
 
+        #region Colors
+        private void BorderColorBGMain_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
 
+        }
 
+        private void BorderColorBGSecondary_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
 
-        // SOUND TAB
-        // PREFERENCES TAB
+        }
 
+        private void BorderColorBorder_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
 
+        }
+
+        private void BorderColorIndicatorFree_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void BorderColorIndicatorOccupied_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void BorderColorNormalText_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void BorderColorPeriodText_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void BorderColorTextTime_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void BorderColorTextValues_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void ButtonPreferencesRestoreDefaultColors_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
     }
 }
 

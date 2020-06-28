@@ -1,26 +1,29 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Xml.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Xml.Serialization;
+using Microsoft.Win32;
 
 namespace HockeyScoreboard
 {
     public partial class MainWindow : Window
     {
-        // CONSTANTS
-        private List<string> teamLoadingFilePaths = new List<string>();
+        #region Constants
+        private readonly List<string> teamLoadingFilePaths = new List<string>();
         private const string ListboxFormat = "{0} - {1}";
         private readonly Brush ColorBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
         private readonly Brush ColorBrush2 = new SolidColorBrush(Color.FromRgb(105, 108, 133));
+        #endregion
 
-        // FUNCTIONS
+        #region Methods
+
+        #region InitializationMethods
         private void InitializeTimer()
         {
             DispatcherTimer MainTimer = new DispatcherTimer(DispatcherPriority.Background)
@@ -33,6 +36,9 @@ namespace HockeyScoreboard
         }
         private void DefineDefaultProgramState()
         {
+            Properties.Settings.Default.DefaultTeamDirectory = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Hockey Scoreboard\\Teams\\";
+
+
             Vars.Team1.Index = 1;
             Vars.Team2.Index = 2;
             Vars.Team1.Name = "Team 1";
@@ -41,7 +47,7 @@ namespace HockeyScoreboard
             Vars.Team2.Score = 0;
             Vars.Team1.Shots = 0;
             Vars.Team2.Shots = 0;
-            Vars.Team1.Player1 = new CustomTypes.PlayerType
+            Vars.Team1.Player1 = new PlayerClass
             {
                 Number = "",
                 PeriodIsMinor = false,
@@ -52,7 +58,7 @@ namespace HockeyScoreboard
                 PenaltyTimeSet = TimeSpan.Zero,
                 OtherTeamScoreAtPenaltyStart = 0,
             };
-            Vars.Team1.Player2 = new CustomTypes.PlayerType
+            Vars.Team1.Player2 = new PlayerClass
             {
                 Number = "",
                 PeriodIsMinor = false,
@@ -63,7 +69,7 @@ namespace HockeyScoreboard
                 PenaltyTimeSet = TimeSpan.Zero,
                 OtherTeamScoreAtPenaltyStart = 0,
             };
-            Vars.Team2.Player1 = new CustomTypes.PlayerType
+            Vars.Team2.Player1 = new PlayerClass
             {
                 Number = "",
                 PeriodIsMinor = false,
@@ -74,7 +80,7 @@ namespace HockeyScoreboard
                 PenaltyTimeSet = TimeSpan.Zero,
                 OtherTeamScoreAtPenaltyStart = 0,
             };
-            Vars.Team2.Player2 = new CustomTypes.PlayerType
+            Vars.Team2.Player2 = new PlayerClass
             {
                 Number = "",
                 PeriodIsMinor = false,
@@ -91,8 +97,8 @@ namespace HockeyScoreboard
             Vars.Game.TimeLeft = TimeSpan.FromMinutes(7);
             Vars.Game.InputMinute = 7;
             Vars.Game.InputSecond = 0;
-            Vars.Game.Period = CustomTypes.PeriodState.First;
-            Vars.Game.GameState = CustomTypes.GameState.Regular;
+            Vars.Game.Period = EnumClass.PeriodState.First;
+            Vars.Game.GameState = EnumClass.GameState.Regular;
             Vars.Game.TeamManagerTeamSavingClassInstance = new TeamSavingClass
             {
                 PlayerList = new List<TeamSavingClass.PlayerTeamListType>(),
@@ -103,12 +109,6 @@ namespace HockeyScoreboard
             Vars.Team2.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
             ButtonPeriodMinus.IsEnabled = false;
 
-        }
-        private void DefineDefaultPrefs() // DEFAULT PREFERENCES
-        {
-            Vars.Prefs.DefaultTeamDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\Hockey Scoreboard\\Teams\\";
-            Vars.Prefs.DefaultBreakTime = new TimeSpan(0, 1, 0);
-            Vars.Prefs.DefaultTimeoutTime = new TimeSpan(0, 0, 30);
         }
         private OpenFileDialog DefineImageFileDialog()
         {
@@ -140,7 +140,7 @@ namespace HockeyScoreboard
                 Title = "Save Team",
                 AddExtension = true,
                 FilterIndex = 1,
-                InitialDirectory = Vars.Prefs.DefaultTeamDirectory,
+                InitialDirectory = Properties.Settings.Default.DefaultTeamDirectory,
                 Filter = "XML files(.xml) | *.xml",
                 DefaultExt = ".xml"
             };
@@ -153,12 +153,15 @@ namespace HockeyScoreboard
             {
                 Title = "Load Team",
                 FilterIndex = 1,
-                InitialDirectory = Vars.Prefs.DefaultTeamDirectory,
+                InitialDirectory = Properties.Settings.Default.DefaultTeamDirectory,
                 Filter = "XML files(.xml) | *.xml",
                 DefaultExt = ".xml"
             };
             return LoadXmlDialog;
         }
+        #endregion
+
+        #region GeneralMethods
         private string ReturnImageSourcePath()
         {
             OpenFileDialog ImageDialog = DefineImageFileDialog();
@@ -182,7 +185,7 @@ namespace HockeyScoreboard
         {
             switch (Vars.Game.GameState)
             {
-                case CustomTypes.GameState.Regular:
+                case EnumClass.GameState.Regular:
                     Vars.Game.StopwatchPeriod.Reset();
                     Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
 
@@ -191,46 +194,46 @@ namespace HockeyScoreboard
                     Vars.Team2.Player1.PenaltyTimeSet = Vars.Team2.Player1.PenaltyTimeLeft; Vars.Team2.Player1.PenaltyOffset = TimeSpan.Zero;
                     Vars.Team2.Player2.PenaltyTimeSet = Vars.Team2.Player2.PenaltyTimeLeft; Vars.Team2.Player2.PenaltyOffset = TimeSpan.Zero;
                     break;
-                case CustomTypes.GameState.Break:
+                case EnumClass.GameState.Break:
                     Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
                     break;
-                case CustomTypes.GameState.Timeout:
+                case EnumClass.GameState.Timeout:
                     Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
                     break;
             }
             UIUpdateGameTime();
             ButtonPauseTime.Content = "Start Time";
         } 
-        private void ChangePeriod(CustomTypes.PeriodState PeriodVariable)
+        private void ChangePeriod(EnumClass.PeriodState PeriodVariable)
         {
 
             switch (PeriodVariable)
             {
-                case CustomTypes.PeriodState.First:
+                case EnumClass.PeriodState.First:
                     LabelPeriod.Content = "1";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "1";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = false;
                     break;
-                case CustomTypes.PeriodState.Second:
+                case EnumClass.PeriodState.Second:
                     LabelPeriod.Content = "2";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "2";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
-                case CustomTypes.PeriodState.Third:
+                case EnumClass.PeriodState.Third:
                     LabelPeriod.Content = "3";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "3";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
-                case CustomTypes.PeriodState.Extension:
+                case EnumClass.PeriodState.Extension:
                     LabelPeriod.Content = "P";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "P";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
-                case CustomTypes.PeriodState.SN:
+                case EnumClass.PeriodState.SN:
                     LabelPeriod.Content = "Sn";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "Sn";
                     ButtonPeriodPlus.IsEnabled = false;
@@ -238,7 +241,9 @@ namespace HockeyScoreboard
                     break;
             }
         }
-        // UI UPDATES
+        #endregion
+
+        #region UIMethods
         private void UIUpdateGameTime()
         {
             if (Vars.Game.TimeLeft < TimeSpan.FromMinutes(1))
@@ -389,7 +394,7 @@ namespace HockeyScoreboard
         private void UIUpdateComboBoxSelection(ComboBox RefreshedBox)
         {
             RefreshedBox.Items.Clear();
-            string searchDirectory = Vars.Prefs.DefaultTeamDirectory;
+            string searchDirectory = Properties.Settings.Default.DefaultTeamDirectory;
             string searchPattern = "*.xml";
             TeamSavingClass LoadClass = new TeamSavingClass();
             XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
@@ -465,21 +470,21 @@ namespace HockeyScoreboard
             }
             switch (Vars.Game.GameState)
             {
-                case CustomTypes.GameState.Regular:
+                case EnumClass.GameState.Regular:
                     LabelTimeText.Content = "Game"; Vars.SecondaryWindow.LabelTimeText.Content = "Game";
                     ButtonBreakMode.Content = "Enter Break Mode";
                     ButtonTimeout.Content = "Timeout";
                     ButtonTimeout.IsEnabled = true;
                     ButtonBreakMode.IsEnabled = true;
                     break;
-                case CustomTypes.GameState.Break:
+                case EnumClass.GameState.Break:
                     LabelTimeText.Content = "Break"; Vars.SecondaryWindow.LabelTimeText.Content = "Break";
                     ButtonBreakMode.Content = "Leave Break Mode";
                     ButtonTimeout.Content = "Timeout";
                     ButtonBreakMode.IsEnabled = true;
                     ButtonTimeout.IsEnabled = false;
                     break;
-                case CustomTypes.GameState.Timeout:
+                case EnumClass.GameState.Timeout:
                     LabelTimeText.Content = "Timeout"; Vars.SecondaryWindow.LabelTimeText.Content = "Timeout";
                     ButtonBreakMode.Content = "Enter Break Mode";
                     ButtonTimeout.Content = "Cancel Timeout";
@@ -489,8 +494,9 @@ namespace HockeyScoreboard
             }
             UIUpdateGameTime();
         }
+        #endregion
 
-        // PENALTY MANAGEMENT
+        #region PenaltyMethods
         private string PenaltySelectPlayer(TeamClass Team, ListBox Listbox)
         {
 
@@ -728,7 +734,9 @@ namespace HockeyScoreboard
 
             }
         }
-        // TEAM MANAGEMENT
+        #endregion
+
+        #region TeamEditorMethods
         private void TeamEditorAddPlayer(string InputName, string InputNumber)
         {
             TeamSavingClass.PlayerTeamListType TempPlayer = new TeamSavingClass.PlayerTeamListType
@@ -744,7 +752,7 @@ namespace HockeyScoreboard
             { 
                 Vars.Game.TeamManagerTeamSavingClassInstance.PlayerList.RemoveAt(EditorListBox.SelectedIndex); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance);
             }
-            catch 
+            catch
             {
                 MessageBox.Show("No player selected. Unable to remove.");
                 return; 
@@ -757,7 +765,7 @@ namespace HockeyScoreboard
         private void TeamEditorSave(string InputTeamName)
         {
             Vars.Game.TeamManagerTeamSavingClassInstance.TeamName = InputTeamName;
-            Directory.CreateDirectory(Vars.Prefs.DefaultTeamDirectory);
+            Directory.CreateDirectory(Properties.Settings.Default.DefaultTeamDirectory);
             SaveFileDialog SaveTeamDialog = DefineSaveXmlDialog();
             SaveTeamDialog.FileName = InputTeamName;
             Nullable<bool> Result = SaveTeamDialog.ShowDialog();
@@ -815,7 +823,7 @@ namespace HockeyScoreboard
                 Team.Shots = 0;
                 Team.TimeoutRunning = false;
                 Team.HasTimeout = true;
-                Team.Player1 = new CustomTypes.PlayerType
+                Team.Player1 = new PlayerClass
                 {
                     Number = "",
                     PenaltyTimeLeft = TimeSpan.Zero,
@@ -825,7 +833,7 @@ namespace HockeyScoreboard
                     PenaltyRunning = false,
                     OtherTeamScoreAtPenaltyStart = 0
                 };
-                Team.Player2 = new CustomTypes.PlayerType
+                Team.Player2 = new PlayerClass
                 {
                     Number = "",
                     PenaltyTimeLeft = TimeSpan.Zero,
@@ -842,5 +850,12 @@ namespace HockeyScoreboard
             }
             else return;
         }
+        #endregion
+
+        #region PreferencesMethods
+        
+        #endregion
+
+        #endregion
     }
 }

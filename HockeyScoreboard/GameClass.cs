@@ -15,11 +15,10 @@ namespace HockeyScoreboard
         public TimeSpan LastSetTime { get => lastSetTime; set => lastSetTime = value; }
         public TimeSpan LastRegularTime { get => lastRegularTime; set => lastRegularTime = value; }
         public Stopwatch StopwatchPeriod { get; set; } = new Stopwatch();
-        public CustomTypes.GameState GameState { get; set; }
-        public CustomTypes.PeriodState Period { get; set; }
+        public EnumClass.GameState GameState { get; set; }
+        public EnumClass.PeriodState Period { get; set; }
         public int InputMinute { get; set; }
         public int InputSecond { get; set; }
-        public string TextBoxRenderFormat { get; set; } = "00.##";
         public string TimespanFormatRegular { get; } = @"mm\:ss";
         public string TimespanFormatMilisecond { get; } = @"ss\.f";
         public TeamSavingClass TeamManagerTeamSavingClassInstance { get; set; }

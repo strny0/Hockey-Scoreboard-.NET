@@ -36,7 +36,7 @@
     <PublisherName>Jakub Strnad</PublisherName>
     <SuiteName>Scoreboards</SuiteName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -131,14 +131,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CustomTypes.cs" />
+    <Compile Include="EnumClass.cs" />
     <Compile Include="MainWindowMethods.cs" />
     <Compile Include="GameClass.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="NumericSpinner.xaml.cs">
       <DependentUpon>NumericSpinner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PreferencesClass.cs" />
+    <Compile Include="PlayerClass.cs" />
     <Compile Include="SecondaryWindow.xaml.cs">
       <DependentUpon>SecondaryWindow.xaml</DependentUpon>
     </Compile>
