@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Globalization;
 using HockeyScoreboard.Properties;
+using System.Drawing;
 
 namespace HockeyScoreboard
 {
@@ -98,7 +99,7 @@ namespace HockeyScoreboard
             {
                 switch (Vars.Game.GameState)
                 {
-                    case EnumClass.GameState.Regular:
+                    case CustomTypes.GameState.Regular:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
                         {
                             Vars.Game.StopwatchPeriod.Reset();
@@ -114,7 +115,7 @@ namespace HockeyScoreboard
                         PenaltyTimeProgression(Vars.Team1, Vars.Team2, true); PenaltyTimeProgression(Vars.Team1, Vars.Team2, false);   // Tick Time Down
                         PenaltyTimeProgression(Vars.Team2, Vars.Team1, true); PenaltyTimeProgression(Vars.Team2, Vars.Team1, false);   // Function checks if penalties for each player are running
                         break;
-                    case EnumClass.GameState.Break:
+                    case CustomTypes.GameState.Break:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
                         {
                             Vars.Game.StopwatchPeriod.Reset();
@@ -122,11 +123,11 @@ namespace HockeyScoreboard
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
                         break;
-                    case EnumClass.GameState.Timeout:
+                    case CustomTypes.GameState.Timeout:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
                         {
                             Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
-                            Vars.Game.GameState = EnumClass.GameState.Regular;
+                            Vars.Game.GameState = CustomTypes.GameState.Regular;
                             SetTime(Vars.Game.LastRegularTime);
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
@@ -182,30 +183,30 @@ namespace HockeyScoreboard
         }
         private void ButtonBreakMode_Click(object sender, RoutedEventArgs e)
         {
-            if (Vars.Game.GameState == EnumClass.GameState.Break)
+            if (Vars.Game.GameState == CustomTypes.GameState.Break)
             {
-                Vars.Game.GameState = EnumClass.GameState.Regular;
+                Vars.Game.GameState = CustomTypes.GameState.Regular;
                 SetTime(Vars.Game.LastRegularTime);
             }
             else
             {
                 Vars.Game.LastRegularTime = Vars.Game.TimeLeft;
-                Vars.Game.GameState = EnumClass.GameState.Break;
+                Vars.Game.GameState = CustomTypes.GameState.Break;
                 SetTime(Settings.Default.BreakDuration);
             }
         }
         private void ButtonTimeout_Click(object sender, RoutedEventArgs e)
         {
-            if (Vars.Game.GameState == EnumClass.GameState.Timeout)
+            if (Vars.Game.GameState == CustomTypes.GameState.Timeout)
             {
-                Vars.Game.GameState = EnumClass.GameState.Regular;
+                Vars.Game.GameState = CustomTypes.GameState.Regular;
                 Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
                 SetTime(Vars.Game.LastRegularTime);
             }
             else
             {
                 Vars.Game.LastRegularTime = Vars.Game.TimeLeft;
-                Vars.Game.GameState = EnumClass.GameState.Timeout;
+                Vars.Game.GameState = CustomTypes.GameState.Timeout;
                 Vars.Game.StopwatchPeriod.Stop();
                 TimeoutDialog TD = new TimeoutDialog();
                 TD.ShowDialog();
@@ -234,7 +235,7 @@ namespace HockeyScoreboard
         }
         private void ButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
-            Vars.Game.Period = EnumClass.PeriodState.First; Vars.Game.GameState = EnumClass.GameState.Regular;
+            Vars.Game.Period = CustomTypes.PeriodState.First; Vars.Game.GameState = CustomTypes.GameState.Regular;
             Vars.Team1.HasTimeout = true; Vars.Team2.HasTimeout = true;
             Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
             SetTime(TimeSpan.FromMinutes(7));
@@ -377,6 +378,7 @@ namespace HockeyScoreboard
 
         #endregion
 
+        #region PreferencesEvents
         private void ButtonPreferencesSetTime_Click(object sender, RoutedEventArgs e)
         {
 
@@ -385,54 +387,85 @@ namespace HockeyScoreboard
         #region Colors
         private void BorderColorBGMain_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorBackgroundMain = ChangeColorSetting(Settings.Default.ColorBackgroundMain);
+            UIUpdateColorButton(Settings.Default.ColorBackgroundMain, BorderColorBGMain);
         }
 
         private void BorderColorBGSecondary_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorBackgroundSecondary = ChangeColorSetting(Settings.Default.ColorBackgroundSecondary);
+            UIUpdateColorButton(Settings.Default.ColorBackgroundSecondary, BorderColorBGSecondary);
         }
 
         private void BorderColorBorder_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorBorderBrush = ChangeColorSetting(Settings.Default.ColorBorderBrush);
+            UIUpdateColorButton(Settings.Default.ColorBorderBrush, BorderColorBorder);
         }
 
         private void BorderColorIndicatorFree_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorPenaltyIndicatorFree = ChangeColorSetting(Settings.Default.ColorPenaltyIndicatorFree);
+            UIUpdateColorButton(Settings.Default.ColorPenaltyIndicatorFree, BorderColorIndicatorFree);
         }
 
         private void BorderColorIndicatorOccupied_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorPenaltyIndicatorOccupied = ChangeColorSetting(Settings.Default.ColorPenaltyIndicatorOccupied);
+            UIUpdateColorButton(Settings.Default.ColorPenaltyIndicatorOccupied, BorderColorIndicatorOccupied);
         }
 
         private void BorderColorNormalText_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorTextMain = ChangeColorSetting(Settings.Default.ColorTextMain);
+            UIUpdateColorButton(Settings.Default.ColorTextMain, BorderColorNormalText);
         }
 
         private void BorderColorPeriodText_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorTextPeriod = ChangeColorSetting(Settings.Default.ColorTextPeriod);
+            UIUpdateColorButton(Settings.Default.ColorTextPeriod, BorderColorPeriodText);
         }
-
         private void BorderColorTextTime_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorTextTime = ChangeColorSetting(Settings.Default.ColorTextTime);
+            UIUpdateColorButton(Settings.Default.ColorTextTime, BorderColorTextTime);
         }
 
         private void BorderColorTextValues_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            Settings.Default.ColorTextValues = ChangeColorSetting(Settings.Default.ColorTextValues);
+            UIUpdateColorButton(Settings.Default.ColorTextValues, BorderColorTextValues);
         }
 
         private void ButtonPreferencesRestoreDefaultColors_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.ColorBackgroundMain = Color.FromArgb(51, 51, 51);
+            Settings.Default.ColorBackgroundSecondary = Color.FromArgb(77, 79, 95);
+            Settings.Default.ColorBorderBrush = Color.Black;
+            Settings.Default.ColorPenaltyIndicatorFree = Color.Green;
+            Settings.Default.ColorPenaltyIndicatorOccupied = Color.Red;
+            Settings.Default.ColorTextMain = Color.White;
+            Settings.Default.ColorTextPeriod = Color.Lime;
+            Settings.Default.ColorTextTime = Color.FromArgb(238, 69, 92);
+            Settings.Default.ColorTextValues = Color.FromArgb(241, 205, 70);
+            UIUpdateAllColorButtons();
+            MessageBox.Show("Colors successfully restored.");
 
         }
+
         #endregion
+        private void ButtonPreferencesSave_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.Save();
+            UIUpdateSecondaryWindowColorScheme();
+
+            MessageBox.Show("Successfully saved. Preferences will be loaded as they were saved next time the program runs.");
+        }
+
+        #endregion
+
+
     }
 }
 

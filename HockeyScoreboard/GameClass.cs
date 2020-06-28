@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Documents;
 
 namespace HockeyScoreboard
 {
@@ -15,8 +13,8 @@ namespace HockeyScoreboard
         public TimeSpan LastSetTime { get => lastSetTime; set => lastSetTime = value; }
         public TimeSpan LastRegularTime { get => lastRegularTime; set => lastRegularTime = value; }
         public Stopwatch StopwatchPeriod { get; set; } = new Stopwatch();
-        public EnumClass.GameState GameState { get; set; }
-        public EnumClass.PeriodState Period { get; set; }
+        public CustomTypes.GameState GameState { get; set; }
+        public CustomTypes.PeriodState Period { get; set; }
         public int InputMinute { get; set; }
         public int InputSecond { get; set; }
         public string TimespanFormatRegular { get; } = @"mm\:ss";

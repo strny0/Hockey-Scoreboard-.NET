@@ -289,7 +289,7 @@
             </TabItem>
             <TabItem Header="Preferences" FontSize="15" Background="#FF333333" Foreground="White" BorderBrush="Black">
                 <Grid>
-                    <Button Content="Apply" HorizontalAlignment="Left" Margin="10,328,0,0" VerticalAlignment="Top" Height="40" Width="460" Style="{DynamicResource CustomButtonStyle}"/>
+                    <Button Content="Save and Apply" x:Name="ButtonPreferencesSave" Click="ButtonPreferencesSave_Click" HorizontalAlignment="Left" Margin="10,328,0,0" VerticalAlignment="Top" Height="40" Width="460" Style="{DynamicResource CustomButtonStyle}"/>
 
                     <GroupBox Header="Toggles" Margin="10,10,882,75" HorizontalAlignment="Center" Width="460" Height="313" VerticalAlignment="Center">
                         <Grid>
@@ -393,7 +393,6 @@
 
                         </Grid>
                     </GroupBox>
-                    <StatusBar x:Name="StatusBarPreferences" Margin="-2,0,-2,-2" Background="#FF4D4F5F" Height="16" VerticalAlignment="Bottom" Foreground="White"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Localization" FontSize="15" Background="#FF333333" Foreground="#FFF4F8FC" BorderBrush="Black">

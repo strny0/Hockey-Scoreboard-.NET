@@ -4,7 +4,7 @@ using System.Windows.Documents;
 
 namespace HockeyScoreboard
 {
-    public static class EnumClass
+    public static partial class CustomTypes
     {
         public enum PeriodState
         {

@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Microsoft.Win32;
+using HockeyScoreboard.Properties;
 
 namespace HockeyScoreboard
 {
@@ -18,7 +19,7 @@ namespace HockeyScoreboard
         private readonly List<string> teamLoadingFilePaths = new List<string>();
         private const string ListboxFormat = "{0} - {1}";
         private readonly Brush ColorBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
-        private readonly Brush ColorBrush2 = new SolidColorBrush(Color.FromRgb(105, 108, 133));
+        private readonly Brush ColorBrush2 = new SolidColorBrush(Color.FromRgb(51, 51, 51));
         #endregion
 
         #region Methods
@@ -37,7 +38,15 @@ namespace HockeyScoreboard
         private void DefineDefaultProgramState()
         {
             Properties.Settings.Default.DefaultTeamDirectory = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Hockey Scoreboard\\Teams\\";
+            DefaultVariableValues();
+            UIUpdateAllColorButtons();
+            UIUpdateSecondaryWindowColorScheme();
 
+            ButtonPeriodMinus.IsEnabled = false;
+
+        }
+        private void DefaultVariableValues()
+        {
 
             Vars.Team1.Index = 1;
             Vars.Team2.Index = 2;
@@ -97,8 +106,8 @@ namespace HockeyScoreboard
             Vars.Game.TimeLeft = TimeSpan.FromMinutes(7);
             Vars.Game.InputMinute = 7;
             Vars.Game.InputSecond = 0;
-            Vars.Game.Period = EnumClass.PeriodState.First;
-            Vars.Game.GameState = EnumClass.GameState.Regular;
+            Vars.Game.Period = CustomTypes.PeriodState.First;
+            Vars.Game.GameState = CustomTypes.GameState.Regular;
             Vars.Game.TeamManagerTeamSavingClassInstance = new TeamSavingClass
             {
                 PlayerList = new List<TeamSavingClass.PlayerTeamListType>(),
@@ -107,8 +116,6 @@ namespace HockeyScoreboard
             };
             Vars.Team1.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
             Vars.Team2.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
-            ButtonPeriodMinus.IsEnabled = false;
-
         }
         private OpenFileDialog DefineImageFileDialog()
         {
@@ -185,7 +192,7 @@ namespace HockeyScoreboard
         {
             switch (Vars.Game.GameState)
             {
-                case EnumClass.GameState.Regular:
+                case CustomTypes.GameState.Regular:
                     Vars.Game.StopwatchPeriod.Reset();
                     Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
 
@@ -194,46 +201,46 @@ namespace HockeyScoreboard
                     Vars.Team2.Player1.PenaltyTimeSet = Vars.Team2.Player1.PenaltyTimeLeft; Vars.Team2.Player1.PenaltyOffset = TimeSpan.Zero;
                     Vars.Team2.Player2.PenaltyTimeSet = Vars.Team2.Player2.PenaltyTimeLeft; Vars.Team2.Player2.PenaltyOffset = TimeSpan.Zero;
                     break;
-                case EnumClass.GameState.Break:
+                case CustomTypes.GameState.Break:
                     Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
                     break;
-                case EnumClass.GameState.Timeout:
+                case CustomTypes.GameState.Timeout:
                     Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
                     break;
             }
             UIUpdateGameTime();
             ButtonPauseTime.Content = "Start Time";
         } 
-        private void ChangePeriod(EnumClass.PeriodState PeriodVariable)
+        private void ChangePeriod(CustomTypes.PeriodState PeriodVariable)
         {
 
             switch (PeriodVariable)
             {
-                case EnumClass.PeriodState.First:
+                case CustomTypes.PeriodState.First:
                     LabelPeriod.Content = "1";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "1";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = false;
                     break;
-                case EnumClass.PeriodState.Second:
+                case CustomTypes.PeriodState.Second:
                     LabelPeriod.Content = "2";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "2";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
-                case EnumClass.PeriodState.Third:
+                case CustomTypes.PeriodState.Third:
                     LabelPeriod.Content = "3";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "3";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
-                case EnumClass.PeriodState.Extension:
+                case CustomTypes.PeriodState.Extension:
                     LabelPeriod.Content = "P";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "P";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
-                case EnumClass.PeriodState.SN:
+                case CustomTypes.PeriodState.SN:
                     LabelPeriod.Content = "Sn";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "Sn";
                     ButtonPeriodPlus.IsEnabled = false;
@@ -319,13 +326,13 @@ namespace HockeyScoreboard
             {
                 Vars.SecondaryWindow.LabelT1P1NumberVariable.Content = Vars.Team1.Player1.Number;
                 Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.Content = Vars.Team1.Player1.PenaltyTimeLeft.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
-                Vars.SecondaryWindow.Team1Indicator1.Background = Brushes.Red;
+                Vars.SecondaryWindow.Team1Indicator1.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorOccupied);
             }
             else
             {
                 Vars.SecondaryWindow.LabelT1P1NumberVariable.Content = "";
                 Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.Content = "";
-                Vars.SecondaryWindow.Team1Indicator1.Background = Brushes.Green;
+                Vars.SecondaryWindow.Team1Indicator1.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree);
             }
 
 
@@ -333,39 +340,39 @@ namespace HockeyScoreboard
             {
                 Vars.SecondaryWindow.LabelT1P2NumberVariable.Content = Vars.Team1.Player2.Number;
                 Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.Content = Vars.Team1.Player2.PenaltyTimeLeft.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
-                Vars.SecondaryWindow.Team1Indicator2.Background = Brushes.Red;
+                Vars.SecondaryWindow.Team1Indicator2.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorOccupied);
             }
             else
             {
                 Vars.SecondaryWindow.LabelT1P2NumberVariable.Content = "";
                 Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.Content = "";
-                Vars.SecondaryWindow.Team1Indicator2.Background = Brushes.Green;
+                Vars.SecondaryWindow.Team1Indicator2.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree); ;
             }
 
             if (Vars.Team2.Player1.PenaltyRunning)
             {
                 Vars.SecondaryWindow.LabelT2P1NumberVariable.Content = Vars.Team2.Player1.Number;
                 Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.Content = Vars.Team2.Player1.PenaltyTimeLeft.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
-                Vars.SecondaryWindow.Team2Indicator1.Background = Brushes.Red;
+                Vars.SecondaryWindow.Team2Indicator1.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorOccupied);
             }
             else
             {
                 Vars.SecondaryWindow.LabelT2P1NumberVariable.Content = "";
                 Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.Content = "";
-                Vars.SecondaryWindow.Team2Indicator1.Background = Brushes.Green;
+                Vars.SecondaryWindow.Team2Indicator1.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree); ;
             }
 
             if (Vars.Team2.Player2.PenaltyRunning)
             {
                 Vars.SecondaryWindow.LabelT2P2NumberVariable.Content = Vars.Team2.Player2.Number;
                 Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.Content = Vars.Team2.Player2.PenaltyTimeLeft.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
-                Vars.SecondaryWindow.Team2Indicator2.Background = Brushes.Red;
+                Vars.SecondaryWindow.Team2Indicator2.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorOccupied);
             }
             else
             {
                 Vars.SecondaryWindow.LabelT2P2NumberVariable.Content = "";
                 Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.Content = "";
-                Vars.SecondaryWindow.Team2Indicator2.Background = Brushes.Green;
+                Vars.SecondaryWindow.Team2Indicator2.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree); ;
             }
         }
         private void UIReloadControlsValues(TeamClass Team)
@@ -431,12 +438,12 @@ namespace HockeyScoreboard
             if (Vars.Team1.TimeoutRunning)
             {
                 LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush1;
-                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush1;
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = ReturnSBrushFromColor(Settings.Default.ColorTextValues);
             }
             else
             {
                 LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush2;
-                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush2;
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = ReturnSBrushFromColor(Settings.Default.ColorBackgroundMain);
                 if (Vars.Team1.HasTimeout)
                 {
                     LabelTimeoutAvailableIndicatorTeam1.Visibility = Visibility.Hidden;
@@ -451,12 +458,12 @@ namespace HockeyScoreboard
             if (Vars.Team2.TimeoutRunning)
             {
                 LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush1;
-                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush1;
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = ReturnSBrushFromColor(Settings.Default.ColorTextValues);
             }
             else
             {
                 LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush2;
-                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush2;
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = ReturnSBrushFromColor(Settings.Default.ColorBackgroundMain);
                 if (Vars.Team2.HasTimeout)
                 {
                     LabelTimeoutAvailableIndicatorTeam2.Visibility = Visibility.Hidden;
@@ -470,21 +477,21 @@ namespace HockeyScoreboard
             }
             switch (Vars.Game.GameState)
             {
-                case EnumClass.GameState.Regular:
+                case CustomTypes.GameState.Regular:
                     LabelTimeText.Content = "Game"; Vars.SecondaryWindow.LabelTimeText.Content = "Game";
                     ButtonBreakMode.Content = "Enter Break Mode";
                     ButtonTimeout.Content = "Timeout";
                     ButtonTimeout.IsEnabled = true;
                     ButtonBreakMode.IsEnabled = true;
                     break;
-                case EnumClass.GameState.Break:
+                case CustomTypes.GameState.Break:
                     LabelTimeText.Content = "Break"; Vars.SecondaryWindow.LabelTimeText.Content = "Break";
                     ButtonBreakMode.Content = "Leave Break Mode";
                     ButtonTimeout.Content = "Timeout";
                     ButtonBreakMode.IsEnabled = true;
                     ButtonTimeout.IsEnabled = false;
                     break;
-                case EnumClass.GameState.Timeout:
+                case CustomTypes.GameState.Timeout:
                     LabelTimeText.Content = "Timeout"; Vars.SecondaryWindow.LabelTimeText.Content = "Timeout";
                     ButtonBreakMode.Content = "Enter Break Mode";
                     ButtonTimeout.Content = "Cancel Timeout";
@@ -752,7 +759,7 @@ namespace HockeyScoreboard
             { 
                 Vars.Game.TeamManagerTeamSavingClassInstance.PlayerList.RemoveAt(EditorListBox.SelectedIndex); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance);
             }
-            catch
+            catch 
             {
                 MessageBox.Show("No player selected. Unable to remove.");
                 return; 
@@ -853,7 +860,189 @@ namespace HockeyScoreboard
         #endregion
 
         #region PreferencesMethods
-        
+        private System.Drawing.Color ChangeColorSetting(System.Drawing.Color origColor)
+        {
+            System.Windows.Forms.ColorDialog cDialog = new System.Windows.Forms.ColorDialog();
+            System.Windows.Forms.DialogResult result = cDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                return cDialog.Color;
+            }
+            else return origColor;
+        }
+        private void UIUpdateColorButton(System.Drawing.Color colorInput, Border borderChanged)
+        {
+            SolidColorBrush sBrush = new SolidColorBrush(Color.FromRgb(colorInput.R, colorInput.G, colorInput.B));
+            borderChanged.Background = sBrush;
+        }
+        private void UIUpdateAllColorButtons()
+        {
+            UIUpdateColorButton(Settings.Default.ColorBackgroundMain, BorderColorBGMain);
+            UIUpdateColorButton(Settings.Default.ColorBackgroundSecondary, BorderColorBGSecondary);
+            UIUpdateColorButton(Settings.Default.ColorBorderBrush, BorderColorBorder);
+            UIUpdateColorButton(Settings.Default.ColorPenaltyIndicatorFree, BorderColorIndicatorFree);
+            UIUpdateColorButton(Settings.Default.ColorPenaltyIndicatorOccupied, BorderColorIndicatorOccupied);
+            UIUpdateColorButton(Settings.Default.ColorTextMain, BorderColorNormalText);
+            UIUpdateColorButton(Settings.Default.ColorTextPeriod, BorderColorPeriodText);
+            UIUpdateColorButton(Settings.Default.ColorTextTime, BorderColorTextTime);
+            UIUpdateColorButton(Settings.Default.ColorTextValues, BorderColorTextValues);
+        }
+        private SolidColorBrush ReturnSBrushFromColor(System.Drawing.Color colorInput)
+        {
+            SolidColorBrush outputBrush = new SolidColorBrush(Color.FromRgb(colorInput.R, colorInput.G, colorInput.B));
+            return outputBrush;
+        }
+        private void UIUpdateSecondaryWindowColorScheme()
+        {
+            #region Color: Normal text
+            SolidColorBrush normalTextBrush = ReturnSBrushFromColor(Settings.Default.ColorTextMain);
+            Vars.SecondaryWindow.LabelPeriodText.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.LabelTimeText.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesLeft.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesRight.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesTimeLeft.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesTimeRight.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockLabelScoreLeft.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockLabelScoreRight.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockLabelShotsLeft.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockLabelShotsRight.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockTeam1Name.Foreground = normalTextBrush;
+            Vars.SecondaryWindow.TextBlockTeam2Name.Foreground = normalTextBrush;
+            #endregion
+            #region Color: Values text
+            SolidColorBrush valuesTextBrush = ReturnSBrushFromColor(Settings.Default.ColorTextValues);
+            Vars.SecondaryWindow.LabelScoreTeam1Variable.Foreground = valuesTextBrush;
+            Vars.SecondaryWindow.LabelScoreTeam2Variable.Foreground = valuesTextBrush;
+            Vars.SecondaryWindow.LabelShotsTeam1Variable.Foreground = valuesTextBrush;
+            Vars.SecondaryWindow.LabelShotsTeam2Variable.Foreground = valuesTextBrush;
+            Vars.SecondaryWindow.LabelT1P1NumberVariable.Foreground = valuesTextBrush;
+            Vars.SecondaryWindow.LabelT1P2NumberVariable.Foreground = valuesTextBrush;
+            Vars.SecondaryWindow.LabelT2P2NumberVariable.Foreground = valuesTextBrush;
+            Vars.SecondaryWindow.LabelT2P1NumberVariable.Foreground = valuesTextBrush;
+            #endregion
+            #region Color: Period text
+            SolidColorBrush periodTextBrush = ReturnSBrushFromColor(Settings.Default.ColorTextPeriod);
+            Vars.SecondaryWindow.LabelPeriodVariable.Foreground = periodTextBrush;
+            #endregion
+            #region Color: Time text
+            SolidColorBrush timeTextBrush = ReturnSBrushFromColor(Settings.Default.ColorTextTime);
+            Vars.SecondaryWindow.LabelTimeVariable.Foreground = timeTextBrush;
+            Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.Foreground = timeTextBrush;
+            Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.Foreground = timeTextBrush;
+            Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.Foreground = timeTextBrush;
+            Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.Foreground = timeTextBrush;
+            Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam1.Foreground = timeTextBrush;
+            Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam2.Foreground = timeTextBrush;
+            #endregion
+
+            #region Color: Main BG and Timeout indicators
+            SolidColorBrush mainBGBrush = ReturnSBrushFromColor(Settings.Default.ColorBackgroundMain);
+            Vars.SecondaryWindow.GridSecondaryWindow.Background = mainBGBrush;
+            if (Vars.Team1.TimeoutRunning)
+            {
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = valuesTextBrush;
+            }
+            else
+            {
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = mainBGBrush;
+
+            }
+            if (Vars.Team2.TimeoutRunning)
+            {
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = valuesTextBrush;
+            }
+            else
+            {
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = mainBGBrush;
+
+            }
+            #endregion
+            #region Color: Secondary BG
+            SolidColorBrush secondaryBGBrush = ReturnSBrushFromColor(Settings.Default.ColorBackgroundSecondary);
+            Vars.SecondaryWindow.LabelTimeVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelPeriodVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.BorderImageTeam1Holder.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.BorderImageTeam2Holder.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelScoreTeam1Variable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelScoreTeam2Variable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelShotsTeam1Variable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelShotsTeam2Variable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelT1P1NumberVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelT1P2NumberVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelT2P2NumberVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelT2P1NumberVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.Background = secondaryBGBrush;
+            Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.Background = secondaryBGBrush;
+            #endregion
+            #region Color: Border
+            SolidColorBrush borderBrush = ReturnSBrushFromColor(Settings.Default.ColorBorderBrush);
+            Vars.SecondaryWindow.LabelTimeVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelTimeVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelPeriodVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.BorderImageTeam1Holder.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.BorderImageTeam2Holder.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelScoreTeam1Variable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelScoreTeam2Variable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelShotsTeam1Variable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelShotsTeam2Variable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelT1P1NumberVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelT1P2NumberVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelT2P2NumberVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelT2P1NumberVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.Team1Indicator1.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.Team1Indicator2.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.Team2Indicator1.BorderBrush = borderBrush;
+            Vars.SecondaryWindow.Team2Indicator2.BorderBrush = borderBrush;
+            #endregion
+            #region Color: Indicators
+            SolidColorBrush indicatorBrushFree = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree);
+            SolidColorBrush indicatorBrushOccupied = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorOccupied);
+
+
+            if (Vars.Team1.Player1.PenaltyRunning)
+            {
+                Vars.SecondaryWindow.Team1Indicator1.Background = indicatorBrushOccupied;
+            }
+            else
+            {
+                Vars.SecondaryWindow.Team1Indicator1.Background = indicatorBrushFree;
+
+            }
+            if (Vars.Team1.Player2.PenaltyRunning)
+            {
+                Vars.SecondaryWindow.Team1Indicator2.Background = indicatorBrushOccupied;
+            }
+            else
+            {
+                Vars.SecondaryWindow.Team1Indicator2.Background = indicatorBrushFree;
+
+            }
+            if (Vars.Team2.Player1.PenaltyRunning)
+            {
+                Vars.SecondaryWindow.Team2Indicator1.Background = indicatorBrushOccupied;
+            }
+            else
+            {
+                Vars.SecondaryWindow.Team2Indicator1.Background = indicatorBrushFree;
+
+            }
+            if (Vars.Team2.Player2.PenaltyRunning)
+            {
+                Vars.SecondaryWindow.Team2Indicator2.Background = indicatorBrushOccupied;
+            }
+            else
+            {
+                Vars.SecondaryWindow.Team2Indicator2.Background = indicatorBrushFree;
+
+            }
+            #endregion
+        }
         #endregion
 
         #endregion
