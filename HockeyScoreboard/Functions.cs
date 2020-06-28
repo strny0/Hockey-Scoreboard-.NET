@@ -1,20 +1,19 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Threading;
+using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Color = System.Windows.Media.Color;
+using System.Windows.Threading;
+using System.Xml;
+using System.Xml.Serialization;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
+using Color = System.Windows.Media.Color;
 using Image = System.Windows.Controls.Image;
-using System.Globalization;
-using System.Xml.Serialization;
-using System.IO;
-using HockeyScoreboard.Properties;
 
 namespace HockeyScoreboard
 {
@@ -38,7 +37,7 @@ namespace HockeyScoreboard
             MainTimer.Start();
             MainTimer.Tick += MainTimer_Tick;
         }
-        private void DefineDefaultVars() // DEFAULT VALUES
+        private void DefineDefaultProgramState()
         {
             Vars.Team1.Index = 1;
             Vars.Team2.Index = 2;
@@ -50,19 +49,43 @@ namespace HockeyScoreboard
             Vars.Team2.Shots = 0;
             Vars.Team1.Player1 = new CustomTypes.PlayerType
             {
-                PenaltyRunning = false
+                Number = "",
+                PeriodIs2plus2 = false,
+                PenaltyRunning = false,
+                PenaltyOffset = TimeSpan.Zero,
+                PenaltyTimeLeft = TimeSpan.Zero,
+                PenaltyTimeSet = TimeSpan.Zero,
+                ScoreAtPeriodStart = 0,
             };
             Vars.Team1.Player2 = new CustomTypes.PlayerType
             {
-                PenaltyRunning = false
+                Number = "",
+                PeriodIs2plus2 = false,
+                PenaltyRunning = false,
+                PenaltyOffset = TimeSpan.Zero,
+                PenaltyTimeLeft = TimeSpan.Zero,
+                PenaltyTimeSet = TimeSpan.Zero,
+                ScoreAtPeriodStart = 0,
             };
             Vars.Team2.Player1 = new CustomTypes.PlayerType
             {
-                PenaltyRunning = false
+                Number = "",
+                PeriodIs2plus2 = false,
+                PenaltyRunning = false,
+                PenaltyOffset = TimeSpan.Zero,
+                PenaltyTimeLeft = TimeSpan.Zero,
+                PenaltyTimeSet = TimeSpan.Zero,
+                ScoreAtPeriodStart = 0,
             };
             Vars.Team2.Player2 = new CustomTypes.PlayerType
             {
-                PenaltyRunning = false
+                Number = "",
+                PeriodIs2plus2 = false,
+                PenaltyRunning = false,
+                PenaltyOffset = TimeSpan.Zero,
+                PenaltyTimeLeft = TimeSpan.Zero,
+                PenaltyTimeSet = TimeSpan.Zero,
+                ScoreAtPeriodStart = 0,
             };
             Vars.Team1.HasTimeout = true;
             Vars.Team2.HasTimeout = true;
@@ -72,7 +95,6 @@ namespace HockeyScoreboard
             Vars.Game.InputSecond = 0;
             Vars.Game.Period = CustomTypes.PeriodState.First;
             Vars.Game.GameState = CustomTypes.GameState.Regular;
-            ButtonPeriodMinus.IsEnabled = false;
             Vars.Game.TempEditorTeam = new TeamSavingClass
             {
                 PlayerList = new List<TeamSavingClass.PlayerTeamListType>(),
@@ -81,12 +103,14 @@ namespace HockeyScoreboard
             };
             Vars.Team1.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
             Vars.Team2.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
+            ButtonPeriodMinus.IsEnabled = false;
 
         }
         private void DefineDefaultPrefs() // DEFAULT PREFERENCES
         {
-            Vars.Prefs.DefaultBreakTime = TimeSpan.FromMinutes(1);
-            Vars.Prefs.DefaultTimeoutTime = new TimeSpan(0, 1, 30);
+            Vars.Prefs.DefaultTeamDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\Hockey Scoreboard\\Teams\\";
+            Vars.Prefs.DefaultBreakTime = new TimeSpan(0, 1, 0);
+            Vars.Prefs.DefaultTimeoutTime = new TimeSpan(0, 0, 30);
         }
         private OpenFileDialog DefineImageFileDialog()
         {
@@ -137,7 +161,7 @@ namespace HockeyScoreboard
             };
             return LoadXmlDialog;
         }
-        private string GetImageSource()
+        private string ReturnImageSourcePath()
         {
             OpenFileDialog ImageDialog = DefineImageFileDialog();
             Nullable<bool> Result = ImageDialog.ShowDialog();
@@ -156,22 +180,82 @@ namespace HockeyScoreboard
             };
             ImageToChange.Source = bitmap;
         }
+        private void SetTime(TimeSpan InputTime) // SET TIME
+        {
+            switch (Vars.Game.GameState)
+            {
+                case CustomTypes.GameState.Regular:
+                    Vars.Game.StopwatchPeriod.Reset();
+                    Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
+
+                    Vars.Team1.Player1.PenaltyTimeSet = Vars.Team1.Player1.PenaltyTimeLeft; Vars.Team1.Player1.PenaltyOffset = TimeSpan.Zero;
+                    Vars.Team1.Player2.PenaltyTimeSet = Vars.Team1.Player2.PenaltyTimeLeft; Vars.Team1.Player2.PenaltyOffset = TimeSpan.Zero;
+                    Vars.Team2.Player1.PenaltyTimeSet = Vars.Team2.Player1.PenaltyTimeLeft; Vars.Team2.Player1.PenaltyOffset = TimeSpan.Zero;
+                    Vars.Team2.Player2.PenaltyTimeSet = Vars.Team2.Player2.PenaltyTimeLeft; Vars.Team2.Player2.PenaltyOffset = TimeSpan.Zero;
+                    break;
+                case CustomTypes.GameState.Break:
+                    Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
+                    break;
+                case CustomTypes.GameState.Timeout:
+                    Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
+                    break;
+            }
+            UIUpdateGameTime();
+            ButtonPauseTime.Content = "Start Time";
+        } 
+        private void ChangePeriod(CustomTypes.PeriodState PeriodVariable)
+        {
+
+            switch (PeriodVariable)
+            {
+                case CustomTypes.PeriodState.First:
+                    LabelPeriod.Content = "1";
+                    Vars.SecondaryWindow.LabelPeriodVariable.Content = "1";
+                    ButtonPeriodPlus.IsEnabled = true;
+                    ButtonPeriodMinus.IsEnabled = false;
+                    break;
+                case CustomTypes.PeriodState.Second:
+                    LabelPeriod.Content = "2";
+                    Vars.SecondaryWindow.LabelPeriodVariable.Content = "2";
+                    ButtonPeriodPlus.IsEnabled = true;
+                    ButtonPeriodMinus.IsEnabled = true;
+                    break;
+                case CustomTypes.PeriodState.Third:
+                    LabelPeriod.Content = "3";
+                    Vars.SecondaryWindow.LabelPeriodVariable.Content = "3";
+                    ButtonPeriodPlus.IsEnabled = true;
+                    ButtonPeriodMinus.IsEnabled = true;
+                    break;
+                case CustomTypes.PeriodState.Extension:
+                    LabelPeriod.Content = "P";
+                    Vars.SecondaryWindow.LabelPeriodVariable.Content = "P";
+                    ButtonPeriodPlus.IsEnabled = true;
+                    ButtonPeriodMinus.IsEnabled = true;
+                    break;
+                case CustomTypes.PeriodState.SN:
+                    LabelPeriod.Content = "Sn";
+                    Vars.SecondaryWindow.LabelPeriodVariable.Content = "Sn";
+                    ButtonPeriodPlus.IsEnabled = false;
+                    ButtonPeriodMinus.IsEnabled = true;
+                    break;
+            }
+        }
         // UI UPDATES
-        private void UpdateTimeLabel()
+        private void UIUpdateGameTime()
         {
             if (Vars.Game.TimeLeft < TimeSpan.FromMinutes(1))
             {
                 LabelTime.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimeFormatMilisecond, CultureInfo.InvariantCulture); // update time Main window
-                Vars.Window.LabelTimeVariable.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimeFormatMilisecond, CultureInfo.InvariantCulture); // update time Secondary window
+                Vars.SecondaryWindow.LabelTimeVariable.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimeFormatMilisecond, CultureInfo.InvariantCulture); // update time Secondary window
             }
             else
             {
                 LabelTime.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture); // update time Main window
-                Vars.Window.LabelTimeVariable.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture); // update time Secondary window
+                Vars.SecondaryWindow.LabelTimeVariable.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture); // update time Secondary window
             }
             ProgressBarGameTime.Maximum = Vars.Game.LastSetTime.TotalSeconds; ProgressBarGameTime.Value = Vars.Game.TimeLeft.TotalSeconds;
         }
-        private void UpdatePenaltyUIMain()
+        private void UIUpdatePenaltyMainWindow()
         {
             if (Vars.Team1.Player1.PenaltyRunning)
             {
@@ -226,77 +310,104 @@ namespace HockeyScoreboard
                 Team2Indicator2.Background = Brushes.Green;
             }
         }
-        private void UpdatePenaltyUISecondary()
+        private void UIUpdatePenaltySecondaryWindow()
         {
             if (Vars.Team1.Player1.PenaltyRunning)
             {
-                Vars.Window.LabelT1P1NumberVariable.Content = Vars.Team1.Player1.Number;
-                Vars.Window.LabelT1P1TimeLeftVariable.Content = Vars.Team1.Player1.PenaltyTimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture);
-                Vars.Window.Team1Indicator1.Background = Brushes.Red;
+                Vars.SecondaryWindow.LabelT1P1NumberVariable.Content = Vars.Team1.Player1.Number;
+                Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.Content = Vars.Team1.Player1.PenaltyTimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture);
+                Vars.SecondaryWindow.Team1Indicator1.Background = Brushes.Red;
             }
             else
             {
-                Vars.Window.LabelT1P1NumberVariable.Content = "";
-                Vars.Window.LabelT1P1TimeLeftVariable.Content = "";
-                Vars.Window.Team1Indicator1.Background = Brushes.Green;
+                Vars.SecondaryWindow.LabelT1P1NumberVariable.Content = "";
+                Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.Content = "";
+                Vars.SecondaryWindow.Team1Indicator1.Background = Brushes.Green;
             }
 
 
             if (Vars.Team1.Player2.PenaltyRunning)
             {
-                Vars.Window.LabelT1P2NumberVariable.Content = Vars.Team1.Player2.Number;
-                Vars.Window.LabelT1P2TimeLeftVariable.Content = Vars.Team1.Player2.PenaltyTimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture);
-                Vars.Window.Team1Indicator2.Background = Brushes.Red;
+                Vars.SecondaryWindow.LabelT1P2NumberVariable.Content = Vars.Team1.Player2.Number;
+                Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.Content = Vars.Team1.Player2.PenaltyTimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture);
+                Vars.SecondaryWindow.Team1Indicator2.Background = Brushes.Red;
             }
             else
             {
-                Vars.Window.LabelT1P2NumberVariable.Content = "";
-                Vars.Window.LabelT1P2TimeLeftVariable.Content = "";
-                Vars.Window.Team1Indicator2.Background = Brushes.Green;
+                Vars.SecondaryWindow.LabelT1P2NumberVariable.Content = "";
+                Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.Content = "";
+                Vars.SecondaryWindow.Team1Indicator2.Background = Brushes.Green;
             }
 
             if (Vars.Team2.Player1.PenaltyRunning)
             {
-                Vars.Window.LabelT2P1NumberVariable.Content = Vars.Team2.Player1.Number;
-                Vars.Window.LabelT2P1TimeLeftVariable.Content = Vars.Team2.Player1.PenaltyTimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture);
-                Vars.Window.Team2Indicator1.Background = Brushes.Red;
+                Vars.SecondaryWindow.LabelT2P1NumberVariable.Content = Vars.Team2.Player1.Number;
+                Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.Content = Vars.Team2.Player1.PenaltyTimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture);
+                Vars.SecondaryWindow.Team2Indicator1.Background = Brushes.Red;
             }
             else
             {
-                Vars.Window.LabelT2P1NumberVariable.Content = "";
-                Vars.Window.LabelT2P1TimeLeftVariable.Content = "";
-                Vars.Window.Team2Indicator1.Background = Brushes.Green;
+                Vars.SecondaryWindow.LabelT2P1NumberVariable.Content = "";
+                Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.Content = "";
+                Vars.SecondaryWindow.Team2Indicator1.Background = Brushes.Green;
             }
 
             if (Vars.Team2.Player2.PenaltyRunning)
             {
-                Vars.Window.LabelT2P2NumberVariable.Content = Vars.Team2.Player2.Number;
-                Vars.Window.LabelT2P2TimeLeftVariable.Content = Vars.Team2.Player2.PenaltyTimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture);
-                Vars.Window.Team2Indicator2.Background = Brushes.Red;
+                Vars.SecondaryWindow.LabelT2P2NumberVariable.Content = Vars.Team2.Player2.Number;
+                Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.Content = Vars.Team2.Player2.PenaltyTimeLeft.ToString(Vars.Game.TimeFormatRegular, CultureInfo.InvariantCulture);
+                Vars.SecondaryWindow.Team2Indicator2.Background = Brushes.Red;
             }
             else
             {
-                Vars.Window.LabelT2P2NumberVariable.Content = "";
-                Vars.Window.LabelT2P2TimeLeftVariable.Content = "";
-                Vars.Window.Team2Indicator2.Background = Brushes.Green;
+                Vars.SecondaryWindow.LabelT2P2NumberVariable.Content = "";
+                Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.Content = "";
+                Vars.SecondaryWindow.Team2Indicator2.Background = Brushes.Green;
             }
         }
-        private void ReloadControlsUI(TeamClass Team)
+        private void UIReloadControlsValues(TeamClass Team)
         {
             if (Team.Index == 1)
             {
-                ChangeImageFromPath(Team.LogoSource, ImageTeam1Logo); ChangeImageFromPath(Team.LogoSource, Vars.Window.ImageTeam1LogoView);
+                ChangeImageFromPath(Team.LogoSource, ImageTeam1Logo); ChangeImageFromPath(Team.LogoSource, Vars.SecondaryWindow.ImageTeam1LogoView);
                 TextBoxTeam1Name.Text = Team.Name; UpDownTeam1Score.Value = Team.Score;  UpDownTeam1Shots.Value = Team.Shots;
             }
             else if (Team.Index == 2)
             {
-                ChangeImageFromPath(Team.LogoSource, ImageTeam2Logo); ChangeImageFromPath(Team.LogoSource, Vars.Window.ImageTeam2LogoView);
+                ChangeImageFromPath(Team.LogoSource, ImageTeam2Logo); ChangeImageFromPath(Team.LogoSource, Vars.SecondaryWindow.ImageTeam2LogoView);
                 TextBoxTeam2Name.Text = Team.Name; UpDownTeam2Score.Value = Team.Score; UpDownTeam2Shots.Value = Team.Shots;
             }
             else return;
 
         }
-        private void UpdateAllUI() // ALL UI
+        private void UIUpdateListbox(ListBox UpdatedListbox, TeamSavingClass LoadClass)
+        {
+            UpdatedListbox.Items.Clear();
+            foreach (TeamSavingClass.PlayerTeamListType ListType in LoadClass.PlayerList)
+            {
+                _ = UpdatedListbox.Items.Add(string.Format(ListboxFormat, ListType.Number, ListType.Name));
+            }
+        }
+        private void UIUpdateComboBoxSelection(ComboBox RefreshedBox)
+        {
+            RefreshedBox.Items.Clear();
+            string searchDirectory = Vars.Prefs.DefaultTeamDirectory;
+            string searchPattern = "*.xml";
+            TeamSavingClass LoadClass = new TeamSavingClass();
+            XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TempEditorTeam.GetType());
+            teamLoadingFilePaths.Clear();
+            
+            foreach (var filePath in Directory.GetFiles(searchDirectory, searchPattern))
+            {
+                teamLoadingFilePaths.Add(filePath);
+                using (StreamReader streamReader = new StreamReader(filePath))
+                {
+                    LoadClass = (TeamSavingClass)xmlSerializer.Deserialize(streamReader);
+                }
+                RefreshedBox.Items.Add(LoadClass.TeamName);
+            }
+        }
+        private void UIUpdateAll() // ALL UI
         {
             if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime)
             {
@@ -306,8 +417,8 @@ namespace HockeyScoreboard
             if (Vars.Game.StopwatchPeriod.IsRunning)
             {
                 ButtonPauseTime.Content = "Pause Time";
-                UpdatePenaltyUIMain();
-                UpdatePenaltyUISecondary();
+                UIUpdatePenaltyMainWindow();
+                UIUpdatePenaltySecondaryWindow();
             }
             if (Vars.Game.StopwatchPeriod.IsRunning == false)
             {
@@ -317,131 +428,152 @@ namespace HockeyScoreboard
             if (Vars.Team1.TimeoutRunning)
             {
                 LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush1;
-                Vars.Window.LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush1;
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush1;
             }
             else
             {
                 LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush2;
-                Vars.Window.LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush2;
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush2;
                 if (Vars.Team1.HasTimeout)
                 {
                     LabelTimeoutAvailableIndicatorTeam1.Visibility = Visibility.Hidden;
-                    Vars.Window.LabelTimeoutAvailableIndicatorTeam1.Visibility = Visibility.Hidden;
+                    Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam1.Visibility = Visibility.Hidden;
                 }
                 else
                 {
                     LabelTimeoutAvailableIndicatorTeam1.Visibility = Visibility.Visible;
-                    Vars.Window.LabelTimeoutAvailableIndicatorTeam1.Visibility = Visibility.Visible;
+                    Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam1.Visibility = Visibility.Visible;
                 }
             }
             if (Vars.Team2.TimeoutRunning)
             {
                 LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush1;
-                Vars.Window.LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush1;
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush1;
             }
             else
             {
                 LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush2;
-                Vars.Window.LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush2;
+                Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush2;
                 if (Vars.Team2.HasTimeout)
                 {
                     LabelTimeoutAvailableIndicatorTeam2.Visibility = Visibility.Hidden;
-                    Vars.Window.LabelTimeoutAvailableIndicatorTeam2.Visibility = Visibility.Hidden;
+                    Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam2.Visibility = Visibility.Hidden;
                 }
                 else
                 {
                     LabelTimeoutAvailableIndicatorTeam2.Visibility = Visibility.Visible;
-                    Vars.Window.LabelTimeoutAvailableIndicatorTeam2.Visibility = Visibility.Visible;
+                    Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam2.Visibility = Visibility.Visible;
                 }
             }
             switch (Vars.Game.GameState)
             {
                 case CustomTypes.GameState.Regular:
-                    LabelTimeText.Content = "Game"; Vars.Window.LabelTimeText.Content = "Game";
+                    LabelTimeText.Content = "Game"; Vars.SecondaryWindow.LabelTimeText.Content = "Game";
                     ButtonBreakMode.Content = "Enter Break Mode";
                     ButtonTimeout.Content = "Timeout";
                     ButtonTimeout.IsEnabled = true;
                     ButtonBreakMode.IsEnabled = true;
                     break;
                 case CustomTypes.GameState.Break:
-                    LabelTimeText.Content = "Break"; Vars.Window.LabelTimeText.Content = "Break";
+                    LabelTimeText.Content = "Break"; Vars.SecondaryWindow.LabelTimeText.Content = "Break";
                     ButtonBreakMode.Content = "Leave Break Mode";
                     ButtonTimeout.Content = "Timeout";
                     ButtonBreakMode.IsEnabled = true;
                     ButtonTimeout.IsEnabled = false;
                     break;
                 case CustomTypes.GameState.Timeout:
-                    LabelTimeText.Content = "Timeout"; Vars.Window.LabelTimeText.Content = "Timeout";
+                    LabelTimeText.Content = "Timeout"; Vars.SecondaryWindow.LabelTimeText.Content = "Timeout";
                     ButtonBreakMode.Content = "Enter Break Mode";
                     ButtonTimeout.Content = "Cancel Timeout";
                     ButtonBreakMode.IsEnabled = false;
                     ButtonTimeout.IsEnabled = true;
                     break;
             }
-            UpdateTimeLabel();
+            UIUpdateGameTime();
         }
-        private void SetTime(TimeSpan InputTime)
-        {
-            switch (Vars.Game.GameState)
-            {
-                case CustomTypes.GameState.Regular:
-                    Vars.Game.StopwatchPeriod.Reset();
-                    Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
 
-                    Vars.Team1.Player1.PenaltyTimeSet = Vars.Team1.Player1.PenaltyTimeLeft; Vars.Team1.Player1.PenaltyOffset = TimeSpan.Zero;
-                    Vars.Team1.Player2.PenaltyTimeSet = Vars.Team1.Player2.PenaltyTimeLeft; Vars.Team1.Player2.PenaltyOffset = TimeSpan.Zero;
-                    Vars.Team2.Player1.PenaltyTimeSet = Vars.Team2.Player1.PenaltyTimeLeft; Vars.Team2.Player1.PenaltyOffset = TimeSpan.Zero;
-                    Vars.Team2.Player2.PenaltyTimeSet = Vars.Team2.Player2.PenaltyTimeLeft; Vars.Team2.Player2.PenaltyOffset = TimeSpan.Zero;
-                    break;
-                case CustomTypes.GameState.Break:
-                    Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
-                    break;
-                case CustomTypes.GameState.Timeout:
-                    Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
-                    break;
-            }
-            UpdateTimeLabel();
-            ButtonPauseTime.Content = "Start Time";
-        } // SET TIME
-        private void ChangePeriod(CustomTypes.PeriodState PeriodVariable)
-        {
-
-            switch (PeriodVariable)
-            {
-                case CustomTypes.PeriodState.First:
-                    LabelPeriod.Content = "1";
-                    Vars.Window.LabelPeriodVariable.Content = "1";
-                    ButtonPeriodPlus.IsEnabled = true;
-                    ButtonPeriodMinus.IsEnabled = false;
-                    break;
-                case CustomTypes.PeriodState.Second:
-                    LabelPeriod.Content = "2";
-                    Vars.Window.LabelPeriodVariable.Content = "2";
-                    ButtonPeriodPlus.IsEnabled = true;
-                    ButtonPeriodMinus.IsEnabled = true;
-                    break;
-                case CustomTypes.PeriodState.Third:
-                    LabelPeriod.Content = "3";
-                    Vars.Window.LabelPeriodVariable.Content = "3";
-                    ButtonPeriodPlus.IsEnabled = true;
-                    ButtonPeriodMinus.IsEnabled = true;
-                    break;
-                case CustomTypes.PeriodState.Extension:
-                    LabelPeriod.Content = "P";
-                    Vars.Window.LabelPeriodVariable.Content = "P";
-                    ButtonPeriodPlus.IsEnabled = true;
-                    ButtonPeriodMinus.IsEnabled = true;
-                    break;
-                case CustomTypes.PeriodState.SN:
-                    LabelPeriod.Content = "Sn";
-                    Vars.Window.LabelPeriodVariable.Content = "Sn";
-                    ButtonPeriodPlus.IsEnabled = false;
-                    ButtonPeriodMinus.IsEnabled = true;
-                    break;
-            }
-        }
         // PENALTY MANAGEMENT
-        private void MatchTimeSpanOffsets(TeamClass Team, bool Player1)
+        private string PenaltySelectPlayer(TeamClass Team, ListBox Listbox)
+        {
+
+            if (Team.SelectedTeamList.Count != 0 && Listbox.SelectedItems.Count != 0)
+            {
+                int SelectedIndex = Listbox.SelectedIndex;
+                Listbox.SelectedIndex = -1;
+                return Team.SelectedTeamList[SelectedIndex].Number;
+            }
+            else
+            {
+                switch (Team.Index)
+                {
+                    case 1: return (UpDownPenaltyTeam1Player.Value).ToString(CultureInfo.CurrentCulture);
+                    case 2: return (UpDownPenaltyTeam2Player.Value).ToString(CultureInfo.CurrentCulture);
+                    default: return String.Empty;
+                };
+            }
+        }
+        private void PenaltySet(TeamClass Team, TeamClass OtherTeam, bool Player1, TimeSpan TimeSet, string PlayerNumber, bool Is2plus2)
+        {
+            switch (Player1)
+            {
+                case true:
+                    Team.Player1.Number = PlayerNumber; Team.Player1.PeriodIs2plus2 = Is2plus2;
+                    Team.Player1.PenaltyTimeSet = TimeSet; Team.Player1.PenaltyTimeLeft = TimeSet;
+                    Team.Player1.PenaltyOffset = Vars.Game.StopwatchPeriod.Elapsed; Team.Player1.PenaltyRunning = true;
+                    Team.Player1.ScoreAtPeriodStart = OtherTeam.Score;
+                    break;
+                case false:
+                    Team.Player2.Number = PlayerNumber; Team.Player2.PeriodIs2plus2 = Is2plus2;
+                    Team.Player2.PenaltyTimeSet = TimeSet; Team.Player2.PenaltyTimeLeft = TimeSet;
+                    Team.Player2.PenaltyOffset = Vars.Game.StopwatchPeriod.Elapsed; Team.Player2.PenaltyRunning = true;
+                    Team.Player2.ScoreAtPeriodStart = OtherTeam.Score;
+                    break;
+            }
+
+            UIUpdatePenaltyMainWindow(); UIUpdatePenaltySecondaryWindow();
+        }
+        private void PenaltyAssignToRightPlayer(TeamClass Team, TeamClass OtherTeam, ListBox Listbox, TimeSpan TimeSet, bool Is2plus2)
+        {
+            if (Team.Player1.PenaltyRunning == false && Team.Player2.PenaltyRunning == false)
+            {
+                PenaltySet(Team, OtherTeam, true, TimeSet, PenaltySelectPlayer(Team, Listbox), Is2plus2);
+                PenaltyMatchMilisecondOffset(Team, true);
+                //MessageBox.Show(String.Format("Number: {0}\nTimeSet: {1}\nTimeLeft: {2}\nStopwatch: {3}\n2+2: {4}", Team.Player1.Number,Team.Player1.PenaltyTimeSet,Team.Player1.PenaltyTimeLeft,Team.Player1.PenaltyStopwatch.IsRunning,Team.Player1.PeriodIs2plus2), "Debug", MessageBoxButton.OK);
+            }
+            else if (Team.Player1.PenaltyRunning == true && Team.Player2.PenaltyRunning == false)
+            {
+                PenaltySet(Team, OtherTeam, false, TimeSet, PenaltySelectPlayer(Team, Listbox), Is2plus2);
+                PenaltyMatchMilisecondOffset(Team, false);
+            }
+            else if (Team.Player1.PenaltyRunning == true && Team.Player2.PenaltyRunning == true)
+            {
+                _ = MessageBox.Show("All penalty slots occupied, cancel running penalties to free up space.", Caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            else if (Team.Player1.PenaltyRunning == false && Team.Player2.PenaltyRunning == false)
+            {
+                PenaltySet(Team, OtherTeam, true, TimeSet, PenaltySelectPlayer(Team, Listbox), Is2plus2);
+                PenaltyMatchMilisecondOffset(Team, true);
+            }
+        }
+        private void PenaltyCancel(TeamClass Team, bool Player1)
+        {
+            switch (Player1)
+            {
+                case true:
+                    Team.Player1.PenaltyOffset = TimeSpan.Zero; Team.Player1.PenaltyRunning = false;
+                    Team.Player1.PenaltyTimeLeft = TimeSpan.Zero; Team.Player1.PenaltyTimeSet = TimeSpan.Zero;
+                    Team.Player1.Number = String.Empty; Team.Player1.PeriodIs2plus2 = false;
+                    break;
+                case false:
+                    Team.Player2.PenaltyOffset = TimeSpan.Zero; Team.Player2.PenaltyRunning = false;
+                    Team.Player2.PenaltyTimeLeft = TimeSpan.Zero; Team.Player2.PenaltyTimeSet = TimeSpan.Zero;
+                    Team.Player2.Number = String.Empty; Team.Player2.PeriodIs2plus2 = false;
+                    PenaltyMoveDownASlot(Team);
+                    break;
+            }
+            UIUpdatePenaltyMainWindow(); UIUpdatePenaltySecondaryWindow();
+        }
+        private void PenaltyMatchMilisecondOffset(TeamClass Team, bool Player1)
         {
             if (Team.Player1.PenaltyOffset.Milliseconds != Vars.Game.StopwatchPeriod.Elapsed.Milliseconds && Player1 == true)
             {
@@ -452,7 +584,7 @@ namespace HockeyScoreboard
                 Team.Player2.PenaltyOffset = TimeSpan.FromHours(Team.Player2.PenaltyOffset.Hours) + TimeSpan.FromMinutes(Team.Player2.PenaltyOffset.Minutes) + TimeSpan.FromSeconds(Team.Player2.PenaltyOffset.Seconds) + TimeSpan.FromMilliseconds(Vars.Game.StopwatchPeriod.Elapsed.Milliseconds);
             }
         }
-        private void TickTimeDownPenalty(TeamClass Team, TeamClass OtherTeam, bool Player1)
+        private void PenaltyTimeProgression(TeamClass Team, TeamClass OtherTeam, bool Player1)
         {
             switch (Player1)
             {
@@ -461,7 +593,7 @@ namespace HockeyScoreboard
                     {
                         if (Team.Player1.PeriodIs2plus2 == false)
                         {
-                            MatchTimeSpanOffsets(Team, Player1);
+                            PenaltyMatchMilisecondOffset(Team, Player1);
                             Team.Player1.PenaltyTimeLeft = Team.Player1.PenaltyTimeSet - (Vars.Game.StopwatchPeriod.Elapsed - Team.Player1.PenaltyOffset);
                         }
                         else
@@ -480,7 +612,7 @@ namespace HockeyScoreboard
                             }
                             else
                             {
-                                MatchTimeSpanOffsets(Team, Player1);
+                                PenaltyMatchMilisecondOffset(Team, Player1);
                                 Team.Player1.PenaltyTimeLeft = Team.Player1.PenaltyTimeSet - (Vars.Game.StopwatchPeriod.Elapsed - Team.Player1.PenaltyOffset);
                             }
                         }
@@ -491,7 +623,7 @@ namespace HockeyScoreboard
                     {
                         if (Team.Player2.PeriodIs2plus2 == false)
                         {
-                            MatchTimeSpanOffsets(Team, Player1);
+                            PenaltyMatchMilisecondOffset(Team, Player1);
                             Team.Player2.PenaltyTimeLeft = Team.Player2.PenaltyTimeSet - (Vars.Game.StopwatchPeriod.Elapsed - Team.Player2.PenaltyOffset);
                         }
                         else
@@ -510,7 +642,7 @@ namespace HockeyScoreboard
                             }
                             else
                             {
-                                MatchTimeSpanOffsets(Team, Player1);
+                                PenaltyMatchMilisecondOffset(Team, Player1);
                                 Team.Player2.PenaltyTimeLeft = Team.Player2.PenaltyTimeSet - (Vars.Game.StopwatchPeriod.Elapsed - Team.Player2.PenaltyOffset);
                             }
                         }
@@ -518,24 +650,24 @@ namespace HockeyScoreboard
                     break;
             }
         }
-        private void StopPenaltyIfRanOut(TeamClass Team, bool Player1)
+        private void PenaltyStopIfRanOutOfTime(TeamClass Team, bool Player1)
         {
             switch (Player1)
             {
                 case true:
                     if ((Vars.Game.StopwatchPeriod.Elapsed - Team.Player1.PenaltyOffset) > Team.Player1.PenaltyTimeSet)
                     {
-                        CancelPenalty(Team, true);
+                        PenaltyCancel(Team, true);
                     }
                     break;
                 case false:
                     if ((Vars.Game.StopwatchPeriod.Elapsed - Team.Player2.PenaltyOffset) > Team.Player2.PenaltyTimeSet)
-                        CancelPenalty(Team, false);
+                        PenaltyCancel(Team, false);
                     break;
             }
 
         }
-        private void MoveDownASlot(TeamClass Team)
+        private void PenaltyMoveDownASlot(TeamClass Team)
         {
             if (Team.Player2.PenaltyRunning == true && Team.Player1.PenaltyRunning == false)
             {
@@ -555,143 +687,60 @@ namespace HockeyScoreboard
 
             }
         }
-        private void CancelPenalty(TeamClass Team, bool Player1)
-        {
-            switch (Player1)
-            {
-                case true:
-                    Team.Player1.PenaltyOffset = TimeSpan.Zero; Team.Player1.PenaltyRunning = false;
-                    Team.Player1.PenaltyTimeLeft = TimeSpan.Zero; Team.Player1.PenaltyTimeSet = TimeSpan.Zero;
-                    Team.Player1.Number = String.Empty; Team.Player1.PeriodIs2plus2 = false;
-                    break;
-                case false:
-                    Team.Player2.PenaltyOffset = TimeSpan.Zero; Team.Player2.PenaltyRunning = false;
-                    Team.Player2.PenaltyTimeLeft = TimeSpan.Zero; Team.Player2.PenaltyTimeSet = TimeSpan.Zero;
-                    Team.Player2.Number = String.Empty; Team.Player2.PeriodIs2plus2 = false;
-                    MoveDownASlot(Team);
-                    break;
-            }
-            UpdatePenaltyUIMain(); UpdatePenaltyUISecondary();
-        }
-        private string SelectPlayer(TeamClass Team, ListBox Listbox)
-        {
-
-            if (Team.SelectedTeamList.Count != 0 && Listbox.SelectedItems.Count != 0)
-            {
-                int SelectedIndex = Listbox.SelectedIndex;
-                Listbox.SelectedIndex = -1;
-                return Team.SelectedTeamList[SelectedIndex].Number;
-            }
-            else
-            {
-                switch (Team.Index)
-                {
-                    case 1: return (UpDownPenaltyTeam1Player.Value).ToString(CultureInfo.CurrentCulture);
-                    case 2: return (UpDownPenaltyTeam2Player.Value).ToString(CultureInfo.CurrentCulture);
-                    default: return String.Empty;
-                };
-            }
-        }
-        private void SetPenalty(TeamClass Team, TeamClass OtherTeam, bool Player1, TimeSpan TimeSet, string PlayerNumber, bool Is2plus2)
-        {
-            switch (Player1)
-            {
-                case true:
-                    Team.Player1.Number = PlayerNumber; Team.Player1.PeriodIs2plus2 = Is2plus2;
-                    Team.Player1.PenaltyTimeSet = TimeSet; Team.Player1.PenaltyTimeLeft = TimeSet;
-                    Team.Player1.PenaltyOffset = Vars.Game.StopwatchPeriod.Elapsed; Team.Player1.PenaltyRunning = true;
-                    Team.Player1.ScoreAtPeriodStart = OtherTeam.Score;
-                    break;
-                case false:
-                    Team.Player2.Number = PlayerNumber; Team.Player2.PeriodIs2plus2 = Is2plus2;
-                    Team.Player2.PenaltyTimeSet = TimeSet; Team.Player2.PenaltyTimeLeft = TimeSet;
-                    Team.Player2.PenaltyOffset = Vars.Game.StopwatchPeriod.Elapsed; Team.Player2.PenaltyRunning = true;
-                    Team.Player2.ScoreAtPeriodStart = OtherTeam.Score;
-                    break;
-            }
-
-            UpdatePenaltyUIMain(); UpdatePenaltyUISecondary();
-        }
-        private void AssignPenalty(TeamClass Team, TeamClass OtherTeam, ListBox Listbox, TimeSpan TimeSet, bool Is2plus2)
-        {
-            if (Team.Player1.PenaltyRunning == false && Team.Player2.PenaltyRunning == false)
-            {
-                SetPenalty(Team, OtherTeam, true, TimeSet, SelectPlayer(Team, Listbox), Is2plus2);
-                MatchTimeSpanOffsets(Team, true);
-                //MessageBox.Show(String.Format("Number: {0}\nTimeSet: {1}\nTimeLeft: {2}\nStopwatch: {3}\n2+2: {4}", Team.Player1.Number,Team.Player1.PenaltyTimeSet,Team.Player1.PenaltyTimeLeft,Team.Player1.PenaltyStopwatch.IsRunning,Team.Player1.PeriodIs2plus2), "Debug", MessageBoxButton.OK);
-            }
-            else if (Team.Player1.PenaltyRunning == true && Team.Player2.PenaltyRunning == false)
-            {
-                SetPenalty(Team, OtherTeam, false, TimeSet, SelectPlayer(Team, Listbox), Is2plus2);
-                MatchTimeSpanOffsets(Team, false);
-            }
-            else if (Team.Player1.PenaltyRunning == true && Team.Player2.PenaltyRunning == true)
-            {
-                _ = MessageBox.Show("All penalty slots occupied, cancel running penalties to free up space.", Caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-            else if (Team.Player1.PenaltyRunning == false && Team.Player2.PenaltyRunning == false)
-            {
-                SetPenalty(Team, OtherTeam, true, TimeSet, SelectPlayer(Team, Listbox), Is2plus2);
-                MatchTimeSpanOffsets(Team, true);
-            }
-        }
         // TEAM MANAGEMENT
-        private void UpdateListbox(ListBox UpdatedListbox, TeamSavingClass LoadClass)
-        {
-            UpdatedListbox.Items.Clear();
-            foreach (TeamSavingClass.PlayerTeamListType ListType in LoadClass.PlayerList)
-            {
-                _ = UpdatedListbox.Items.Add(string.Format(ListboxFormat, ListType.Number, ListType.Name));
-            }
-        }
-        private void AddPlayerToTeamEditor(string InputName, string InputNumber)
+        private void TeamEditorAddPlayer(string InputName, string InputNumber)
         {
             TeamSavingClass.PlayerTeamListType TempPlayer = new TeamSavingClass.PlayerTeamListType
             {
                 Name = InputName,
                 Number = InputNumber
             };
-            Vars.Game.TempEditorTeam.PlayerList.Add(TempPlayer); UpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam);
+            Vars.Game.TempEditorTeam.PlayerList.Add(TempPlayer); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam);
         }
-        private void RemovePlayerToTeamEditor(ListBox EditorListBox)
+        private void TeamEditorRemovePlayer(ListBox EditorListBox)
         {
-            try { Vars.Game.TempEditorTeam.PlayerList.RemoveAt(EditorListBox.SelectedIndex); UpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam); }
-            catch {
+            try 
+            { 
+                Vars.Game.TempEditorTeam.PlayerList.RemoveAt(EditorListBox.SelectedIndex); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam);
+            }
+            catch 
+            {
                 MessageBox.Show("No player selected. Unable to remove.");
-                return; }
+                return; 
+            }
         }
-        private void ClearPlayerTeamEditor()
+        private void TeamEditorClearPlayerList()
         {
-            Vars.Game.TempEditorTeam.PlayerList.Clear(); UpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam); ;
+            Vars.Game.TempEditorTeam.PlayerList.Clear(); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam); ;
         }
-        private void SaveTeamEditor(string InputTeamName)
+        private void TeamEditorSave(string InputTeamName)
         {
             Vars.Game.TempEditorTeam.TeamName = InputTeamName;
             Directory.CreateDirectory(Vars.Prefs.DefaultTeamDirectory);
             SaveFileDialog SaveTeamDialog = DefineSaveXmlDialog();
             SaveTeamDialog.FileName = InputTeamName;
             Nullable<bool> Result = SaveTeamDialog.ShowDialog();
-            XmlSerializer Xser = new XmlSerializer(Vars.Game.TempEditorTeam.GetType());
+            XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TempEditorTeam.GetType());
             if (Result == true)
             {
                 using (StreamWriter streamWriter = new StreamWriter(SaveTeamDialog.FileName))
                 {
 
-                    Xser.Serialize(streamWriter, Vars.Game.TempEditorTeam);
+                    xmlSerializer.Serialize(streamWriter, Vars.Game.TempEditorTeam);
                 }
             }
         }
-        private void LoadTeamEditor()
+        private void TeamEditorLoad()
         {
             TeamSavingClass LoadClass = new TeamSavingClass();
             OpenFileDialog LoadTeamDialog = DefineLoadXmlDialog();
             Nullable<bool> Result = LoadTeamDialog.ShowDialog();
-            XmlSerializer Xser = new XmlSerializer(Vars.Game.TempEditorTeam.GetType());
+            XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TempEditorTeam.GetType());
             if (Result == true)
             {
                 using (StreamReader streamReader = new StreamReader(LoadTeamDialog.FileName))
                 {
-                    LoadClass = (TeamSavingClass)Xser.Deserialize(streamReader);
+                    LoadClass = (TeamSavingClass)xmlSerializer.Deserialize(streamReader);
                 }
                 Vars.Game.TempEditorTeam = LoadClass;
                 BitmapImage bitmap = new BitmapImage(new Uri(Vars.Game.TempEditorTeam.TeamLogoPath))
@@ -700,28 +749,10 @@ namespace HockeyScoreboard
                 };
                 ImageTeamManagerLogo.Source = bitmap;
                 TextBoxTeamNameManager.Text = Vars.Game.TempEditorTeam.TeamName;
-                UpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam); ;
+                UIUpdateListbox(ListBoxTeamManager, Vars.Game.TempEditorTeam); ;
             }
         }
-        private void RefreshComboBox(ComboBox RefreshedBox)
-        {
-            RefreshedBox.Items.Clear();
-            string searchDirectory = Vars.Prefs.DefaultTeamDirectory;
-            string searchPattern = "*.xml";
-            TeamSavingClass LoadClass = new TeamSavingClass();
-            XmlSerializer Xser = new XmlSerializer(Vars.Game.TempEditorTeam.GetType());
-            teamLoadingFilePaths.Clear();
-            foreach (var filePath in Directory.GetFiles(searchDirectory, searchPattern))
-            {
-                teamLoadingFilePaths.Add(filePath);
-                using (StreamReader streamReader = new StreamReader(filePath))
-                {
-                    LoadClass = (TeamSavingClass)Xser.Deserialize(streamReader);
-                }
-                RefreshedBox.Items.Add(LoadClass.TeamName);
-            }
-        }
-        private void LoadComboBoxSelection(ListBox OutputListBox, ComboBox InputComboBox, TeamClass Team)
+        private void TeamEditorLoadTeamFromComboBox(ListBox OutputListBox, ComboBox InputComboBox, TeamClass Team)
         {
             System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("This will override your current team setup. Do you wish to continue?", "Warning", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Warning);
             if (result == System.Windows.Forms.DialogResult.Yes)
@@ -762,8 +793,8 @@ namespace HockeyScoreboard
 
                 };
                 Team.SelectedTeamList = LoadClass.PlayerList;
-                UpdateListbox(OutputListBox, LoadClass);
-                ReloadControlsUI(Team); UpdateAllUI();
+                UIUpdateListbox(OutputListBox, LoadClass);
+                UIReloadControlsValues(Team); UIUpdateAll();
             }
             else return;
         }

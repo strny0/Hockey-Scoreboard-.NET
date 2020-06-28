@@ -1,42 +1,96 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Threading;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Color = System.Windows.Media.Color;
-using Brush = System.Windows.Media.Brush;
-using Brushes = System.Windows.Media.Brushes;
-using Image = System.Windows.Controls.Image;
-using System.Drawing.Imaging;
 using System.Globalization;
-using DocumentFormat.OpenXml.Bibliography;
-using System.IO;
 
 namespace HockeyScoreboard
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// This file contains all Events for the Main Window of HockeyScoreboard.
     /// </summary>
-    public partial class MainWindow : Window // EVENTS
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Vars.Window = new SecondaryWindow(); // Define window
-            Vars.Window.Show(); // launch and load view window
+            Vars.SecondaryWindow.Show(); // launch and load view window
             // Load operations TBD
-            DefineDefaultVars();
+            DefineDefaultProgramState();
             DefineDefaultPrefs();
             InitializeTimer();
         }
+
+        /// <summary>
+        /// TEAM MANAGEMENT RELATED EVENTS
+        /// </summary>
+
+        private void TextBoxTeam1Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Vars.Team1.Name = TextBoxTeam1Name.Text;
+            Vars.SecondaryWindow.TextBlockTeam1Name.Text = Vars.Team1.Name;
+        }
+        private void TextBoxTeam2Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Vars.Team2.Name = TextBoxTeam2Name.Text;
+            Vars.SecondaryWindow.TextBlockTeam2Name.Text = Vars.Team2.Name;
+        }
+        private void UpDownTeam1Score_ValueChanged(object sender, EventArgs e)
+        {
+            Vars.Team1.Score = (int)UpDownTeam1Score.Value;
+            Vars.SecondaryWindow.LabelScoreTeam1Variable.Content = Vars.Team1.Score.ToString(CultureInfo.InvariantCulture);
+        }
+        private void UpDownTeam1Shots_ValueChanged(object sender, EventArgs e)
+        {
+            Vars.Team1.Shots = (int)UpDownTeam1Shots.Value;
+            Vars.SecondaryWindow.LabelShotsTeam1Variable.Content = Vars.Team1.Shots.ToString(CultureInfo.InvariantCulture);
+        }
+        private void UpDownTeam2Score_ValueChanged(object sender, EventArgs e)
+        {
+            Vars.Team2.Score = (int)UpDownTeam2Score.Value;
+            Vars.SecondaryWindow.LabelScoreTeam2Variable.Content = Vars.Team2.Score.ToString(CultureInfo.InvariantCulture);
+        }
+        private void UpDownTeam2Shots_ValueChanged(object sender, EventArgs e)
+        {
+            Vars.Team2.Shots = (int)UpDownTeam2Shots.Value;
+            Vars.SecondaryWindow.LabelShotsTeam2Variable.Content = Vars.Team2.Shots.ToString(CultureInfo.InvariantCulture);
+        }
+        private void ButtonTeam1SelectImage_Click(object sender, RoutedEventArgs e)
+        {
+            Vars.Team1.LogoSource = ReturnImageSourcePath();
+            ChangeImageFromPath(Vars.Team1.LogoSource, ImageTeam1Logo);
+            ChangeImageFromPath(Vars.Team1.LogoSource, Vars.SecondaryWindow.ImageTeam1LogoView);
+
+        }
+        private void ButtonTeam2SelectImage_Click(object sender, RoutedEventArgs e)
+        {
+            Vars.Team2.LogoSource = ReturnImageSourcePath();
+            ChangeImageFromPath(Vars.Team2.LogoSource, ImageTeam2Logo);
+            ChangeImageFromPath(Vars.Team2.LogoSource, Vars.SecondaryWindow.ImageTeam2LogoView);
+        }
+        private void ButtonCancelPenaltyTeam1Player1_Click(object sender, RoutedEventArgs e)
+        {
+            PenaltyCancel(Vars.Team1, true);
+        }
+        private void ButtonCancelPenaltyTeam1Player2_Click(object sender, RoutedEventArgs e)
+        {
+            PenaltyCancel(Vars.Team1, false);
+        }
+        private void ButtonCancelPenaltyTeam2Player1_Click(object sender, RoutedEventArgs e)
+        {
+            PenaltyCancel(Vars.Team2, true);
+        }
+        private void ButtonCancelPenaltyTeam2Player2_Click(object sender, RoutedEventArgs e)
+        {
+            PenaltyCancel(Vars.Team2, false);
+        }
+
+        /// <summary>
+        /// GAME MANAGEMENT RELATED EVENTS
+        /// </summary>
+
         private void MainTimer_Tick(object sender, EventArgs e) // TIMER
         {
             if (Vars.Game.StopwatchPeriod.IsRunning) // PERIOD RUNNING
@@ -51,13 +105,13 @@ namespace HockeyScoreboard
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
 
-                        StopPenaltyIfRanOut(Vars.Team1, true); StopPenaltyIfRanOut(Vars.Team1, false); // Stop penalty timer if time ran out
-                        StopPenaltyIfRanOut(Vars.Team2, true); StopPenaltyIfRanOut(Vars.Team2, false);
+                        PenaltyStopIfRanOutOfTime(Vars.Team1, true); PenaltyStopIfRanOutOfTime(Vars.Team1, false); // Stop penalty timer if time ran out
+                        PenaltyStopIfRanOutOfTime(Vars.Team2, true); PenaltyStopIfRanOutOfTime(Vars.Team2, false);
 
-                        MoveDownASlot(Vars.Team1); MoveDownASlot(Vars.Team2); // Move Player2 to slot of Player1 if Player1 slot empty
+                        PenaltyMoveDownASlot(Vars.Team1); PenaltyMoveDownASlot(Vars.Team2); // Move Player2 to slot of Player1 if Player1 slot empty
 
-                        TickTimeDownPenalty(Vars.Team1, Vars.Team2, true); TickTimeDownPenalty(Vars.Team1, Vars.Team2, false);   // Tick Time Down
-                        TickTimeDownPenalty(Vars.Team2, Vars.Team1, true); TickTimeDownPenalty(Vars.Team2, Vars.Team1, false);   // Function checks if penalties for each player are running
+                        PenaltyTimeProgression(Vars.Team1, Vars.Team2, true); PenaltyTimeProgression(Vars.Team1, Vars.Team2, false);   // Tick Time Down
+                        PenaltyTimeProgression(Vars.Team2, Vars.Team1, true); PenaltyTimeProgression(Vars.Team2, Vars.Team1, false);   // Function checks if penalties for each player are running
                         break;
                     case CustomTypes.GameState.Break:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
@@ -78,51 +132,8 @@ namespace HockeyScoreboard
                         break;
                 }
             }
-            UpdateAllUI(); ; // UI UPDATE
+            UIUpdateAll(); ; // UI UPDATE
         } // TIMER
-        private void TextBoxTeam1Name_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Vars.Team1.Name = TextBoxTeam1Name.Text;
-            Vars.Window.TextBlockTeam1Name.Text = Vars.Team1.Name;
-        }
-        private void TextBoxTeam2Name_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Vars.Team2.Name = TextBoxTeam2Name.Text;
-            Vars.Window.TextBlockTeam2Name.Text = Vars.Team2.Name;
-        }
-        private void UpDownTeam1Score_ValueChanged(object sender, EventArgs e)
-        {
-            Vars.Team1.Score = (int)UpDownTeam1Score.Value;
-            Vars.Window.LabelScoreTeam1Variable.Content = Vars.Team1.Score.ToString(CultureInfo.InvariantCulture);
-        }
-        private void UpDownTeam1Shots_ValueChanged(object sender, EventArgs e)
-        {
-            Vars.Team1.Shots = (int)UpDownTeam1Shots.Value;
-            Vars.Window.LabelShotsTeam1Variable.Content = Vars.Team1.Shots.ToString(CultureInfo.InvariantCulture);
-        }
-        private void UpDownTeam2Score_ValueChanged(object sender, EventArgs e)
-        {
-            Vars.Team2.Score = (int)UpDownTeam2Score.Value;
-            Vars.Window.LabelScoreTeam2Variable.Content = Vars.Team2.Score.ToString(CultureInfo.InvariantCulture);
-        }
-        private void UpDownTeam2Shots_ValueChanged(object sender, EventArgs e)
-        {
-            Vars.Team2.Shots = (int)UpDownTeam2Shots.Value;
-            Vars.Window.LabelShotsTeam2Variable.Content = Vars.Team2.Shots.ToString(CultureInfo.InvariantCulture);
-        }
-        private void ButtonTeam1SelectImage_Click(object sender, RoutedEventArgs e)
-        {
-            Vars.Team1.LogoSource = GetImageSource();
-            ChangeImageFromPath(Vars.Team1.LogoSource, ImageTeam1Logo);
-            ChangeImageFromPath(Vars.Team1.LogoSource, Vars.Window.ImageTeam1LogoView);
-
-        }
-        private void ButtonTeam2SelectImage_Click(object sender, RoutedEventArgs e)
-        {
-            Vars.Team2.LogoSource = GetImageSource();
-            ChangeImageFromPath(Vars.Team2.LogoSource, ImageTeam2Logo);
-            ChangeImageFromPath(Vars.Team2.LogoSource, Vars.Window.ImageTeam2LogoView);
-        }
         private void ButtonSetTime_Click(object sender, RoutedEventArgs e)
         {
             SetTime(TimeSpan.FromMinutes(Vars.Game.InputMinute) + TimeSpan.FromSeconds(Vars.Game.InputSecond));
@@ -217,9 +228,9 @@ namespace HockeyScoreboard
         }
         private void ButtonNewView_Click(object sender, RoutedEventArgs e)
         {
-            Vars.Window.Close();
-            Vars.Window = new SecondaryWindow();
-            Vars.Window.Show();
+            Vars.SecondaryWindow.Close();
+            Vars.SecondaryWindow = new SecondaryWindow();
+            Vars.SecondaryWindow.Show();
 
         }
         private void ButtonNewGame_Click(object sender, RoutedEventArgs e)
@@ -228,149 +239,130 @@ namespace HockeyScoreboard
             Vars.Team1.HasTimeout = true; Vars.Team2.HasTimeout = true;
             Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
             SetTime(TimeSpan.FromMinutes(7));
-            CancelPenalty(Vars.Team1, false); CancelPenalty(Vars.Team1, true);
-            CancelPenalty(Vars.Team2, false); CancelPenalty(Vars.Team2, true);
+            PenaltyCancel(Vars.Team1, false); PenaltyCancel(Vars.Team1, true);
+            PenaltyCancel(Vars.Team2, false); PenaltyCancel(Vars.Team2, true);
             Vars.Team1.Score = 0; Vars.Team2.Score = 0;
             UpDownTeam1Score.Value = Vars.Team1.Score; UpDownTeam2Score.Value = Vars.Team2.Score;
             Vars.Team1.Shots = 0; Vars.Team2.Shots = 0;
             UpDownTeam1Shots.Value = Vars.Team1.Shots; UpDownTeam2Shots.Value = Vars.Team2.Shots;
-            UpdateAllUI();
+            UIUpdateAll();
         }
-        private void ButtonCancelPenaltyTeam1Player1_Click(object sender, RoutedEventArgs e)
-        {
-            CancelPenalty(Vars.Team1, true);
-        }
-        private void ButtonCancelPenaltyTeam1Player2_Click(object sender, RoutedEventArgs e)
-        {
-            CancelPenalty(Vars.Team1, false);
-        }
-        private void ButtonCancelPenaltyTeam2Player1_Click(object sender, RoutedEventArgs e)
-        {
-            CancelPenalty(Vars.Team2, true);
-        }
-        private void ButtonCancelPenaltyTeam2Player2_Click(object sender, RoutedEventArgs e)
-        {
-            CancelPenalty(Vars.Team2, false);
-        }
-        // PENALTIES TAB
+
+        /// <summary>
+        /// PENALTY TAB RELATED EVENTS
+        /// </summary>
+
         private void ButtonSetSpecificPenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam1.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam1.Value), false); // It is a slot based system, there are 2 slots for each team,
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam1.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam1.Value), false); // It is a slot based system, there are 2 slots for each team,
         }
         private void ButtonSet1minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(1), false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(1), false);
         }
         private void ButtonSet2minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(2), false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(2), false);
         }
         private void ButtonSet5minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(5), false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(5), false);
         }
         private void ButtonSet10minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(10), false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(10), false);
         }
         private void ButtonSet2plus2minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(4), true);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(4), true);
         }
         private void ButtonSetSpecificPenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team2, Vars.Team1, ListBoxTeam2Players, (TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam2.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam2.Value)), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, (TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam2.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam2.Value)), false);
         }
         private void ButtonSet1minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(1), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(1), false);
         }
         private void ButtonSet2minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(2), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(2), false);
         }
         private void ButtonSet5minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(5), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(5), false);
         }
         private void ButtonSet10minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(10), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(10), false);
         }
         private void ButtonSet2plus2minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
-            AssignPenalty(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(4), true);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(4), true);
         }
-        // TEAM MANAGER
-        private void ButtonTeamManagerAddPlayer_Click(object sender, RoutedEventArgs e)
-        {
-            AddPlayerToTeamEditor(TextBoxPlayerNameManager.Text, UpDownTeamManager.Value.ToString());
-        }
-
-        private void ButtonTeamManagerRemovePlayer_Click(object sender, RoutedEventArgs e)
-        {
-            RemovePlayerToTeamEditor(ListBoxTeamManager);
-        }
-
-        private void ButtonTeamManagerClearList_Click(object sender, RoutedEventArgs e)
-        {
-            ClearPlayerTeamEditor();
-        }
-
-        private void ListBoxTeamManager_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            RemovePlayerToTeamEditor(ListBoxTeamManager);
-        }
-        private void ButtonTeamManagerSaveTeam_Click(object sender, RoutedEventArgs e)
-        {
-            SaveTeamEditor(TextBoxTeamNameManager.Text);
-        }
-
-        private void ButtonTeamManagerLoadTeam_Click(object sender, RoutedEventArgs e)
-        {
-            LoadTeamEditor();
-        }
-
-        private void ButtonTeamManagerSelectImage_Click(object sender, RoutedEventArgs e)
-        {
-            Vars.Game.TempEditorTeam.TeamLogoPath = GetImageSource();
-            ChangeImageFromPath(Vars.Game.TempEditorTeam.TeamLogoPath, ImageTeamManagerLogo);
-        }
-
-
         private void ComboBoxTeam1_DropDownOpened(object sender, EventArgs e)
         {
-            RefreshComboBox(ComboBoxTeam1);
+            UIUpdateComboBoxSelection(ComboBoxTeam1);
         }
-
         private void ComboBoxTeam2_DropDownOpened(object sender, EventArgs e)
         {
-            RefreshComboBox(ComboBoxTeam2);
+            UIUpdateComboBoxSelection(ComboBoxTeam2);
         }
         private void ComboBoxTeam1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LoadComboBoxSelection(ListBoxTeam1Players, ComboBoxTeam1, Vars.Team1);
+            TeamEditorLoadTeamFromComboBox(ListBoxTeam1Players, ComboBoxTeam1, Vars.Team1);
         }
         private void ComboBoxTeam2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LoadComboBoxSelection(ListBoxTeam2Players, ComboBoxTeam2, Vars.Team2);
+            TeamEditorLoadTeamFromComboBox(ListBoxTeam2Players, ComboBoxTeam2, Vars.Team2);
 
         }
-
         private void ListBoxTeam1Players_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ListBoxTeam1Players.SelectedIndex = -1;
         }
-
         private void ListBoxTeam2Players_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ListBoxTeam2Players.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// TEAM MANAGER RELATED EVENTS
+        /// </summary>
+
+        private void ButtonTeamManagerAddPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            TeamEditorAddPlayer(TextBoxPlayerNameManager.Text, UpDownTeamManager.Value.ToString());
+        }
+        private void ButtonTeamManagerRemovePlayer_Click(object sender, RoutedEventArgs e)
+        {
+            TeamEditorRemovePlayer(ListBoxTeamManager);
+        }
+        private void ButtonTeamManagerClearList_Click(object sender, RoutedEventArgs e)
+        {
+            TeamEditorClearPlayerList();
+        }
+        private void ListBoxTeamManager_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            TeamEditorRemovePlayer(ListBoxTeamManager);
+        }
+        private void ButtonTeamManagerSaveTeam_Click(object sender, RoutedEventArgs e)
+        {
+            TeamEditorSave(TextBoxTeamNameManager.Text);
+        }
+        private void ButtonTeamManagerLoadTeam_Click(object sender, RoutedEventArgs e)
+        {
+            TeamEditorLoad();
+        }
+        private void ButtonTeamManagerSelectImage_Click(object sender, RoutedEventArgs e)
+        {
+            Vars.Game.TempEditorTeam.TeamLogoPath = ReturnImageSourcePath();
+            ChangeImageFromPath(Vars.Game.TempEditorTeam.TeamLogoPath, ImageTeamManagerLogo);
+        }
 
 
 
-        // TEAMS TAB
+
         // SOUND TAB
         // PREFERENCES TAB
 
