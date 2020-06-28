@@ -133,7 +133,7 @@ namespace HockeyScoreboard
                 }
             }
             UIUpdateAll(); ; // UI UPDATE
-        } // TIMER
+        }
         private void ButtonSetTime_Click(object sender, RoutedEventArgs e)
         {
             SetTime(TimeSpan.FromMinutes(Vars.Game.InputMinute) + TimeSpan.FromSeconds(Vars.Game.InputSecond));
@@ -163,24 +163,22 @@ namespace HockeyScoreboard
         {
             SetTime(Vars.Game.LastSetTime);
         }
-        private void ButtonSetTimePresetA_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetTimePresetA_Click(object sender, RoutedEventArgs e) // PRESET
         {
-            Vars.Team1.Player1.PenaltyTimeLeft = TimeSpan.FromMinutes(1);
-            Vars.Team1.Player1.PenaltyTimeSet = TimeSpan.FromMinutes(1);
-            //SetTime(TimeSpan.FromMinutes(1)); // temporary
-        } // PRESET
-        private void ButtonSetTimePresetB_Click(object sender, RoutedEventArgs e)
+            SetTime(TimeSpan.FromMinutes(1)); // temporary
+        }
+        private void ButtonSetTimePresetB_Click(object sender, RoutedEventArgs e) // PRESET
         {
             SetTime(TimeSpan.FromMinutes(2)); // temporary
-        }// PRESET
-        private void ButtonSetTimePresetC_Click(object sender, RoutedEventArgs e)
+        }
+        private void ButtonSetTimePresetC_Click(object sender, RoutedEventArgs e) // PRESET
         {
             SetTime(TimeSpan.FromMinutes(5)); // temporary
-        }// PRESET
-        private void ButtonSetTimePresetD_Click(object sender, RoutedEventArgs e)
+        }
+        private void ButtonSetTimePresetD_Click(object sender, RoutedEventArgs e) // PRESET
         {
             SetTime(TimeSpan.FromMinutes(10)); // temporary
-        }// PRESET
+        }
         private void ButtonBreakMode_Click(object sender, RoutedEventArgs e)
         {
             if (Vars.Game.GameState == CustomTypes.GameState.Break)
@@ -254,51 +252,59 @@ namespace HockeyScoreboard
 
         private void ButtonSetSpecificPenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam1.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam1.Value), false); // It is a slot based system, there are 2 slots for each team,
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, (TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam1.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam1.Value)), false, false);
         }
-        private void ButtonSet1minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetPenaltyTeam1A_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(1), false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(1), false, false);
         }
-        private void ButtonSet2minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetPenaltyTeam1B_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(2), false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(2), false, false);
         }
-        private void ButtonSet5minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetPenaltyTeam1C_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(5), false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(5), false, false);
         }
-        private void ButtonSet10minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetPenaltyTeam1D_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(10), false);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(10), false, false);
         }
-        private void ButtonSet2plus2minutePenaltyTeam1_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetMinorPenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(4), true);
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(2), false, true);
+        }
+        private void ButtonSetDoubleMinorPenaltyTeam1_Click(object sender, RoutedEventArgs e)
+        {
+            PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(4), true, false);
         }
         private void ButtonSetSpecificPenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, (TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam2.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam2.Value)), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, (TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam2.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam2.Value)), false, false);
         }
-        private void ButtonSet1minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetPenaltyTeam2A_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(1), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(1), false, false);
         }
-        private void ButtonSet2minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetPenaltyTeam2B_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(2), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(2), false, false);
         }
-        private void ButtonSet5minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetPenaltyTeam2C_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(5), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(5), false, false);
         }
-        private void ButtonSet10minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetPenaltyTeam2D_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(10), false);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(10), false, false);
         }
-        private void ButtonSet2plus2minutePenaltyTeam2_Click(object sender, RoutedEventArgs e)
+        private void ButtonSetMinorPenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
-            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(4), true);
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(2), false, true);
+        }
+        private void ButtonSetDoubleMinorPenaltyTeam2_Click(object sender, RoutedEventArgs e)
+        {
+            PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(4), true, false);
         }
         private void ComboBoxTeam1_DropDownOpened(object sender, EventArgs e)
         {
@@ -310,12 +316,20 @@ namespace HockeyScoreboard
         }
         private void ComboBoxTeam1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TeamEditorLoadTeamFromComboBox(ListBoxTeam1Players, ComboBoxTeam1, Vars.Team1);
+            if (ComboBoxTeam1.SelectedIndex != -1)
+            {
+                TeamEditorLoadTeamFromComboBox(ListBoxTeam1Players, ComboBoxTeam1, Vars.Team1);
+                ComboBoxTeam1.SelectedIndex = -1;
+            }
+            else return;
         }
         private void ComboBoxTeam2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TeamEditorLoadTeamFromComboBox(ListBoxTeam2Players, ComboBoxTeam2, Vars.Team2);
-
+            if (ComboBoxTeam2.SelectedIndex != -1)
+            {
+                TeamEditorLoadTeamFromComboBox(ListBoxTeam2Players, ComboBoxTeam2, Vars.Team2);
+                ComboBoxTeam2.SelectedIndex = -1;
+            }
         }
         private void ListBoxTeam1Players_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -332,7 +346,7 @@ namespace HockeyScoreboard
 
         private void ButtonTeamManagerAddPlayer_Click(object sender, RoutedEventArgs e)
         {
-            TeamEditorAddPlayer(TextBoxPlayerNameManager.Text, UpDownTeamManager.Value.ToString());
+            TeamEditorAddPlayer(TextBoxPlayerNameManager.Text, UpDownTeamManager.Value.ToString(CultureInfo.InvariantCulture));
         }
         private void ButtonTeamManagerRemovePlayer_Click(object sender, RoutedEventArgs e)
         {
@@ -356,9 +370,12 @@ namespace HockeyScoreboard
         }
         private void ButtonTeamManagerSelectImage_Click(object sender, RoutedEventArgs e)
         {
-            Vars.Game.TempEditorTeam.TeamLogoPath = ReturnImageSourcePath();
-            ChangeImageFromPath(Vars.Game.TempEditorTeam.TeamLogoPath, ImageTeamManagerLogo);
+            Vars.Game.TeamManagerTeamSavingClassInstance.TeamLogoPath = ReturnImageSourcePath();
+            ChangeImageFromPath(Vars.Game.TeamManagerTeamSavingClassInstance.TeamLogoPath, ImageTeamManagerLogo);
         }
+
+
+
 
 
 

@@ -158,33 +158,35 @@
                     <Grid Margin="0,0,0,0" Background="#FF333333">
                         <GroupBox Header="Team 1 Penalty Controls" HorizontalAlignment="Left" Height="388" VerticalAlignment="Top" Width="420" Margin="7,0,0,0">
                             <Grid>
-                                <Label HorizontalAlignment="Left" BorderThickness="1" Content="Player no.:" VerticalAlignment="Top" Height="35" Width="94" FontSize="16" Background="{x:Null}" Foreground="#FFF9FAFC" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="0,0,0,0" Margin="204,4,0,0"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetSpecificPenaltyTeam1" Click="ButtonSetSpecificPenaltyTeam1_Click"  Content="Set Specific Penalty" HorizontalAlignment="Left" Margin="204,264,0,0" VerticalAlignment="Top" Width="195" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet1minutePenaltyTeam1" Click="ButtonSet1minutePenaltyTeam1_Click"  Content="1:00" HorizontalAlignment="Left" Margin="204,44,0,0" VerticalAlignment="Top" Width="95" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet2minutePenaltyTeam1" Click="ButtonSet2minutePenaltyTeam1_Click"  Content="2:00" HorizontalAlignment="Left" Margin="303,44,0,0" VerticalAlignment="Top" Width="95" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet5minutePenaltyTeam1" Click="ButtonSet5minutePenaltyTeam1_Click" Content="5:00" HorizontalAlignment="Left" Margin="204,99,0,0" VerticalAlignment="Top" Width="95" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet10minutePenaltyTeam1" Click="ButtonSet10minutePenaltyTeam1_Click"  Content="10:00" HorizontalAlignment="Left" Margin="303,99,0,0" VerticalAlignment="Top" Width="95" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet2plus2minutePenaltyTeam1" Click="ButtonSet2plus2minutePenaltyTeam1_Click"  Content="2:00+2:00" HorizontalAlignment="Left" Margin="204,154,0,0" VerticalAlignment="Top" Width="195" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <ComboBox x:Name="ComboBoxTeam1" Margin="0,5,0,0" HorizontalAlignment="Left" Width="200" Height="34" VerticalAlignment="Top" DropDownOpened="ComboBoxTeam1_DropDownOpened" SelectionChanged="ComboBoxTeam1_SelectionChanged" Template="{DynamicResource CustomComboBoxControlTemplate}" ForceCursor="True">
-                                    <ComboBox.Background>
-                                        <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
-                                    </ComboBox.Background>
-                                    <ComboBox.BorderBrush>
-                                        <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
-                                    </ComboBox.BorderBrush>
+                                <ComboBox x:Name="ComboBoxTeam1" Margin="0,5,208,322" Template="{DynamicResource CustomComboBoxControlTemplate}" Height="34" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" DropDownOpened="ComboBoxTeam1_DropDownOpened" SelectionChanged="ComboBoxTeam1_SelectionChanged">
                                     <ComboBox.Foreground>
                                         <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
                                     </ComboBox.Foreground>
+                                    <ComboBox.BorderBrush>
+                                        <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
+                                    </ComboBox.BorderBrush>
+                                    <ComboBox.Background>
+                                        <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
+                                    </ComboBox.Background>
                                 </ComboBox>
-                                <Controls:NumericSpinner x:Name="UpDownPenaltyTeam1Player"  HorizontalAlignment="Left" Height="35" Margin="303,4,0,0" VerticalAlignment="Top" Width="95" Step="1" Maximum="99" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
-                                <Controls:NumericSpinner x:Name="UpDownSecondsPenaltyTeam1"  HorizontalAlignment="Left" Height="50" Margin="309,209,0,0" VerticalAlignment="Top" Width="90" Step="1" Maximum="999" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
-                                <Controls:NumericSpinner x:Name="UpDownMinutesPenaltyTeam1"  HorizontalAlignment="Left" Height="50" Margin="204,209,0,0" VerticalAlignment="Top" Width="90" Step="1" Maximum="59" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
-                                <Label Content=":" HorizontalAlignment="Left" Margin="294,209,0,0" VerticalAlignment="Top" FontSize="26" FontWeight="Bold" Padding="0,0,0,-6" Height="50" Width="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetSpecificPenaltyTeam1" Click="ButtonSetSpecificPenaltyTeam1_Click"  Content="Set Custom Penalty" HorizontalAlignment="Left" Margin="205,320,0,0" VerticalAlignment="Top" Width="200" Height="40" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetPenaltyTeam1A"  Click="ButtonSetPenaltyTeam1A_Click" Content="Major 1:00" HorizontalAlignment="Left" Margin="205,44,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetPenaltyTeam1B" Click="ButtonSetPenaltyTeam1B_Click" Content="Major 2:00" HorizontalAlignment="Left" Margin="205,89,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetPenaltyTeam1C" Click="ButtonSetPenaltyTeam1C_Click" Content="Major 5:00" HorizontalAlignment="Left" Margin="205,134,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetPenaltyTeam1D" Click="ButtonSetPenaltyTeam1D_Click" Content="Major 10:00" HorizontalAlignment="Left" Margin="205,179,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetDoubleMinorPenaltyTeam1" Click="ButtonSetDoubleMinorPenaltyTeam1_Click"  Content="Double minor 2:00+2:00" HorizontalAlignment="Left" Margin="205,269,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetMinorPenaltyTeam1" Click="ButtonSetMinorPenaltyTeam1_Click"  Content="Minor 2:00" HorizontalAlignment="Left" Margin="205,224,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+
+                                <Controls:NumericSpinner x:Name="UpDownPenaltyTeam1Player"  HorizontalAlignment="Left" Height="35" Margin="305,4,0,0" VerticalAlignment="Top" Width="100" Step="1" Maximum="99" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
+                                <Controls:NumericSpinner x:Name="UpDownSecondsPenaltyTeam1"  HorizontalAlignment="Left" Height="40" Margin="110,320,0,0" VerticalAlignment="Top" Width="90" Step="1" Maximum="999" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
+                                <Controls:NumericSpinner x:Name="UpDownMinutesPenaltyTeam1"  HorizontalAlignment="Left" Height="40" Margin="1,320,0,0" VerticalAlignment="Top" Width="90" Step="1" Maximum="59" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
+                                <Label Content=":" HorizontalAlignment="Left" Margin="91,320,0,0" VerticalAlignment="Top" FontSize="26" FontWeight="Bold" Padding="0,0,0,-6" Height="39" Width="19" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                                     <Label.Foreground>
                                         <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
                                     </Label.Foreground>
                                 </Label>
-                                <ListBox x:Name="ListBoxTeam1Players"  HorizontalAlignment="Left" Height="271" Margin="0,44,0,0" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black" PreviewMouseRightButtonUp="ListBoxTeam1Players_PreviewMouseRightButtonUp"/>
+                                <ListBox x:Name="ListBoxTeam1Players" HorizontalAlignment="Left" Height="270" Margin="0,44,0,0" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black" PreviewMouseRightButtonUp="ListBoxTeam1Players_PreviewMouseRightButtonUp" />
+                                <Label HorizontalAlignment="Left" Margin="205,5,0,0" BorderThickness="1" Content="Player no.:" VerticalAlignment="Top" Height="34" Width="95" FontSize="16" Background="{x:Null}" Foreground="#FFF9FAFC" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="0,0,0,0"/>
 
                             </Grid>
                         </GroupBox>
@@ -201,21 +203,23 @@
                                         <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
                                     </ComboBox.Background>
                                 </ComboBox>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetSpecificPenaltyTeam2" Click="ButtonSetSpecificPenaltyTeam2_Click"  Content="Set Specific Penalty" HorizontalAlignment="Left" Margin="205,265,0,0" VerticalAlignment="Top" Width="195" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet1minutePenaltyTeam2"  Click="ButtonSet1minutePenaltyTeam2_Click" Content="1:00" HorizontalAlignment="Left" Margin="205,44,0,0" VerticalAlignment="Top" Width="95" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet2minutePenaltyTeam2" Click="ButtonSet2minutePenaltyTeam2_Click" Content="2:00" HorizontalAlignment="Left" Margin="305,44,0,0" VerticalAlignment="Top" Width="95" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet5minutePenaltyTeam2" Click="ButtonSet5minutePenaltyTeam2_Click" Content="5:00" HorizontalAlignment="Left" Margin="205,99,0,0" VerticalAlignment="Top" Width="95" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet10minutePenaltyTeam2" Click="ButtonSet10minutePenaltyTeam2_Click" Content="10:00" HorizontalAlignment="Left" Margin="305,99,0,0" VerticalAlignment="Top" Width="95" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSet2plus2minutePenaltyTeam2" Click="ButtonSet2plus2minutePenaltyTeam2_Click"  Content="2:00+2:00" HorizontalAlignment="Left" Margin="205,154,0,0" VerticalAlignment="Top" Width="195" Height="50" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
-                                <Controls:NumericSpinner x:Name="UpDownPenaltyTeam2Player"  HorizontalAlignment="Left" Height="35" Margin="305,4,0,0" VerticalAlignment="Top" Width="95" Step="1" Maximum="99" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
-                                <Controls:NumericSpinner x:Name="UpDownSecondsPenaltyTeam2"  HorizontalAlignment="Left" Height="50" Margin="310,210,0,0" VerticalAlignment="Top" Width="90" Step="1" Maximum="999" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
-                                <Controls:NumericSpinner x:Name="UpDownMinutesPenaltyTeam2"  HorizontalAlignment="Left" Height="50" Margin="205,210,0,0" VerticalAlignment="Top" Width="90" Step="1" Maximum="59" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
-                                <Label Content=":" HorizontalAlignment="Left" Margin="295,210,0,0" VerticalAlignment="Top" FontSize="26" FontWeight="Bold" Padding="0,0,0,-6" Height="48" Width="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetSpecificPenaltyTeam2" Click="ButtonSetSpecificPenaltyTeam2_Click"  Content="Set Custom Penalty" HorizontalAlignment="Left" Margin="205,320,0,0" VerticalAlignment="Top" Width="200" Height="40" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetPenaltyTeam2A"  Click="ButtonSetPenaltyTeam2A_Click" Content="Major 1:00" HorizontalAlignment="Left" Margin="205,44,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetPenaltyTeam2B" Click="ButtonSetPenaltyTeam2B_Click" Content="Major 2:00" HorizontalAlignment="Left" Margin="205,89,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetPenaltyTeam2C" Click="ButtonSetPenaltyTeam2C_Click" Content="Major 5:00" HorizontalAlignment="Left" Margin="205,134,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetPenaltyTeam2D" Click="ButtonSetPenaltyTeam2D_Click" Content="Major 10:00" HorizontalAlignment="Left" Margin="205,179,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetDoubleMinorPenaltyTeam2" Click="ButtonSetDoubleMinorPenaltyTeam2_Click"  Content="Double minor 2:00+2:00" HorizontalAlignment="Left" Margin="205,269,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+                                <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetMinorPenaltyTeam2" Click="ButtonSetMinorPenaltyTeam2_Click"  Content="Minor 2:00" HorizontalAlignment="Left" Margin="205,224,0,0" VerticalAlignment="Top" Width="200" Height="45" FontSize="16" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46"/>
+
+                                <Controls:NumericSpinner x:Name="UpDownPenaltyTeam2Player"  HorizontalAlignment="Left" Height="35" Margin="305,4,0,0" VerticalAlignment="Top" Width="100" Step="1" Maximum="99" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
+                                <Controls:NumericSpinner x:Name="UpDownSecondsPenaltyTeam2"  HorizontalAlignment="Left" Height="40" Margin="110,320,0,0" VerticalAlignment="Top" Width="90" Step="1" Maximum="999" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
+                                <Controls:NumericSpinner x:Name="UpDownMinutesPenaltyTeam2"  HorizontalAlignment="Left" Height="40" Margin="0,320,0,0" VerticalAlignment="Top" Width="90" Step="1" Maximum="59" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
+                                <Label Content=":" HorizontalAlignment="Left" Margin="90,320,0,0" VerticalAlignment="Top" FontSize="26" FontWeight="Bold" Padding="0,0,0,-6" Height="39" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                                     <Label.Foreground>
                                         <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
                                     </Label.Foreground>
                                 </Label>
-                                <ListBox x:Name="ListBoxTeam2Players" HorizontalAlignment="Left" Height="271" Margin="0,44,0,0" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black" PreviewMouseRightButtonUp="ListBoxTeam2Players_PreviewMouseRightButtonUp" />
+                                <ListBox x:Name="ListBoxTeam2Players" HorizontalAlignment="Left" Height="270" Margin="0,44,0,0" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black" PreviewMouseRightButtonUp="ListBoxTeam2Players_PreviewMouseRightButtonUp" />
                                 <Label HorizontalAlignment="Left" Margin="205,5,0,0" BorderThickness="1" Content="Player no.:" VerticalAlignment="Top" Height="34" Width="95" FontSize="16" Background="{x:Null}" Foreground="#FFF9FAFC" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="0,0,0,0"/>
 
                             </Grid>
@@ -233,8 +237,8 @@
                                         <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
                                     </TextBox.Background>
                                 </TextBox>
-                                <Controls:NumericSpinner x:Name="UpDownTeamManager"  HorizontalAlignment="Left" Height="35" Margin="205,160,0,0" VerticalAlignment="Top" Width="111" Step="1" Maximum="99" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
-                                <TextBox Margin="321,160,10,166" x:Name="TextBoxPlayerNameManager" Text="Enter Player Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" >
+                                <Controls:NumericSpinner x:Name="UpDownTeamManager"  HorizontalAlignment="Left" Height="40" Margin="205,186,0,0" VerticalAlignment="Top" Width="111" Step="1" Maximum="99" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
+                                <TextBox Margin="321,186,7,135" x:Name="TextBoxPlayerNameManager" Text="Enter Player Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Height="40" >
                                     <TextBox.Foreground>
                                         <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
                                     </TextBox.Foreground>
@@ -245,8 +249,8 @@
                                         <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
                                     </TextBox.Background>
                                 </TextBox>
-                                <ListBox x:Name="ListBoxTeamManager"  HorizontalAlignment="Left" Height="271" Margin="0,44,0,-9" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black" PreviewMouseRightButtonUp="ListBoxTeamManager_PreviewMouseRightButtonUp"/>
-                                <Border Margin="0,4,10,0" BorderThickness="1" Width="155" Height="155" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <ListBox x:Name="ListBoxTeamManager"  HorizontalAlignment="Left" Height="317" Margin="0,44,0,0" VerticalAlignment="Top" Width="200" Background="#FF4D4F5F" VerticalContentAlignment="Top" Foreground="#FFF1CD46" BorderBrush="Black" PreviewMouseRightButtonUp="ListBoxTeamManager_PreviewMouseRightButtonUp"/>
+                                <Border Margin="0,4,104,0" BorderThickness="1" Width="177" Height="177" HorizontalAlignment="Right" VerticalAlignment="Top">
                                     <Border.BorderBrush>
                                         <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
                                     </Border.BorderBrush>
@@ -255,17 +259,17 @@
                                     </Border.Background>
                                     <Image x:Name="ImageTeamManagerLogo"/>
                                 </Border>
-                                <Button  x:Name="ButtonTeamManagerSelectImage" Click="ButtonTeamManagerSelectImage_Click" fa:Awesome.Content="Image" HorizontalAlignment="Left" Margin="452,139,0,0" VerticalAlignment="Top" Width="24" Height="20" Padding="0" FontSize="10" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" Foreground="#FFF1CD46" Style="{DynamicResource CustomButtonStyle}">
+                                <Button  x:Name="ButtonTeamManagerSelectImage" Click="ButtonTeamManagerSelectImage_Click" fa:Awesome.Content="Image" HorizontalAlignment="Left" Margin="358,161,0,0" VerticalAlignment="Top" Width="24" Height="20" Padding="0" FontSize="10" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" Foreground="#FFF1CD46" Style="{DynamicResource CustomButtonStyle}">
                                     <Button.Background>
                                         <SolidColorBrush Color="#FF696C85"/>
                                     </Button.Background>
                                 </Button>
-                                <Button x:Name="ButtonTeamManagerLoadTeam" Content="Load and Edit Team" Click="ButtonTeamManagerLoadTeam_Click" Margin="205,280,10,46" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
-                                <Button x:Name="ButtonTeamManagerSaveTeam" Content="Save Team" Click="ButtonTeamManagerSaveTeam_Click" Margin="205,240,10,86" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
+                                <Button x:Name="ButtonTeamManagerLoadTeam" Content="Load and Edit Team" Click="ButtonTeamManagerLoadTeam_Click" Margin="205,321,7,0" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="40"/>
+                                <Button x:Name="ButtonTeamManagerSaveTeam" Content="Save Team" Click="ButtonTeamManagerSaveTeam_Click" Margin="205,276,7,45" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="40"/>
 
-                                <Button x:Name="ButtonTeamManagerAddPlayer" Click="ButtonTeamManagerAddPlayer_Click" fa:Awesome.Content="Plus" Margin="205,200,231,126" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35" Width="50"/>
-                                <Button x:Name="ButtonTeamManagerRemovePlayer" Click="ButtonTeamManagerRemovePlayer_Click" fa:Awesome.Content="Minus" Margin="0,200,170,126" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="35" Width="50" HorizontalAlignment="Right"/>
-                                <Button x:Name="ButtonTeamManagerClearList" Click="ButtonTeamManagerClearList_Click" Content="Clear list" Margin="321,200,10,126" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="35"/>
+                                <Button x:Name="ButtonTeamManagerAddPlayer" Click="ButtonTeamManagerAddPlayer_Click" fa:Awesome.Content="Plus" Margin="205,231,231,90" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="40" Width="50"/>
+                                <Button x:Name="ButtonTeamManagerRemovePlayer" Click="ButtonTeamManagerRemovePlayer_Click" fa:Awesome.Content="Minus" Margin="0,231,170,90" Style="{DynamicResource CustomButtonStyle}" FontSize="18" Height="40" Width="50" HorizontalAlignment="Right"/>
+                                <Button x:Name="ButtonTeamManagerClearList" Click="ButtonTeamManagerClearList_Click" Content="Clear list" Margin="321,231,7,90" Style="{DynamicResource CustomButtonStyle}" FontSize="16" Height="40"/>
 
                             </Grid>
                         </GroupBox>

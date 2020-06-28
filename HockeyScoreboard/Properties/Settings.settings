@@ -2,13 +2,37 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HockeyScoreboard.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="DefaultTimeoutDuration" Type="System.TimeSpan" Scope="User">
-      <Value Profile="(Default)">00:01:30</Value>
+    <Setting Name="TimeoutDuration" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:00:30</Value>
     </Setting>
-    <Setting Name="DefaultBreakDuration" Type="System.TimeSpan" Scope="User">
-      <Value Profile="(Default)">00:01:30</Value>
+    <Setting Name="BreakDuration" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:01:00</Value>
     </Setting>
-    <Setting Name="ExampleSetting" Type="System.Boolean" Scope="User">
+    <Setting Name="GameTimePresetA" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:07:00</Value>
+    </Setting>
+    <Setting Name="GameTimePresetB" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:05:00</Value>
+    </Setting>
+    <Setting Name="GameTimePresetC" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:10:00</Value>
+    </Setting>
+    <Setting Name="GameTimePresetD" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:03:00</Value>
+    </Setting>
+    <Setting Name="PenaltyTimePresetA" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:01:00</Value>
+    </Setting>
+    <Setting Name="PenaltyTimePresetB" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:02:00</Value>
+    </Setting>
+    <Setting Name="PenaltyTimePresetC" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:05:00</Value>
+    </Setting>
+    <Setting Name="PenaltyTimePresetD" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:10:00</Value>
+    </Setting>
+    <Setting Name="AutomaticallyStartBreak" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

@@ -25,37 +25,133 @@ namespace HockeyScoreboard.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("00:01:30")]
-        public global::System.TimeSpan DefaultTimeoutDuration {
+        [global::System.Configuration.DefaultSettingValueAttribute("00:00:30")]
+        public global::System.TimeSpan TimeoutDuration {
             get {
-                return ((global::System.TimeSpan)(this["DefaultTimeoutDuration"]));
+                return ((global::System.TimeSpan)(this["TimeoutDuration"]));
             }
             set {
-                this["DefaultTimeoutDuration"] = value;
+                this["TimeoutDuration"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("00:01:30")]
-        public global::System.TimeSpan DefaultBreakDuration {
+        [global::System.Configuration.DefaultSettingValueAttribute("00:01:00")]
+        public global::System.TimeSpan BreakDuration {
             get {
-                return ((global::System.TimeSpan)(this["DefaultBreakDuration"]));
+                return ((global::System.TimeSpan)(this["BreakDuration"]));
             }
             set {
-                this["DefaultBreakDuration"] = value;
+                this["BreakDuration"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:07:00")]
+        public global::System.TimeSpan GameTimePresetA {
+            get {
+                return ((global::System.TimeSpan)(this["GameTimePresetA"]));
+            }
+            set {
+                this["GameTimePresetA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:05:00")]
+        public global::System.TimeSpan GameTimePresetB {
+            get {
+                return ((global::System.TimeSpan)(this["GameTimePresetB"]));
+            }
+            set {
+                this["GameTimePresetB"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:10:00")]
+        public global::System.TimeSpan GameTimePresetC {
+            get {
+                return ((global::System.TimeSpan)(this["GameTimePresetC"]));
+            }
+            set {
+                this["GameTimePresetC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:03:00")]
+        public global::System.TimeSpan GameTimePresetD {
+            get {
+                return ((global::System.TimeSpan)(this["GameTimePresetD"]));
+            }
+            set {
+                this["GameTimePresetD"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:01:00")]
+        public global::System.TimeSpan PenaltyTimePresetA {
+            get {
+                return ((global::System.TimeSpan)(this["PenaltyTimePresetA"]));
+            }
+            set {
+                this["PenaltyTimePresetA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:02:00")]
+        public global::System.TimeSpan PenaltyTimePresetB {
+            get {
+                return ((global::System.TimeSpan)(this["PenaltyTimePresetB"]));
+            }
+            set {
+                this["PenaltyTimePresetB"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:05:00")]
+        public global::System.TimeSpan PenaltyTimePresetC {
+            get {
+                return ((global::System.TimeSpan)(this["PenaltyTimePresetC"]));
+            }
+            set {
+                this["PenaltyTimePresetC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:10:00")]
+        public global::System.TimeSpan PenaltyTimePresetD {
+            get {
+                return ((global::System.TimeSpan)(this["PenaltyTimePresetD"]));
+            }
+            set {
+                this["PenaltyTimePresetD"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ExampleSetting {
+        public bool AutomaticallyStartBreak {
             get {
-                return ((bool)(this["ExampleSetting"]));
+                return ((bool)(this["AutomaticallyStartBreak"]));
             }
             set {
-                this["ExampleSetting"] = value;
+                this["AutomaticallyStartBreak"] = value;
             }
         }
     }

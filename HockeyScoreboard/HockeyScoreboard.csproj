@@ -132,7 +132,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CustomTypes.cs" />
-    <Compile Include="Functions.cs" />
+    <Compile Include="MainWindowMethods.cs" />
     <Compile Include="GameClass.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="NumericSpinner.xaml.cs">
@@ -142,6 +142,7 @@
     <Compile Include="SecondaryWindow.xaml.cs">
       <DependentUpon>SecondaryWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="TeamClass.cs" />
     <Compile Include="TeamSavingClass.cs" />
     <Compile Include="TimeoutDialog.xaml.cs">

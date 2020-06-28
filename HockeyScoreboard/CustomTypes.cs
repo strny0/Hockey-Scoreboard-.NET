@@ -16,8 +16,9 @@ namespace HockeyScoreboard
             public TimeSpan PenaltyTimeLeft { get => penaltyTimeLeft; set => penaltyTimeLeft = value; }
             public TimeSpan PenaltyTimeSet { get => penaltyTimeSet; set => penaltyTimeSet = value; }
             public TimeSpan PenaltyOffset { get => penaltyOffset; set => penaltyOffset = value; }
-            public bool PeriodIs2plus2 { get; set; }
-            public int ScoreAtPeriodStart { get; set; }
+            public bool PeriodIsMinor { get; set; }
+            public bool PeriodIsDoubleMinor { get; set; }
+            public int OtherTeamScoreAtPenaltyStart { get; set; }
 
             public override bool Equals(object obj) => Equals(obj);
 
