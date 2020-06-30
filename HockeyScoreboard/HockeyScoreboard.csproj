@@ -134,6 +134,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CustomTypes.cs" />
+    <Compile Include="GetControls.cs" />
     <Compile Include="MainWindowMethods.cs" />
     <Compile Include="GameClass.cs" />
     <Compile Include="GlobalSuppressions.cs" />

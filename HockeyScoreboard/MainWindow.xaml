@@ -289,9 +289,8 @@
             </TabItem>
             <TabItem Header="Preferences" FontSize="15" Background="#FF333333" Foreground="White" BorderBrush="Black">
                 <Grid>
-                    <Button Content="Save and Apply" x:Name="ButtonPreferencesSave" Click="ButtonPreferencesSave_Click" HorizontalAlignment="Left" Margin="10,328,0,0" VerticalAlignment="Top" Height="40" Width="460" Style="{DynamicResource CustomButtonStyle}"/>
 
-                    <GroupBox Header="Toggles" Margin="10,10,882,75" HorizontalAlignment="Center" Width="460" Height="313" VerticalAlignment="Center">
+                    <GroupBox Header="Toggles" Margin="10,0,950,10">
                         <Grid>
                             <CheckBox Content="Display miliseconds below 1 minute for period clock" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" BorderBrush="Black" Background="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="4,0,0,0"/>
                             <CheckBox Content="Display miliseconds below 1 minute for penalty clock" HorizontalAlignment="Left" Margin="4,25,0,0" VerticalAlignment="Top" Foreground="White" BorderBrush="Black" Background="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
@@ -303,92 +302,92 @@
                             <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="4,175,0,0" VerticalAlignment="Top" Foreground="White" BorderBrush="Black" Background="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
                             <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="4,200,0,0" VerticalAlignment="Top" Foreground="White" BorderBrush="Black" Background="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
                             <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="4,225,0,0" VerticalAlignment="Top" Foreground="White" BorderBrush="Black" Background="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
+                            <Button Content="Save and Apply all settings" x:Name="ButtonPreferencesSave" Click="ButtonPreferencesSave_Click" HorizontalAlignment="Left" Margin="4,318,0,0" VerticalAlignment="Top" Height="40" Width="371" Style="{DynamicResource CustomButtonStyle}" FontSize="14"/>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Time presets" Margin="483,10,295,159">
-                        <Grid>
-
-                            <Controls:NumericSpinner HorizontalAlignment="Left" Height="40" Margin="139,115,0,0" VerticalAlignment="Top" Width="120"/>
-                            <Controls:NumericSpinner HorizontalAlignment="Left" Height="40" Margin="4,115,0,0" VerticalAlignment="Top" Width="120"/>
-                            <Button x:Name="ButtonPreferencesSetTime" Click="ButtonPreferencesSetTime_Click" Content="Set Time" HorizontalAlignment="Left" Margin="4,160,0,0" VerticalAlignment="Top" Height="40" Width="255" Style="{DynamicResource CustomButtonStyle}"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPeriodA" Content="Period Preset A: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Foreground="#FFF4F8FC" Background="#FFF4F8FC" Margin="10,10,0,0" BorderBrush="Black"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPeriodB" Content="Period Preset B: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="10,35,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPeriodC" Content="Period Preset C: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="10,60,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPeriodD" Content="Period Preset D: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="10,85,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPenaltyA" Content="Penalty Preset A: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Foreground="#FFF4F8FC" Background="#FFF4F8FC" Margin="290,10,0,0">
-                                <RadioButton.BorderBrush>
-                                    <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
-                                </RadioButton.BorderBrush>
-                            </RadioButton>
-                            <RadioButton x:Name="RadioButtonPreferencesPenaltyB" Content="Penalty Preset B: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="290,35,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPenaltyC" Content="Penalty Preset C: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="290,60,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPenaltyD" Content="Penalty Preset D: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="290,85,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
-                            <RadioButton x:Name="RadioButtonPreferencesDefaultTimeout" Content="Default Timeout Duration: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="290,110,-34,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
-                            <RadioButton x:Name="RadioButtonPreferencesDefaultBreak" Content="Default Break Duration: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="290,135,-16,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
+                    <GroupBox Header="Time presets" Margin="407,0,670,10">
+                        <Grid x:Name="GridTimePresets">
+                            <Controls:NumericSpinner x:Name="UpDownPreferencesSeconds" HorizontalAlignment="Left" Height="40" Margin="139,273,0,0" VerticalAlignment="Top" Width="120"/>
+                            <Controls:NumericSpinner x:Name="UpDownPreferencesMinutes" HorizontalAlignment="Left" Height="40" Margin="4,273,0,0" VerticalAlignment="Top" Width="120"/>
+                            <Button x:Name="ButtonPreferencesSetTime" Click="ButtonPreferencesSetTime_Click" Content="Set Time" HorizontalAlignment="Left" Margin="4,318,0,0" VerticalAlignment="Top" Height="40" Width="255" Style="{DynamicResource CustomButtonStyle}" FontSize="14"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPeriodA" Tag="GameTimePresetA" Content="Period Preset A: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Foreground="#FFF4F8FC" Background="#FFF4F8FC" Margin="4,0,0,0" BorderBrush="Black"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPeriodB" Tag="GameTimePresetB" Content="Period Preset B: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="4,25,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPeriodC" Tag="GameTimePresetC" Content="Period Preset C: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="4,50,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPeriodD" Tag="GameTimePresetD" Content="Period Preset D: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="4,75,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPenaltyA" Tag="PenaltyTimePresetA" Content="Penalty Preset A: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black" Margin="4,100,0,0" Width="249"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPenaltyB" Tag="PenaltyTimePresetB" Content="Penalty Preset B: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="4,125,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black" Width="248"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPenaltyC" Tag="PenaltyTimePresetC" Content="Penalty Preset C: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="4,150,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black" Width="248"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPenaltyD" Tag="PenaltyTimePresetD" Content="Penalty Preset D: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="4,175,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black" Width="250"/>
+                            <RadioButton x:Name="RadioButtonPreferencesDefaultTimeout" Tag="TimeoutDuration" Content="Default Timeout Duration: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="4,200,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black" Width="248"/>
+                            <RadioButton x:Name="RadioButtonPreferencesDefaultBreak" Tag="BreakDuration" Content="Default Break Duration: {minute}:{second}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="4,225,0,0" Foreground="#FFF4F8FC" Background="#FFF4F8FC" BorderBrush="Black" Width="249"/>
 
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Colors" Margin="1072,10,10,30" Height="358" VerticalAlignment="Center" HorizontalAlignment="Center" Width="270">
+                    <GroupBox Header="Color scheme of View" Margin="687,0,430,10" Height="388" Width="235">
                         <Grid>
-                            <Border x:Name="BorderColorBGMain" PreviewMouseLeftButtonUp="BorderColorBGMain_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,13,208,288" Width="40" Height="30">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="218*"/>
+                                <RowDefinition Height="143*"/>
+                            </Grid.RowDefinitions>
+                            <Border x:Name="BorderColorBGMain" PreviewMouseLeftButtonUp="BorderColorBGMain_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,3,179,185" Width="40" Height="30">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorBackgroundMain}"/>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="BorderColorBGSecondary" PreviewMouseLeftButtonUp="BorderColorBGSecondary_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,48,208,253" Width="40" Height="30">
+                            <Border x:Name="BorderColorBGSecondary" PreviewMouseLeftButtonUp="BorderColorBGSecondary_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,38,179,150" Width="40" Height="30">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="BorderColorBorder" PreviewMouseLeftButtonUp="BorderColorBorder_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,83,208,218" Width="40" Height="30">
+                            <Border x:Name="BorderColorBorder" PreviewMouseLeftButtonUp="BorderColorBorder_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,73,179,115" Width="40" Height="30">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="BorderColorIndicatorFree" PreviewMouseLeftButtonUp="BorderColorIndicatorFree_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,118,208,183" Width="40" Height="30">
+                            <Border x:Name="BorderColorIndicatorFree" PreviewMouseLeftButtonUp="BorderColorIndicatorFree_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,108,179,80" Width="40" Height="30">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorIndicatorSlotFree}"/>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="BorderColorIndicatorOccupied" PreviewMouseLeftButtonUp="BorderColorIndicatorOccupied_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,153,208,148" Width="40" Height="30">
+                            <Border x:Name="BorderColorIndicatorOccupied" PreviewMouseLeftButtonUp="BorderColorIndicatorOccupied_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,143,179,45" Width="40" Height="30">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorIndicatorSlotOccupied}"/>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="BorderColorNormalText" PreviewMouseLeftButtonUp="BorderColorNormalText_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,188,208,113" Width="40" Height="30">
+                            <Border x:Name="BorderColorNormalText" PreviewMouseLeftButtonUp="BorderColorNormalText_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,178,179,10" Width="40" Height="30">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="BorderColorPeriodText" PreviewMouseLeftButtonUp="BorderColorPeriodText_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,223,208,78" Width="40" Height="30">
+                            <Border x:Name="BorderColorPeriodText" PreviewMouseLeftButtonUp="BorderColorPeriodText_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,213,179,118" Width="40" Height="30" Grid.RowSpan="2">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorTextPeriod}"/>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="BorderColorTextTime" PreviewMouseLeftButtonUp="BorderColorTextTime_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,293,208,8" Width="40" Height="30">
+                            <Border x:Name="BorderColorTextTime" PreviewMouseLeftButtonUp="BorderColorTextTime_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,65,179,48" Width="40" Height="30" Grid.Row="1">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorTextTime}"/>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="BorderColorTextValues" PreviewMouseLeftButtonUp="BorderColorTextValues_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="10,258,208,43" Width="40" Height="30">
+                            <Border x:Name="BorderColorTextValues" PreviewMouseLeftButtonUp="BorderColorTextValues_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="White" Margin="4,30,179,83" Width="40" Height="30" Grid.Row="1">
                                 <Border.Background>
                                     <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
                                 </Border.Background>
                             </Border>
-                            <Label Content="Main Background Color" Margin="55,13,0,0" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" FontSize="12"/>
-                            <Label Content="Secondary Background Color" Margin="55,48,0,0" Foreground="White" VerticalContentAlignment="Center" Width="204" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" FontSize="12"/>
-                            <Label Content="Border Color" Margin="55,83,0,0" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" FontSize="12"/>
-                            <Label Content="Indicator Free Color" Margin="55,118,0,0" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" FontSize="12"/>
-                            <Label Content="Indicator Occupied Color" Margin="55,153,0,0" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" FontSize="12"/>
-                            <Label Content="Main Text Color" Margin="55,188,0,0" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" FontSize="12"/>
-                            <Label Content="Period Text Color" Margin="55,223,0,0" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" FontSize="12"/>
-                            <Label Content="Values Text Color" Margin="55,258,0,0" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" FontSize="12"/>
-                            <Label Content="Time Text Color" Margin="55,293,0,0" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" FontSize="12"/>
-                            <Button Content="Restore colors" x:Name="ButtonPreferencesRestoreDefaultColors" Click="ButtonPreferencesRestoreDefaultColors_Click" Margin="159,293,10,8" FontSize="12" Style="{DynamicResource CustomButtonStyle}" />
+                            <Label Content="Main Background Color" Margin="49,3,0,185" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12"/>
+                            <Label Content="Secondary Background Color" Margin="49,38,0,150" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12"/>
+                            <Label Content="Border Color" Margin="49,73,0,115" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12"/>
+                            <Label Content="Indicator Free Color" Margin="49,108,0,80" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12"/>
+                            <Label Content="Indicator Occupied Color" Margin="49,143,0,45" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12"/>
+                            <Label Content="Main Text Color" Margin="49,178,0,10" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12"/>
+                            <Label Content="Period Text Color" Margin="49,0,0,118" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12" Height="30" VerticalAlignment="Bottom" Grid.RowSpan="2"/>
+                            <Label Content="Values Text Color" Margin="49,0,0,83" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12" Height="30" VerticalAlignment="Bottom" Grid.Row="1"/>
+                            <Label Content="Time Text Color" Margin="49,0,0,50" Foreground="White" VerticalContentAlignment="Center" Width="169" HorizontalAlignment="Left" FontSize="12" Height="28" VerticalAlignment="Bottom" Grid.Row="1"/>
+                            <Button Content="Restore default colors" x:Name="ButtonPreferencesRestoreDefaultColors" Click="ButtonPreferencesRestoreDefaultColors_Click" Margin="4,100,5,3" FontSize="14" Style="{DynamicResource CustomButtonStyle}" Grid.Row="1" />
 
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Fonts" Margin="483,244,295,30" HorizontalAlignment="Center" Width="574" Height="124" VerticalAlignment="Center">
+                    <GroupBox Header="Fonts" Margin="927,0,260,10" HorizontalAlignment="Center" Width="165" Height="388" VerticalAlignment="Center">
                         <Grid>
 
                         </Grid>

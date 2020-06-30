@@ -17,13 +17,15 @@ namespace HockeyScoreboard
         public MainWindow()
         {
             InitializeComponent();
+            UIUpdateAllRadioButtons();
+            UIUpdateTimePresetButtonsPenalty("Major"); UIUpdateTimePresetButtonsPeriod();
+            Vars.SecondaryWindow.Show(); // launch and load view window
+            DefineDefaultProgramState();
+            InitializeTimer();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Vars.SecondaryWindow.Show(); // launch and load view window
             
-            DefineDefaultProgramState();
-            InitializeTimer();
         }
         #endregion
 
@@ -167,19 +169,19 @@ namespace HockeyScoreboard
         }
         private void ButtonSetTimePresetA_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(Settings.Default.PenaltyTimePresetA);
+            SetTime(Settings.Default.GameTimePresetA);
         }
         private void ButtonSetTimePresetB_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(Settings.Default.PenaltyTimePresetB);
+            SetTime(Settings.Default.GameTimePresetB);
         }
         private void ButtonSetTimePresetC_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(Settings.Default.PenaltyTimePresetC);
+            SetTime(Settings.Default.GameTimePresetC);
         }
         private void ButtonSetTimePresetD_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(Settings.Default.PenaltyTimePresetD);
+            SetTime(Settings.Default.GameTimePresetD);
         }
         private void ButtonBreakMode_Click(object sender, RoutedEventArgs e)
         {
@@ -381,7 +383,10 @@ namespace HockeyScoreboard
         #region PreferencesEvents
         private void ButtonPreferencesSetTime_Click(object sender, RoutedEventArgs e)
         {
-
+            PreferencesChangeTimeSetting(TimeSpan.FromMinutes((int)UpDownPreferencesMinutes.Value) + TimeSpan.FromSeconds((int)UpDownPreferencesSeconds.Value));
+            UIUpdateAllRadioButtons();
+            UIUpdateTimePresetButtonsPenalty("Major");
+            UIUpdateTimePresetButtonsPeriod();
         }
 
         #region Colors
@@ -440,17 +445,7 @@ namespace HockeyScoreboard
 
         private void ButtonPreferencesRestoreDefaultColors_Click(object sender, RoutedEventArgs e)
         {
-            Settings.Default.ColorBackgroundMain = Color.FromArgb(51, 51, 51);
-            Settings.Default.ColorBackgroundSecondary = Color.FromArgb(77, 79, 95);
-            Settings.Default.ColorBorderBrush = Color.Black;
-            Settings.Default.ColorPenaltyIndicatorFree = Color.Green;
-            Settings.Default.ColorPenaltyIndicatorOccupied = Color.Red;
-            Settings.Default.ColorTextMain = Color.White;
-            Settings.Default.ColorTextPeriod = Color.Lime;
-            Settings.Default.ColorTextTime = Color.FromArgb(238, 69, 92);
-            Settings.Default.ColorTextValues = Color.FromArgb(241, 205, 70);
-            UIUpdateAllColorButtons();
-            MessageBox.Show("Colors successfully restored.");
+            UIRestoreDefaultColors();
 
         }
 
@@ -459,6 +454,7 @@ namespace HockeyScoreboard
         {
             Settings.Default.Save();
             UIUpdateSecondaryWindowColorScheme();
+            UIUpdateAllRadioButtons();
 
             MessageBox.Show("Successfully saved. Preferences will be loaded as they were saved next time the program runs.");
         }

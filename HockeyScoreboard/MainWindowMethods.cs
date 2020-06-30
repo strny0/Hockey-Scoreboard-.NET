@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using HockeyScoreboard.Properties;
+using System.Linq;
 
 namespace HockeyScoreboard
 {
@@ -20,6 +21,7 @@ namespace HockeyScoreboard
         private const string ListboxFormat = "{0} - {1}";
         private readonly Brush ColorBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
         private readonly Brush ColorBrush2 = new SolidColorBrush(Color.FromRgb(51, 51, 51));
+
         #endregion
 
         #region Methods
@@ -887,6 +889,20 @@ namespace HockeyScoreboard
             UIUpdateColorButton(Settings.Default.ColorTextTime, BorderColorTextTime);
             UIUpdateColorButton(Settings.Default.ColorTextValues, BorderColorTextValues);
         }
+        private void UIRestoreDefaultColors()
+        {
+            Settings.Default.ColorBackgroundMain = System.Drawing.Color.FromArgb(51, 51, 51);
+            Settings.Default.ColorBackgroundSecondary = System.Drawing.Color.FromArgb(77, 79, 95);
+            Settings.Default.ColorBorderBrush = System.Drawing.Color.Black;
+            Settings.Default.ColorPenaltyIndicatorFree = System.Drawing.Color.Green;
+            Settings.Default.ColorPenaltyIndicatorOccupied = System.Drawing.Color.Red;
+            Settings.Default.ColorTextMain = System.Drawing.Color.White;
+            Settings.Default.ColorTextPeriod = System.Drawing.Color.Lime;
+            Settings.Default.ColorTextTime = System.Drawing.Color.FromArgb(238, 69, 92);
+            Settings.Default.ColorTextValues = System.Drawing.Color.FromArgb(241, 205, 70);
+            UIUpdateAllColorButtons();
+            MessageBox.Show("Colors successfully restored.");
+        }
         private SolidColorBrush ReturnSBrushFromColor(System.Drawing.Color colorInput)
         {
             SolidColorBrush outputBrush = new SolidColorBrush(Color.FromRgb(colorInput.R, colorInput.G, colorInput.B));
@@ -934,8 +950,7 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam1.Foreground = timeTextBrush;
             Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam2.Foreground = timeTextBrush;
             #endregion
-
-            #region Color: Main BG and Timeout indicators
+            #region Color: Main BG, Timeout and Indicators
             SolidColorBrush mainBGBrush = ReturnSBrushFromColor(Settings.Default.ColorBackgroundMain);
             Vars.SecondaryWindow.GridSecondaryWindow.Background = mainBGBrush;
             if (Vars.Team1.TimeoutRunning)
@@ -1003,8 +1018,6 @@ namespace HockeyScoreboard
             #region Color: Indicators
             SolidColorBrush indicatorBrushFree = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree);
             SolidColorBrush indicatorBrushOccupied = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorOccupied);
-
-
             if (Vars.Team1.Player1.PenaltyRunning)
             {
                 Vars.SecondaryWindow.Team1Indicator1.Background = indicatorBrushOccupied;
@@ -1043,8 +1056,116 @@ namespace HockeyScoreboard
             }
             #endregion
         }
-        #endregion
+        private void UIUpdateRadioButton(RadioButton buttonToUpdate, string buttonContent, TimeSpan buttonValue)
+        {
+            buttonToUpdate.Content = $"{buttonContent}: {buttonValue.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+        }
+        private void UIUpdateAllRadioButtons()
+        {
+            #region Game Time Radio buttons
+            UIUpdateRadioButton(RadioButtonPreferencesPeriodA, "Period Preset A", Settings.Default.GameTimePresetA);
+            UIUpdateRadioButton(RadioButtonPreferencesPeriodB, "Period Preset B", Settings.Default.GameTimePresetB);
+            UIUpdateRadioButton(RadioButtonPreferencesPeriodC, "Period Preset C", Settings.Default.GameTimePresetC);
+            UIUpdateRadioButton(RadioButtonPreferencesPeriodD, "Period Preset D", Settings.Default.GameTimePresetD);
+            #endregion
+            #region Penalty Time Radio buttons
+            UIUpdateRadioButton(RadioButtonPreferencesPenaltyA, "Penalty Preset A", Settings.Default.PenaltyTimePresetA);
+            UIUpdateRadioButton(RadioButtonPreferencesPenaltyB, "Penalty Preset B", Settings.Default.PenaltyTimePresetB);
+            UIUpdateRadioButton(RadioButtonPreferencesPenaltyC, "Penalty Preset C", Settings.Default.PenaltyTimePresetC);
+            UIUpdateRadioButton(RadioButtonPreferencesPenaltyD, "Penalty Preset D", Settings.Default.PenaltyTimePresetD);
+            #endregion
+            #region Other Radio buttons
+            UIUpdateRadioButton(RadioButtonPreferencesDefaultTimeout, "Default Timeout Duration", Settings.Default.TimeoutDuration);
+            UIUpdateRadioButton(RadioButtonPreferencesDefaultBreak, "Default Break Duration", Settings.Default.BreakDuration);
+            #endregion
+        }
+        private void UIUpdateTimePresetButtonsPeriod()
+        {
+            ButtonSetTimePresetA.Content = Settings.Default.GameTimePresetA.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
+            ButtonSetTimePresetB.Content = Settings.Default.GameTimePresetB.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
+            ButtonSetTimePresetC.Content = Settings.Default.GameTimePresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
+            ButtonSetTimePresetD.Content = Settings.Default.GameTimePresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
+        }
 
+        private void UIUpdateTimePresetButtonsPenalty(string format)
+        {
+            ButtonSetPenaltyTeam1A.Content = $"{format} {Settings.Default.PenaltyTimePresetA.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+            ButtonSetPenaltyTeam1B.Content = $"{format} {Settings.Default.PenaltyTimePresetB.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+            ButtonSetPenaltyTeam1C.Content = $"{format} {Settings.Default.PenaltyTimePresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+            ButtonSetPenaltyTeam1D.Content = $"{format} {Settings.Default.PenaltyTimePresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+            ButtonSetPenaltyTeam2A.Content = $"{format} {Settings.Default.PenaltyTimePresetA.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+            ButtonSetPenaltyTeam2B.Content = $"{format} {Settings.Default.PenaltyTimePresetB.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+            ButtonSetPenaltyTeam2C.Content = $"{format} {Settings.Default.PenaltyTimePresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+            ButtonSetPenaltyTeam2D.Content = $"{format} {Settings.Default.PenaltyTimePresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
+        }
+
+        private void PreferencesChangeTimeSetting(TimeSpan timeToSet)
+        {
+            foreach (RadioButton rB in GridTimePresets.Children.OfType<RadioButton>())
+            {
+                if (rB.IsChecked == true)
+                {
+                    if (rB == RadioButtonPreferencesDefaultBreak)
+                    {
+                        Settings.Default.BreakDuration = timeToSet;
+                    }
+                    else if (rB == RadioButtonPreferencesDefaultTimeout)
+                    {
+                        Settings.Default.TimeoutDuration = timeToSet;
+
+                    }
+                    else if (rB == RadioButtonPreferencesPenaltyA)
+                    {
+                        Settings.Default.PenaltyTimePresetA = timeToSet;
+
+                    }
+                    else if (rB == RadioButtonPreferencesPenaltyB)
+                    {
+                        Settings.Default.PenaltyTimePresetB = timeToSet;
+
+                    }
+                    else if (rB == RadioButtonPreferencesPenaltyC)
+                    {
+                        Settings.Default.PenaltyTimePresetC = timeToSet;
+
+                    }
+                    else if (rB == RadioButtonPreferencesPenaltyD)
+                    {
+                        Settings.Default.PenaltyTimePresetD = timeToSet;
+
+                    }
+                    else if (rB == RadioButtonPreferencesPeriodA)
+                    {
+                        Settings.Default.GameTimePresetA = timeToSet;
+
+                    }
+                    else if (rB == RadioButtonPreferencesPeriodB)
+                    {
+                        Settings.Default.GameTimePresetB = timeToSet;
+
+                    }
+                    else if (rB == RadioButtonPreferencesPeriodC)
+                    {
+                        Settings.Default.GameTimePresetC = timeToSet;
+
+                    }
+                    else if (rB == RadioButtonPreferencesPeriodD)
+                    {
+                        Settings.Default.GameTimePresetD = timeToSet;
+                    }
+
+                }
+
+            }
+        }
+
+
+
+
+
+
+
+        #endregion
         #endregion
     }
 }
