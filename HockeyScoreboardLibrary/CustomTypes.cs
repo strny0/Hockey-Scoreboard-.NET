@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Documents;
-
-namespace HockeyScoreboard
+﻿namespace HockeyScoreboard
 {
     public static partial class CustomTypes
     {

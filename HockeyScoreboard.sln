@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HockeyScoreboard", "HockeyScoreboard\HockeyScoreboard.csproj", "{52A2894F-79E1-4CFB-AB5D-3AE7E44906C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIHockeyScoreboard", "HockeyScoreboard\UIHockeyScoreboard.csproj", "{52A2894F-79E1-4CFB-AB5D-3AE7E44906C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HockeyScoreboardLibrary", "HockeyScoreboardLibrary\HockeyScoreboardLibrary.csproj", "{7F1F6E60-2599-4561-A21E-762ED6BD9A95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HockeyScoreboardWpfControlLibrary", "HockeyScoreboardWpfControlLibrary\HockeyScoreboardWpfControlLibrary.csproj", "{8082E58A-22AD-4876-AE93-B77B4C0A2E2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{52A2894F-79E1-4CFB-AB5D-3AE7E44906C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52A2894F-79E1-4CFB-AB5D-3AE7E44906C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52A2894F-79E1-4CFB-AB5D-3AE7E44906C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F1F6E60-2599-4561-A21E-762ED6BD9A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F1F6E60-2599-4561-A21E-762ED6BD9A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F1F6E60-2599-4561-A21E-762ED6BD9A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F1F6E60-2599-4561-A21E-762ED6BD9A95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8082E58A-22AD-4876-AE93-B77B4C0A2E2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8082E58A-22AD-4876-AE93-B77B4C0A2E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8082E58A-22AD-4876-AE93-B77B4C0A2E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8082E58A-22AD-4876-AE93-B77B4C0A2E2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

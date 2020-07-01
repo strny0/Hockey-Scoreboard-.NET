@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Controls="clr-namespace:HockeyScoreboard.Controls"
+    xmlns:Controls="clr-namespace:HockeyScoreboard.Controls;assembly=HockeyScoreboardWpfControlLibrary"
     x:Class="HockeyScoreboard.MainWindow"
         mc:Ignorable="d"
         Title="Hockey Scoreboard" Height="768" Width="1366" MinHeight="360" MinWidth="640" Loaded="Window_Loaded" Icon="Resources/DefaultIcon.ico" >
@@ -34,11 +34,8 @@
                         <Label x:Name="LabelTimeText" HorizontalAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="24" Width="389" Height="39" Content="Game" Foreground="#FFF9FAFC" Margin="41,-1,178,0"/>
                         <Label x:Name="LabelPeriod" Content="1" BorderThickness="1" VerticalAlignment="Center" RenderTransformOrigin="0.543,0.5" Margin="474,2,1,133" Height="132" FontSize="72" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FF74FF00" Background="#FF4D4F5F" BorderBrush="Black" HorizontalAlignment="Center" Width="133"/>
                         <Label HorizontalAlignment="Center" Margin="474,-1,2,228" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="24" Width="132" Height="40" Content="Period" Foreground="#FFF9FAFB"/>
-                        <Label Content=":" HorizontalAlignment="Center" Margin="75,146,517,86" VerticalAlignment="Center" FontSize="26" FontWeight="Bold" Padding="0" Height="35" Width="16" HorizontalContentAlignment="Center">
-                            <Label.Foreground>
-                                <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
-                            </Label.Foreground>
-                        </Label>
+                        <Label Content=":" HorizontalAlignment="Center" Margin="75,146,517,86" VerticalAlignment="Center" Foreground="{DynamicResource Theme_Brush_Bg}" FontSize="26" FontWeight="Bold" Padding="0" Height="35" Width="16" HorizontalContentAlignment="Center"/>
+
                         <Controls:NumericSpinner x:Name="UpDownMinutes" ValueChanged="UpDownMinutes_ValueChanged" Value="7" HorizontalAlignment="Center" Height="35" Margin="0,147,533,85" VerticalAlignment="Center" Width="75" Step="1" Maximum="999" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
                         <Controls:NumericSpinner x:Name="UpDownSeconds" ValueChanged="UpDownSeconds_ValueChanged" HorizontalAlignment="Center" Height="35" Margin="92,147,442,85" VerticalAlignment="Center" Width="74" Step="1" Maximum="59" Minimum="0" BorderThickness="0" FontSize="18" Decimals="0"/>
                         <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonSetTime" Click="ButtonSetTime_Click" Content="Set Time" HorizontalAlignment="Center" Margin="171,147,323,85" VerticalAlignment="Center" Width="114" Height="35" FontSize="15" Background="#FF696C85" BorderBrush="Black" Foreground="#FFF1CD46" FontWeight="Bold"/>

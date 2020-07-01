@@ -133,21 +133,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CustomTypes.cs" />
-    <Compile Include="GetControls.cs" />
-    <Compile Include="MainWindowMethods.cs" />
-    <Compile Include="GameClass.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="NumericSpinner.xaml.cs">
-      <DependentUpon>NumericSpinner.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PlayerClass.cs" />
+    <Compile Include="MainWindowMethods.cs" />
     <Compile Include="SecondaryWindow.xaml.cs">
       <DependentUpon>SecondaryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="TeamClass.cs" />
-    <Compile Include="TeamSavingClass.cs" />
     <Compile Include="TimeoutDialog.xaml.cs">
       <DependentUpon>TimeoutDialog.xaml</DependentUpon>
     </Compile>
@@ -164,10 +155,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NumericSpinner.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SecondaryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +221,16 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HockeyScoreboardLibrary\HockeyScoreboardLibrary.csproj">
+      <Project>{7f1f6e60-2599-4561-a21e-762ed6bd9a95}</Project>
+      <Name>HockeyScoreboardLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HockeyScoreboardWpfControlLibrary\HockeyScoreboardWpfControlLibrary.csproj">
+      <Project>{8082e58a-22ad-4876-ae93-b77b4c0a2e2d}</Project>
+      <Name>HockeyScoreboardWpfControlLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

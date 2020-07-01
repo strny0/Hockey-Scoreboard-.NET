@@ -419,7 +419,7 @@ namespace HockeyScoreboard
                 RefreshedBox.Items.Add(LoadClass.TeamName);
             }
         }
-        private void UIUpdateAll() // ALL UI
+        private void UIUpdateAllMainControls() // ALL UI
         {
             if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime)
             {
@@ -855,7 +855,7 @@ namespace HockeyScoreboard
                 };
                 Team.SelectedTeamList = LoadClass.PlayerList;
                 UIUpdateListbox(OutputListBox, LoadClass);
-                UIReloadControlsValues(Team); UIUpdateAll();
+                UIReloadControlsValues(Team); UIUpdateAllMainControls();
             }
             else return;
         }

@@ -17,6 +17,7 @@ namespace HockeyScoreboard
         public MainWindow()
         {
             InitializeComponent();
+            UIUpdateAllMainControls();
             UIUpdateAllRadioButtons();
             UIUpdateTimePresetButtonsPenalty("Major"); UIUpdateTimePresetButtonsPeriod();
             Vars.SecondaryWindow.Show(); // launch and load view window
@@ -136,7 +137,7 @@ namespace HockeyScoreboard
                         break;
                 }
             }
-            UIUpdateAll(); ; // UI UPDATE
+            UIUpdateAllMainControls(); ; // UI UPDATE
         }
         private void ButtonSetTime_Click(object sender, RoutedEventArgs e)
         {
@@ -247,7 +248,7 @@ namespace HockeyScoreboard
             UpDownTeam1Score.Value = Vars.Team1.Score; UpDownTeam2Score.Value = Vars.Team2.Score;
             Vars.Team1.Shots = 0; Vars.Team2.Shots = 0;
             UpDownTeam1Shots.Value = Vars.Team1.Shots; UpDownTeam2Shots.Value = Vars.Team2.Shots;
-            UIUpdateAll();
+            UIUpdateAllMainControls();
         }
         
         #endregion
