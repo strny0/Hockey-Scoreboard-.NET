@@ -6,7 +6,10 @@
              x:Class="HockeyScoreboard.App"
              StartupUri="MainWindow.xaml" ShutdownMode="OnMainWindowClose">
     <Application.Resources>
+        <!--#region Font Awesome-->
         <FontFamily x:Key="FontAwesome">/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
+        <!--#endregion-->
+        <!--#region Colors-->
         <Color x:Key="ColorBackgroundMain">#FF333333</Color>
         <Color x:Key="ColorBackgroundSecondary">#FF4D4F5F</Color>
         <Color x:Key="ColorBackgroundButton">#FF696C85</Color>
@@ -19,7 +22,7 @@
         <Color x:Key="ColorTextPeriod">#FF74FF00</Color>
         <Color x:Key="ColorIndicatorSlotFree">#FF008000</Color>
         <Color x:Key="ColorIndicatorSlotOccupied">#FFFF0000</Color>
-
+        <!--#endregion-->
         <!--BitmapImage x:Key="IconSource" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\ojstr\Programming\Visual Studio\HockeyScoreboard\HockeyScoreboard\HockeyScoreboardIcon.ico"/-->
 
         <!-- THEME BASIC  #FF688CAF -->
