@@ -1,10 +1,10 @@
-﻿<Window
+﻿<Window 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HockeyScoreboard"
-        xmlns:Controls="clr-namespace:HockeyScoreboard.Controls;assembly=HockeyScoreboardWpfControlLibrary" x:Class="HockeyScoreboard.TimeoutDialog"
+        xmlns:Controls="clr-namespace:HockeyScoreboard.Controls;assembly=HockeyScoreboardWpfControlLibrary"    
+        x:Class="HockeyScoreboard.TimeoutDialog"
         mc:Ignorable="d"
         Title="Give timeout" Height="256" Width="373" Loaded="Window_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="Resources/DefaultIcon.ico" Closed="Window_Closed">
     <Window.Background>
