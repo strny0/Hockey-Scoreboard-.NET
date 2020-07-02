@@ -23,9 +23,8 @@
         <Color x:Key="ColorIndicatorSlotFree">#FF008000</Color>
         <Color x:Key="ColorIndicatorSlotOccupied">#FFFF0000</Color>
         <!--#endregion-->
-        <!--BitmapImage x:Key="IconSource" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\ojstr\Programming\Visual Studio\HockeyScoreboard\HockeyScoreboard\HockeyScoreboardIcon.ico"/-->
 
-        <!-- THEME BASIC  #FF688CAF -->
+        <!--#region Theme presets for custom controls-->
         <Color x:Key="ThemeRedColor">#d14040</Color>
         <Color x:Key="ThemeColorInactive">#FF333333</Color>
         <Color x:Key="ThemeColorActive">#FF696C85</Color>
@@ -39,7 +38,7 @@
 
         <SolidColorBrush x:Key="Theme_Brush_Bg" Color="White" />
         <SolidColorBrush x:Key="Theme_Brush_SilverBorder" Color="Silver" />
-
+        <!--#endregion-->
 
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -335,7 +334,6 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-
 
     </Application.Resources>
 </Application>

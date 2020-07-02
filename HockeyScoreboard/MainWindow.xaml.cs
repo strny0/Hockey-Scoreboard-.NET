@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Globalization;
 using HockeyScoreboard.Properties;
-using System.Drawing;
 
 namespace HockeyScoreboard
 {
@@ -23,10 +22,6 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.Show(); // launch and load view window
             DefineDefaultProgramState();
             InitializeTimer();
-        }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            
         }
         #endregion
 

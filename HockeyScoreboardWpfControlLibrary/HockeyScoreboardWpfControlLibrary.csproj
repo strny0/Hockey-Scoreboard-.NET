@@ -54,9 +54,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NumericSpinner.xaml.cs">
-      <DependentUpon>NumericSpinner.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,8 +67,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
+    <Compile Include="UpDownDecimal.xaml.cs">
+      <DependentUpon>UpDownDecimal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpDownDouble.xaml.cs">
+      <DependentUpon>UpDownDouble.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpDownFloat.xaml.cs">
+      <DependentUpon>UpDownFloat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpDownInt.xaml.cs">
+      <DependentUpon>UpDownInt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpDownTimeSpan.xaml.cs">
+      <DependentUpon>UpDownTimeSpan.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -84,11 +93,23 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="NumericSpinner.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="UpDownDecimal.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl1.xaml">
+    <Page Include="UpDownDouble.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpDownFloat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpDownInt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpDownTimeSpan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
