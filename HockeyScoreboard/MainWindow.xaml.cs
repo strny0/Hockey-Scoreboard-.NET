@@ -229,7 +229,7 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.Close();
             Vars.SecondaryWindow = new SecondaryWindow();
             Vars.SecondaryWindow.Show();
-
+            UIUpdateSecondaryWindowColorScheme();
         }
         private void ButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
@@ -390,59 +390,68 @@ namespace HockeyScoreboard
         {
             Settings.Default.ColorBackgroundMain = ChangeColorSetting(Settings.Default.ColorBackgroundMain);
             UIUpdateColorButton(Settings.Default.ColorBackgroundMain, BorderColorBGMain);
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         private void BorderColorBGSecondary_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorBackgroundSecondary = ChangeColorSetting(Settings.Default.ColorBackgroundSecondary);
             UIUpdateColorButton(Settings.Default.ColorBackgroundSecondary, BorderColorBGSecondary);
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         private void BorderColorBorder_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorBorderBrush = ChangeColorSetting(Settings.Default.ColorBorderBrush);
             UIUpdateColorButton(Settings.Default.ColorBorderBrush, BorderColorBorder);
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         private void BorderColorIndicatorFree_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorPenaltyIndicatorFree = ChangeColorSetting(Settings.Default.ColorPenaltyIndicatorFree);
             UIUpdateColorButton(Settings.Default.ColorPenaltyIndicatorFree, BorderColorIndicatorFree);
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         private void BorderColorIndicatorOccupied_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorPenaltyIndicatorOccupied = ChangeColorSetting(Settings.Default.ColorPenaltyIndicatorOccupied);
             UIUpdateColorButton(Settings.Default.ColorPenaltyIndicatorOccupied, BorderColorIndicatorOccupied);
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         private void BorderColorNormalText_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextMain = ChangeColorSetting(Settings.Default.ColorTextMain);
             UIUpdateColorButton(Settings.Default.ColorTextMain, BorderColorNormalText);
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         private void BorderColorPeriodText_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextPeriod = ChangeColorSetting(Settings.Default.ColorTextPeriod);
             UIUpdateColorButton(Settings.Default.ColorTextPeriod, BorderColorPeriodText);
+            UIUpdateSecondaryWindowColorScheme();
         }
         private void BorderColorTextTime_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextTime = ChangeColorSetting(Settings.Default.ColorTextTime);
             UIUpdateColorButton(Settings.Default.ColorTextTime, BorderColorTextTime);
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         private void BorderColorTextValues_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextValues = ChangeColorSetting(Settings.Default.ColorTextValues);
             UIUpdateColorButton(Settings.Default.ColorTextValues, BorderColorTextValues);
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         private void ButtonPreferencesRestoreDefaultColors_Click(object sender, RoutedEventArgs e)
         {
             UIRestoreDefaultColors();
-
+            UIUpdateSecondaryWindowColorScheme();
         }
 
         #endregion

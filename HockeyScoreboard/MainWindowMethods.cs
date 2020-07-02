@@ -16,7 +16,7 @@ namespace HockeyScoreboard
 {
     public partial class MainWindow : Window
     {
-        #region Constants
+        #region Constants and Variables
         private readonly List<string> teamLoadingFilePaths = new List<string>();
         private const string ListboxFormat = "{0} - {1}";
         private readonly Brush ColorBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
@@ -170,25 +170,35 @@ namespace HockeyScoreboard
         }
         #endregion
 
-        #region GeneralMethods
+        #region GameManagementMethods
         private string ReturnImageSourcePath()
         {
             OpenFileDialog ImageDialog = DefineImageFileDialog();
-            Nullable<bool> Result = ImageDialog.ShowDialog();
 
-            if (Result == true)
+            bool? result = ImageDialog.ShowDialog();
+
+
+            if (result == true)
             {
                 return ImageDialog.FileName;
             }
-            else return "";
+            else return string.Empty;
         }
         private void ChangeImageFromPath(string ImagePath, Image ImageToChange)
         {
-            BitmapImage bitmap = new BitmapImage(new Uri(ImagePath))
+            if (string.IsNullOrEmpty(ImagePath))
             {
-                CacheOption = BitmapCacheOption.OnLoad
-            };
-            ImageToChange.Source = bitmap;
+                MessageBox.Show("You must select an image.","Operation aborted",MessageBoxButton.OK,MessageBoxImage.Warning);
+                return;
+            }
+            else
+            {
+                BitmapImage bitmap = new BitmapImage(new Uri(ImagePath))
+                {
+                    CacheOption = BitmapCacheOption.OnLoad
+                };
+                ImageToChange.Source = bitmap;
+            }
         }
         private void SetTime(TimeSpan InputTime) // SET TIME
         {
@@ -252,7 +262,7 @@ namespace HockeyScoreboard
         }
         #endregion
 
-        #region UIMethods
+        #region UIUpdate'GameManagement, Secondary Window and Penalties'Methods
         private void UIUpdateGameTime()
         {
             if (Vars.Game.TimeLeft < TimeSpan.FromMinutes(1))
@@ -397,7 +407,7 @@ namespace HockeyScoreboard
             UpdatedListbox.Items.Clear();
             foreach (TeamSavingClass.PlayerTeamListType ListType in LoadClass.PlayerList)
             {
-                _ = UpdatedListbox.Items.Add(string.Format(ListboxFormat, ListType.Number, ListType.Name));
+                _ = UpdatedListbox.Items.Add(string.Format(ListboxFormat, ListType.Number, ListType.Name, CultureInfo.InvariantCulture));
             }
         }
         private void UIUpdateComboBoxSelection(ComboBox RefreshedBox)
@@ -1086,7 +1096,6 @@ namespace HockeyScoreboard
             ButtonSetTimePresetC.Content = Settings.Default.GameTimePresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
             ButtonSetTimePresetD.Content = Settings.Default.GameTimePresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
         }
-
         private void UIUpdateTimePresetButtonsPenalty(string format)
         {
             ButtonSetPenaltyTeam1A.Content = $"{format} {Settings.Default.PenaltyTimePresetA.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
@@ -1098,7 +1107,6 @@ namespace HockeyScoreboard
             ButtonSetPenaltyTeam2C.Content = $"{format} {Settings.Default.PenaltyTimePresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
             ButtonSetPenaltyTeam2D.Content = $"{format} {Settings.Default.PenaltyTimePresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
         }
-
         private void PreferencesChangeTimeSetting(TimeSpan timeToSet)
         {
             foreach (RadioButton rB in GridTimePresets.Children.OfType<RadioButton>())
@@ -1166,6 +1174,7 @@ namespace HockeyScoreboard
 
 
         #endregion
+
         #endregion
     }
 }
