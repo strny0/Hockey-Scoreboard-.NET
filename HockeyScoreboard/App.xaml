@@ -6,49 +6,49 @@
              x:Class="HockeyScoreboard.App"
              StartupUri="MainWindow.xaml" ShutdownMode="OnMainWindowClose">
     <Application.Resources>
-        <!--#region Font Awesome-->
+        <!--#region Font Awesome Import-->
         <FontFamily x:Key="FontAwesome">/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
         <!--#endregion-->
-        <!--#region Colors-->
+        
+        <!--#region Default colors-->
         <Color x:Key="ColorBackgroundMain">#FF333333</Color>
+        <SolidColorBrush x:Key="BrushBackgroundMain" Color="{StaticResource ColorBackgroundMain}"/>
+
         <Color x:Key="ColorBackgroundSecondary">#FF4D4F5F</Color>
+        <SolidColorBrush x:Key="BrushBackgroundSecondary" Color="{StaticResource ColorBackgroundSecondary}"/>
+
         <Color x:Key="ColorBackgroundButton">#FF696C85</Color>
+        <SolidColorBrush x:Key="BrushBackgroundButton" Color="{StaticResource ColorBackgroundButton}"/>
+
         <Color x:Key="ColorMouseOver">#FF9A9CB0</Color>
+        <SolidColorBrush x:Key="BrushMouseOver" Color="{StaticResource ColorMouseOver}"/>
+
         <Color x:Key="ColorKeyPressed">#FF585A6F</Color>
+        <SolidColorBrush x:Key="BrushKeyPressed" Color="{StaticResource ColorKeyPressed}"/>
+
         <Color x:Key="ColorBorderBrush">Black</Color>
-        <Color x:Key="ColorTextDefault">#FFF4F8FC</Color>
+        <SolidColorBrush x:Key="BrushBorderBrush" Color="{StaticResource ColorBorderBrush}"/>
+
+        <Color x:Key="ColorTextDefault">White</Color>
+        <SolidColorBrush x:Key="BrushTextDefault" Color="{StaticResource ColorTextDefault}"/>
+
         <Color x:Key="ColorTextValues">#FFF1CD46</Color>
+        <SolidColorBrush x:Key="BrushTextValues" Color="{StaticResource ColorTextValues}"/>
+
         <Color x:Key="ColorTextTime">#FFEE455D</Color>
+        <SolidColorBrush x:Key="BrushTextTime" Color="{StaticResource ColorTextTime}"/>
+
         <Color x:Key="ColorTextPeriod">#FF74FF00</Color>
+        <SolidColorBrush x:Key="BrushTextPeriod" Color="{StaticResource ColorTextPeriod}"/>
+
         <Color x:Key="ColorIndicatorSlotFree">#FF008000</Color>
+        <SolidColorBrush x:Key="BrushIndicatorSlotFree" Color="{StaticResource ColorIndicatorSlotFree}"/>
+
         <Color x:Key="ColorIndicatorSlotOccupied">#FFFF0000</Color>
+        <SolidColorBrush x:Key="BrushIndicatorSlotOccupied" Color="{StaticResource ColorIndicatorSlotOccupied}"/>
         <!--#endregion-->
 
-        <!--#region Theme presets for custom controls-->
-        <Color x:Key="ThemeRedColor">#d14040</Color>
-        <Color x:Key="ThemeColorInactive">#FF333333</Color>
-        <Color x:Key="ThemeColorActive">#FF696C85</Color>
-        <SolidColorBrush x:Key="ThemeBrushBackgroundButton" Color="{DynamicResource ColorBackgroundButton}" />
-        <SolidColorBrush x:Key="ThemeBrushBackgroundSecondary" Color="{DynamicResource ColorBackgroundSecondary}" />
-        <SolidColorBrush x:Key="ThemeBrushBackgroundMain" Color="{DynamicResource ColorBackgroundMain}" />
-        <SolidColorBrush x:Key="ThemeBrushBorderBrush" Color="{DynamicResource ColorBorderBrush}" />
-        <SolidColorBrush x:Key="ThemeBrushInactive" Color="{DynamicResource ThemeColorInactive}" />
-        <SolidColorBrush x:Key="ThemeBrushActive" Color="{DynamicResource ThemeColorActive}" />
-        <SolidColorBrush x:Key="ThemeRedBrush" Color="{DynamicResource ThemeRedColor}" />
-
-        <SolidColorBrush x:Key="Theme_Brush_Bg" Color="White" />
-        <SolidColorBrush x:Key="Theme_Brush_SilverBorder" Color="Silver" />
-        <!--#endregion-->
-
-        <Style x:Key="FocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <!--#region Colors for templates (better names, but duplicate in some cases)-->
         <SolidColorBrush x:Key="Button.Static.Background" Color="{DynamicResource ColorBackgroundButton}"/>
         <SolidColorBrush x:Key="Button.Static.Border" Color="{DynamicResource ColorBorderBrush}"/>
         <SolidColorBrush x:Key="Button.Static.Foreground" Color="{DynamicResource ColorTextValues}"/>
@@ -59,6 +59,18 @@
         <SolidColorBrush x:Key="Button.Disabled.Background" Color="{DynamicResource ColorBackgroundSecondary}"/>
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="{DynamicResource ColorBorderBrush}"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="{DynamicResource ColorBackgroundButton}"/>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--#endregion-->
+        
+        <!--#region Style: Button-->
         <Style x:Key="CustomButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
             <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
@@ -96,8 +108,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--#endregion-->
 
-
+        <!--#region Style: Tab-->
         <Style x:Key="CustomTabStyle" TargetType="{x:Type TabControl}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
             <Setter Property="Background" Value="Black"/>
@@ -126,7 +139,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        <!--#endregion-->
+        
+        <!--#region Template: ComboBox-->
         <ControlTemplate x:Key="CustomComboBoxControlTemplate" TargetType="{x:Type ComboBox}">
             <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
                 <Grid.ColumnDefinitions>
@@ -334,6 +349,7 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-
+        <!--#endregion-->
+        
     </Application.Resources>
 </Application>

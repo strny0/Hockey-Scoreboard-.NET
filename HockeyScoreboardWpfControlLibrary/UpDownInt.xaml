@@ -89,11 +89,11 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <RepeatButton x:Name="RbuttonUp" 
                       x:FieldModifier="private"
                       Template="{DynamicResource RepeatButtonControlTemplate}"
-                      Click="RbuttonUp_Click" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="33" Grid.ColumnSpan="2">
+                      Click="RbuttonUp_Click" Grid.Row="0" Grid.Column="1">
             <RepeatButton.Foreground>
                 <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
             </RepeatButton.Foreground>
@@ -114,7 +114,7 @@
         <RepeatButton x:Name="RbuttonDown"
                       x:FieldModifier="private"
                       Template="{DynamicResource RepeatButtonControlTemplate}"
-                      Click="RbuttonDown_Click" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="20" Width="33" Grid.ColumnSpan="2">
+                      Click="RbuttonDown_Click" Grid.Row="1" Grid.Column="1">
             <RepeatButton.Foreground>
                 <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
             </RepeatButton.Foreground>
@@ -138,11 +138,11 @@
                  x:Name="TextBoxValue"
                  x:FieldModifier="private"
                  TextWrapping="NoWrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.IsSharedSizeScope="True"
+                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="1"
                  Template="{DynamicResource TextBoxControlTemplate}"
                  InputScope="Digits"
                  PreviewMouseWheel="TextBoxValue_PreviewMouseWheel"
-                 Loaded="TextBoxValue_Loaded" Grid.ColumnSpan="2" Margin="0,0,32,0" TextChanged="TextBoxValue_TextChanged">
+                 Loaded="TextBoxValue_Loaded" TextChanged="TextBoxValue_TextChanged">
             <TextBox.SelectionBrush>
                 <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
             </TextBox.SelectionBrush>

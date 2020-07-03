@@ -26,8 +26,8 @@
                 <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
             </Label.Foreground>
         </Label>
-        <Controls:UpDownDecimal x:Name="UpDownMinutes" Value="1" Step="1" Minimum="0" HorizontalAlignment="Left" Height="50" Margin="10,171,0,0" VerticalAlignment="Top" Width="169"/>
-        <Controls:UpDownDecimal x:Name="UpDownSeconds" Value="30" Step="1" Minimum="0" Maximum="59" HorizontalAlignment="Left" Height="50" Margin="184,171,0,0" VerticalAlignment="Top" Width="169"/>
+        <Controls:UpDownInt x:Name="UpDownMinutes" Value="1" Step="1" Minimum="0" HorizontalAlignment="Left" Height="50" Margin="10,171,0,0" VerticalAlignment="Top" Width="169"/>
+        <Controls:UpDownInt x:Name="UpDownSeconds" Value="30" Step="1" Minimum="0" Maximum="59" HorizontalAlignment="Left" Height="50" Margin="184,171,0,0" VerticalAlignment="Top" Width="169"/>
         <Label Content=":" HorizontalAlignment="Center" Margin="177,175,181,0" VerticalAlignment="Top" Width="9" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Height="49" FontSize="20" Padding="0,0,0,0">
             <Label.Foreground>
                 <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>

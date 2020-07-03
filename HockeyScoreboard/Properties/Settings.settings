@@ -8,16 +8,16 @@
     <Setting Name="BreakDuration" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:01:00</Value>
     </Setting>
-    <Setting Name="GameTimePresetA" Type="System.TimeSpan" Scope="User">
+    <Setting Name="PeriodPresetA" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:07:00</Value>
     </Setting>
-    <Setting Name="GameTimePresetB" Type="System.TimeSpan" Scope="User">
+    <Setting Name="PeriodPresetB" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:05:00</Value>
     </Setting>
-    <Setting Name="GameTimePresetC" Type="System.TimeSpan" Scope="User">
+    <Setting Name="PeriodPresetC" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:10:00</Value>
     </Setting>
-    <Setting Name="GameTimePresetD" Type="System.TimeSpan" Scope="User">
+    <Setting Name="PeriodPresetD" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:03:00</Value>
     </Setting>
     <Setting Name="PenaltyTimePresetA" Type="System.TimeSpan" Scope="User">
@@ -68,10 +68,13 @@
     <Setting Name="ColorTextPeriod" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Lime</Value>
     </Setting>
-    <Setting Name="DescriptiveFont" Type="System.Drawing.Font" Scope="User">
+    <Setting Name="DescriptiveTextFont" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI, 8.25pt</Value>
     </Setting>
-    <Setting Name="ValuesFont" Type="System.Drawing.Font" Scope="User">
+    <Setting Name="ValuesTextFont" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI, 8.25pt</Value>
+    </Setting>
+    <Setting Name="TimeTextFont" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI, 8.25pt</Value>
     </Setting>
   </Settings>

@@ -50,48 +50,48 @@ namespace HockeyScoreboard.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:07:00")]
-        public global::System.TimeSpan GameTimePresetA {
+        public global::System.TimeSpan PeriodPresetA {
             get {
-                return ((global::System.TimeSpan)(this["GameTimePresetA"]));
+                return ((global::System.TimeSpan)(this["PeriodPresetA"]));
             }
             set {
-                this["GameTimePresetA"] = value;
+                this["PeriodPresetA"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:05:00")]
-        public global::System.TimeSpan GameTimePresetB {
+        public global::System.TimeSpan PeriodPresetB {
             get {
-                return ((global::System.TimeSpan)(this["GameTimePresetB"]));
+                return ((global::System.TimeSpan)(this["PeriodPresetB"]));
             }
             set {
-                this["GameTimePresetB"] = value;
+                this["PeriodPresetB"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:10:00")]
-        public global::System.TimeSpan GameTimePresetC {
+        public global::System.TimeSpan PeriodPresetC {
             get {
-                return ((global::System.TimeSpan)(this["GameTimePresetC"]));
+                return ((global::System.TimeSpan)(this["PeriodPresetC"]));
             }
             set {
-                this["GameTimePresetC"] = value;
+                this["PeriodPresetC"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:03:00")]
-        public global::System.TimeSpan GameTimePresetD {
+        public global::System.TimeSpan PeriodPresetD {
             get {
-                return ((global::System.TimeSpan)(this["GameTimePresetD"]));
+                return ((global::System.TimeSpan)(this["PeriodPresetD"]));
             }
             set {
-                this["GameTimePresetD"] = value;
+                this["PeriodPresetD"] = value;
             }
         }
         
@@ -290,24 +290,36 @@ namespace HockeyScoreboard.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI, 8.25pt")]
-        public global::System.Drawing.Font DescriptiveFont {
+        public global::System.Drawing.Font DescriptiveTextFont {
             get {
-                return ((global::System.Drawing.Font)(this["DescriptiveFont"]));
+                return ((global::System.Drawing.Font)(this["DescriptiveTextFont"]));
             }
             set {
-                this["DescriptiveFont"] = value;
+                this["DescriptiveTextFont"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI, 8.25pt")]
-        public global::System.Drawing.Font ValuesFont {
+        public global::System.Drawing.Font ValuesTextFont {
             get {
-                return ((global::System.Drawing.Font)(this["ValuesFont"]));
+                return ((global::System.Drawing.Font)(this["ValuesTextFont"]));
             }
             set {
-                this["ValuesFont"] = value;
+                this["ValuesTextFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI, 8.25pt")]
+        public global::System.Drawing.Font TimeTextFont {
+            get {
+                return ((global::System.Drawing.Font)(this["TimeTextFont"]));
+            }
+            set {
+                this["TimeTextFont"] = value;
             }
         }
     }

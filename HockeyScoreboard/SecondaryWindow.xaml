@@ -6,7 +6,7 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:HockeyScoreboard"
         mc:Ignorable="d"
-         Height="768" Width="1366" MinHeight="360" MinWidth="640" Icon="Resources/DefaultIcon.ico" Background="#FF333333" >
+         Height="768" Width="1366" MinHeight="360" MinWidth="640" Icon="Resources/DefaultIcon.ico" Background="#FF333333" WindowState="Minimized" WindowStartupLocation="CenterOwner" >
     <Grid>
         <Viewbox Stretch="Fill">
             <Grid x:Name="GridSecondaryWindow" x:FieldModifier="public" Background="#FF333333" >

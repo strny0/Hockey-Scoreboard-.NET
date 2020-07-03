@@ -1,16 +1,16 @@
-﻿using System;
+﻿using HockeyScoreboard.Properties;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using Microsoft.Win32;
-using HockeyScoreboard.Properties;
-using System.Linq;
+using System.Xml.Serialization;
 
 namespace HockeyScoreboard
 {
@@ -19,8 +19,8 @@ namespace HockeyScoreboard
         #region Constants and Variables
         private readonly List<string> teamLoadingFilePaths = new List<string>();
         private const string ListboxFormat = "{0} - {1}";
-        private readonly Brush ColorBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
-        private readonly Brush ColorBrush2 = new SolidColorBrush(Color.FromRgb(51, 51, 51));
+        private readonly Brush cBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
+        private readonly Brush cBrush2 = new SolidColorBrush(Color.FromRgb(51, 51, 51));
 
         #endregion
 
@@ -449,12 +449,12 @@ namespace HockeyScoreboard
 
             if (Vars.Team1.TimeoutRunning)
             {
-                LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush1;
+                LabelTimeoutRunningIndicatorTeam1.Foreground = cBrush1;
                 Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = ReturnSBrushFromColor(Settings.Default.ColorTextValues);
             }
             else
             {
-                LabelTimeoutRunningIndicatorTeam1.Foreground = ColorBrush2;
+                LabelTimeoutRunningIndicatorTeam1.Foreground = cBrush2;
                 Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = ReturnSBrushFromColor(Settings.Default.ColorBackgroundMain);
                 if (Vars.Team1.HasTimeout)
                 {
@@ -469,12 +469,12 @@ namespace HockeyScoreboard
             }
             if (Vars.Team2.TimeoutRunning)
             {
-                LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush1;
+                LabelTimeoutRunningIndicatorTeam2.Foreground = cBrush1;
                 Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = ReturnSBrushFromColor(Settings.Default.ColorTextValues);
             }
             else
             {
-                LabelTimeoutRunningIndicatorTeam2.Foreground = ColorBrush2;
+                LabelTimeoutRunningIndicatorTeam2.Foreground = cBrush2;
                 Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = ReturnSBrushFromColor(Settings.Default.ColorBackgroundMain);
                 if (Vars.Team2.HasTimeout)
                 {
@@ -1073,10 +1073,10 @@ namespace HockeyScoreboard
         private void UIUpdateAllRadioButtons()
         {
             #region Game Time Radio buttons
-            UIUpdateRadioButton(RadioButtonPreferencesPeriodA, "Period Preset A", Settings.Default.GameTimePresetA);
-            UIUpdateRadioButton(RadioButtonPreferencesPeriodB, "Period Preset B", Settings.Default.GameTimePresetB);
-            UIUpdateRadioButton(RadioButtonPreferencesPeriodC, "Period Preset C", Settings.Default.GameTimePresetC);
-            UIUpdateRadioButton(RadioButtonPreferencesPeriodD, "Period Preset D", Settings.Default.GameTimePresetD);
+            UIUpdateRadioButton(RadioButtonPreferencesPeriodA, "Period Preset A", Settings.Default.PeriodPresetA);
+            UIUpdateRadioButton(RadioButtonPreferencesPeriodB, "Period Preset B", Settings.Default.PeriodPresetB);
+            UIUpdateRadioButton(RadioButtonPreferencesPeriodC, "Period Preset C", Settings.Default.PeriodPresetC);
+            UIUpdateRadioButton(RadioButtonPreferencesPeriodD, "Period Preset D", Settings.Default.PeriodPresetD);
             #endregion
             #region Penalty Time Radio buttons
             UIUpdateRadioButton(RadioButtonPreferencesPenaltyA, "Penalty Preset A", Settings.Default.PenaltyTimePresetA);
@@ -1091,10 +1091,10 @@ namespace HockeyScoreboard
         }
         private void UIUpdateTimePresetButtonsPeriod()
         {
-            ButtonSetTimePresetA.Content = Settings.Default.GameTimePresetA.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
-            ButtonSetTimePresetB.Content = Settings.Default.GameTimePresetB.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
-            ButtonSetTimePresetC.Content = Settings.Default.GameTimePresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
-            ButtonSetTimePresetD.Content = Settings.Default.GameTimePresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
+            ButtonSetTimePresetA.Content = Settings.Default.PeriodPresetA.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
+            ButtonSetTimePresetB.Content = Settings.Default.PeriodPresetB.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
+            ButtonSetTimePresetC.Content = Settings.Default.PeriodPresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
+            ButtonSetTimePresetD.Content = Settings.Default.PeriodPresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
         }
         private void UIUpdateTimePresetButtonsPenalty(string format)
         {
@@ -1144,22 +1144,22 @@ namespace HockeyScoreboard
                     }
                     else if (rB == RadioButtonPreferencesPeriodA)
                     {
-                        Settings.Default.GameTimePresetA = timeToSet;
+                        Settings.Default.PeriodPresetA = timeToSet;
 
                     }
                     else if (rB == RadioButtonPreferencesPeriodB)
                     {
-                        Settings.Default.GameTimePresetB = timeToSet;
+                        Settings.Default.PeriodPresetB = timeToSet;
 
                     }
                     else if (rB == RadioButtonPreferencesPeriodC)
                     {
-                        Settings.Default.GameTimePresetC = timeToSet;
+                        Settings.Default.PeriodPresetC = timeToSet;
 
                     }
                     else if (rB == RadioButtonPreferencesPeriodD)
                     {
-                        Settings.Default.GameTimePresetD = timeToSet;
+                        Settings.Default.PeriodPresetD = timeToSet;
                     }
 
                 }

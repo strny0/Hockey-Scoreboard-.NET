@@ -165,19 +165,19 @@ namespace HockeyScoreboard
         }
         private void ButtonSetTimePresetA_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(Settings.Default.GameTimePresetA);
+            SetTime(Settings.Default.PeriodPresetA);
         }
         private void ButtonSetTimePresetB_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(Settings.Default.GameTimePresetB);
+            SetTime(Settings.Default.PeriodPresetB);
         }
         private void ButtonSetTimePresetC_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(Settings.Default.GameTimePresetC);
+            SetTime(Settings.Default.PeriodPresetC);
         }
         private void ButtonSetTimePresetD_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
-            SetTime(Settings.Default.GameTimePresetD);
+            SetTime(Settings.Default.PeriodPresetD);
         }
         private void ButtonBreakMode_Click(object sender, RoutedEventArgs e)
         {
