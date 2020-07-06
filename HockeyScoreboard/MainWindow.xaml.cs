@@ -464,9 +464,123 @@ namespace HockeyScoreboard
             MessageBox.Show("Successfully saved. Preferences will be loaded as they were saved next time the program runs.");
         }
 
+
         #endregion
 
+        private void ButtonPreferencesChangeFontNumbers_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void ButtonPreferencesChangeFontText_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundPlayBuzzer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundPlayHorn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundPlayPeriod_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundPlayBreak_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundPlayTimeout_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundChangeHorn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundChangeBuzzer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundChangePeriod_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundChangeBreak_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonSoundChangeTimeout_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoChange1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoChange2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoChange3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoChange4_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoPlayPause_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoStop_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoRestart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoLoad1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoLoad2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoLoad3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonVideoLoad4_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 
