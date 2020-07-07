@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:Controls="clr-namespace:HockeyScoreboardWpfControlLibrary;assembly=HockeyScoreboardWpfControlLibrary"
-        mc:Ignorable="d" Background="{DynamicResource BrushBackgroundMain}"
+        mc:Ignorable="d" Background="{DynamicResource BrushBackgroundMain}" Loaded="Window_Loaded"
         Title="Hockey Scoreboard .NET" Height="768" Width="1366" MinHeight="360" MinWidth="640" Icon="Resources/DefaultIcon.ico" WindowStartupLocation="CenterScreen" >
     <!-- BACKGROUND/SPLIT -->
     <Grid>
@@ -278,18 +278,20 @@
                             <Button Grid.Row="3" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayBreak" Click="ButtonSoundPlayBreak_Click" Content="Break sound" Style="{DynamicResource CustomButtonStyle}"/>
                             <Button Grid.Row="4" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayTimeout" Click="ButtonSoundPlayTimeout_Click" Content="Timeout sound" Style="{DynamicResource CustomButtonStyle}"/>
 
-                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,0,0,45" Content="Play on goal" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,22,0,22" Content="Play on game start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,45,0,0" Content="Play game pause/start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
+                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,0,0,45" Content="Play on goal" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,22,0,22" Content="Play on game start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,45,0,0" Content="Play game pause/start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
 
-                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,45" Content="Play on goal" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,22,0,22" Content="Play on game start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,45,0,0" Content="Play on game pause/stop" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
+                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,45" Content="Play on goal" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,22,0,22" Content="Play on game start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,45,0,0" Content="Play on game pause/stop" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
 
 
-                            <CheckBox Grid.Row="2" Grid.Column="1" Margin="5" Content="Play on period change" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Grid.Row="3" Grid.Column="1" Margin="5" Content="Play on break end" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Grid.Row="4" Grid.Column="1" Margin="5" Content="Play on timeout end" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
+                            <CheckBox Grid.Row="2" Grid.Column="1" Margin="5" Content="Play on period change" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                            <CheckBox Grid.Row="3" Grid.Column="1" Margin="5,10,5,42" Content="Play on break start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="200"/>
+                            <CheckBox Grid.Row="3" Grid.Column="1" Margin="5,42,5,10" Content="Play on break end" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="200"/>
+                            <CheckBox Grid.Row="4" Grid.Column="1" Margin="5,10,5,42" Content="Play on timeout start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                            <CheckBox Grid.Row="4" Grid.Column="1" Margin="5,42,5,10" Content="Play on timeout end" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
 
 
                         </Grid>
@@ -312,15 +314,15 @@
                                 <ColumnDefinition Width="45*"/>
                                 <ColumnDefinition Width="45*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" Grid.Row="0" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border Grid.Column="0" Grid.Row="1" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border Grid.Column="0" Grid.Row="2" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border Grid.Column="0" Grid.Row="3" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border Grid.Column="0" Grid.Row="4" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border Grid.Column="0" Grid.Row="5" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border Grid.Column="0" Grid.Row="6" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border Grid.Column="0" Grid.Row="7" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border Grid.Column="0" Grid.Row="8" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundHorn" Grid.Column="0" Grid.Row="0" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundBuzzer" Grid.Column="0" Grid.Row="1" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundPeriod" Grid.Column="0" Grid.Row="2" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundBreak" Grid.Column="0" Grid.Row="3" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundTimeout" Grid.Column="0" Grid.Row="4" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundVid1" Grid.Column="0" Grid.Row="5" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundVid2" Grid.Column="0" Grid.Row="6" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundVid3" Grid.Column="0" Grid.Row="7" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                            <Border x:Name="BorderSoundVid4" Grid.Column="0" Grid.Row="8" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
                             <Button Grid.Column="1" Grid.Row="0" Margin="2" Content="Change Horn" x:Name="ButtonSoundChangeHorn" Click="ButtonSoundChangeHorn_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
                             <Button Grid.Column="1" Grid.Row="1" Margin="2" Content="Change Buzzer" x:Name="ButtonSoundChangeBuzzer" Click="ButtonSoundChangeBuzzer_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
                             <Button Grid.Column="1" Grid.Row="2" Margin="2" Content="Change Period sound" x:Name="ButtonSoundChangePeriod" Click="ButtonSoundChangePeriod_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
@@ -330,15 +332,15 @@
                             <Button Grid.Column="1" Grid.Row="6" Margin="2" Content="Change Video 2" x:Name="ButtonVideoChange2" Click="ButtonVideoChange2_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
                             <Button Grid.Column="1" Grid.Row="7" Margin="2" Content="Change Video 3" x:Name="ButtonVideoChange3" Click="ButtonVideoChange3_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
                             <Button Grid.Column="1" Grid.Row="8" Margin="2" Content="Change Video 4" x:Name="ButtonVideoChange4" Click="ButtonVideoChange4_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Label Grid.Column="2" Grid.Row="0" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label Grid.Column="2" Grid.Row="1" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label Grid.Column="2" Grid.Row="2" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label Grid.Column="2" Grid.Row="3" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label Grid.Column="2" Grid.Row="4" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label Grid.Column="2" Grid.Row="5" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label Grid.Column="2" Grid.Row="6" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label Grid.Column="2" Grid.Row="7" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label Grid.Column="2" Grid.Row="8" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundHorn" Grid.Column="2" Grid.Row="0" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundBuzzer" Grid.Column="2" Grid.Row="1" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundPeriod" Grid.Column="2" Grid.Row="2" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundBreak" Grid.Column="2" Grid.Row="3" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundTimeout" Grid.Column="2" Grid.Row="4" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundVid1" Grid.Column="2" Grid.Row="5" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundVid2" Grid.Column="2" Grid.Row="6" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundVid3" Grid.Column="2" Grid.Row="7" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            <Label x:Name="LabelSoundVid4" Grid.Column="2" Grid.Row="8" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Video" Grid.Column="2" Margin="10,0,10,10">
@@ -349,12 +351,13 @@
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushBackgroundSecondary}"
                                     Margin="5">
-                                <MediaElement />
+                                <MediaElement x:Name="MediaElementPlayer" LoadedBehavior="Manual" ScrubbingEnabled="True" Stretch="UniformToFill" UnloadedBehavior="Manual"/>
                             </Border>
                             <Slider Grid.Row="1" x:Name="SliderVideoControl" Margin="5,4,5,154"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoPlayPause" Click="ButtonVideoPlayPause_Click" fa:Awesome.Content="Play" Margin="130,30,240,100" Style="{DynamicResource CustomButtonStyle}"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoStop" Click="ButtonVideoStop_Click"  fa:Awesome.Content="Stop" Margin="184,30,184,100" Style="{DynamicResource CustomButtonStyle}"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoRestart" Click="ButtonVideoRestart_Click" fa:Awesome.Content="Refresh" Margin="240,30,130,100" Style="{DynamicResource CustomButtonStyle}"/>
+                            <Button Grid.Row="1" x:Name="ButtonVideoPlayPause" Click="ButtonVideoPlayPause_Click" fa:Awesome.Content="Play" Margin="10,30,279,100" Style="{DynamicResource CustomButtonStyle}" Height="50" Width="130"/>
+                            <Button Grid.Row="1" x:Name="ButtonVideoStop" Click="ButtonVideoStop_Click"  fa:Awesome.Content="Pause" Margin="145,30,145,100" Style="{DynamicResource CustomButtonStyle}" Width="129"/>
+                            <Button Grid.Row="1" x:Name="ButtonVideoRestart" Click="ButtonVideoRestart_Click" fa:Awesome.Content="Refresh" Margin="279,30,10,100" Style="{DynamicResource CustomButtonStyle}" Width="130"/>
+                            <CheckBox x:Name="CheckBoxShowVideo" Content="Show  Video" Margin="0,0,6,6" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="124" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" />
                             <Button Grid.Row="1" x:Name="ButtonVideoLoad1" Click="ButtonVideoLoad1_Click" Content="Load video 1" Margin="10,87,214,43" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
                             <Button Grid.Row="1" x:Name="ButtonVideoLoad2" Click="ButtonVideoLoad2_Click" Content="Load video 2" Margin="214,87,10,43" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
                             <Button Grid.Row="1" x:Name="ButtonVideoLoad3" Click="ButtonVideoLoad3_Click" Content="Load video 3" Margin="214,135,10,9" Style="{DynamicResource CustomButtonStyle}" Height="36"/>

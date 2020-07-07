@@ -16,6 +16,11 @@ namespace HockeyScoreboard
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UISoundUpdateAssets();
             UIUpdateAllMainControls();
             UIUpdateAllRadioButtons();
             UIUpdateTimePresetButtonsPenalty("Major"); UIUpdateTimePresetButtonsPeriod();
@@ -479,108 +484,125 @@ namespace HockeyScoreboard
 
         private void ButtonSoundPlayBuzzer_Click(object sender, RoutedEventArgs e)
         {
-
+            PlaySound(Settings.Default.BuzzerSoundPath);
         }
 
         private void ButtonSoundPlayHorn_Click(object sender, RoutedEventArgs e)
         {
+            PlaySound(Settings.Default.HornSoundPath);
 
         }
 
         private void ButtonSoundPlayPeriod_Click(object sender, RoutedEventArgs e)
         {
+            PlaySound(Settings.Default.PeriodSoundPath);
 
         }
 
         private void ButtonSoundPlayBreak_Click(object sender, RoutedEventArgs e)
         {
+            PlaySound(Settings.Default.BreakSoundPath);
 
         }
 
         private void ButtonSoundPlayTimeout_Click(object sender, RoutedEventArgs e)
         {
-
+            PlaySound(Settings.Default.TimeoutSoundPath);
         }
 
         private void ButtonSoundChangeHorn_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.HornSoundPath = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonSoundChangeBuzzer_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.BuzzerSoundPath = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonSoundChangePeriod_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.PeriodSoundPath = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonSoundChangeBreak_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.BreakSoundPath = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonSoundChangeTimeout_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.TimeoutSoundPath = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonVideoChange1_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.Video1Path = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonVideoChange2_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.Video2Path = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonVideoChange3_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.Video3Path = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonVideoChange4_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.Video4Path = GetMediaFilePath(); SoundUpdateValues();
 
         }
 
         private void ButtonVideoPlayPause_Click(object sender, RoutedEventArgs e)
         {
-
+            try { MediaElementPlayer.Play(); }
+            catch { MessageBox.Show("No video loaded.", "Error",MessageBoxButton.OK,MessageBoxImage.Error); }
         }
 
         private void ButtonVideoStop_Click(object sender, RoutedEventArgs e)
         {
-
+            try { MediaElementPlayer.Pause(); }
+            catch { MessageBox.Show("No video loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void ButtonVideoRestart_Click(object sender, RoutedEventArgs e)
         {
-
+            try { MediaElementPlayer.Stop(); }
+            catch { MessageBox.Show("No video loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void ButtonVideoLoad1_Click(object sender, RoutedEventArgs e)
         {
-
+            LoadVideo(Settings.Default.Video1Path);
         }
 
         private void ButtonVideoLoad2_Click(object sender, RoutedEventArgs e)
         {
-
+            LoadVideo(Settings.Default.Video2Path);
         }
 
         private void ButtonVideoLoad3_Click(object sender, RoutedEventArgs e)
         {
-
+            LoadVideo(Settings.Default.Video3Path);
         }
 
         private void ButtonVideoLoad4_Click(object sender, RoutedEventArgs e)
         {
-
+            LoadVideo(Settings.Default.Video4Path);
         }
+
+
     }
 }
 

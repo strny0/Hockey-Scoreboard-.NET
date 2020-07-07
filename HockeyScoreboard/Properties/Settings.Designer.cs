@@ -322,5 +322,113 @@ namespace HockeyScoreboard.Properties {
                 this["TimeTextFont"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HornSoundPath {
+            get {
+                return ((string)(this["HornSoundPath"]));
+            }
+            set {
+                this["HornSoundPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BuzzerSoundPath {
+            get {
+                return ((string)(this["BuzzerSoundPath"]));
+            }
+            set {
+                this["BuzzerSoundPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PeriodSoundPath {
+            get {
+                return ((string)(this["PeriodSoundPath"]));
+            }
+            set {
+                this["PeriodSoundPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BreakSoundPath {
+            get {
+                return ((string)(this["BreakSoundPath"]));
+            }
+            set {
+                this["BreakSoundPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TimeoutSoundPath {
+            get {
+                return ((string)(this["TimeoutSoundPath"]));
+            }
+            set {
+                this["TimeoutSoundPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Video1Path {
+            get {
+                return ((string)(this["Video1Path"]));
+            }
+            set {
+                this["Video1Path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Video2Path {
+            get {
+                return ((string)(this["Video2Path"]));
+            }
+            set {
+                this["Video2Path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Video3Path {
+            get {
+                return ((string)(this["Video3Path"]));
+            }
+            set {
+                this["Video3Path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Video4Path {
+            get {
+                return ((string)(this["Video4Path"]));
+            }
+            set {
+                this["Video4Path"] = value;
+            }
+        }
     }
 }

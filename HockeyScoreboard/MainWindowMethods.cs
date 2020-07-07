@@ -1,4 +1,5 @@
 ﻿using HockeyScoreboard.Properties;
+using HockeyScoreboardLibrary;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -168,6 +169,20 @@ namespace HockeyScoreboard
             };
             return LoadXmlDialog;
         }
+        private OpenFileDialog DefineLoadMediaDialog()
+        {
+            OpenFileDialog LoadMediaDialog = new OpenFileDialog
+            {
+                Title = "Load Sound",
+                FilterIndex = 10,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                Filter = "All Media Files|*.wav;*.aac;*.wma;*.wmv;*.avi;*.mpg;*.mpeg;*.m1v;*.mp2;*.mp3;*.mpa;*.mpe;*.m3u;*.mp4;*.mov;*.3g2;*.3gp2;*.3gp;*.3gpp;*.m4a;*.cda;*.aif;*.aifc;*.aiff;*.mid;*.midi;*.rmi;*.mkv;*.WAV;*.AAC;*.WMA;*.WMV;*.AVI;*.MPG;*.MPEG;*.M1V;*.MP2;*.MP3;*.MPA;*.MPE;*.M3U;*.MP4;*.MOV;*.3G2;*.3GP2;*.3GP;*.3GPP;*.M4A;*.CDA;*.AIF;*.AIFC;*.AIFF;*.MID;*.MIDI;*.RMI;*.MKV",
+                DefaultExt = ".mp3"
+            };
+
+            return LoadMediaDialog;
+        }
+
         #endregion
 
         #region GameManagementMethods
@@ -1004,7 +1019,6 @@ namespace HockeyScoreboard
             #region Color: Border
             SolidColorBrush borderBrush = ReturnSBrushFromColor(Settings.Default.ColorBorderBrush);
             Vars.SecondaryWindow.LabelTimeVariable.BorderBrush = borderBrush;
-            Vars.SecondaryWindow.LabelTimeVariable.BorderBrush = borderBrush;
             Vars.SecondaryWindow.LabelPeriodVariable.BorderBrush = borderBrush;
             Vars.SecondaryWindow.BorderImageTeam1Holder.BorderBrush = borderBrush;
             Vars.SecondaryWindow.BorderImageTeam2Holder.BorderBrush = borderBrush;
@@ -1171,6 +1185,176 @@ namespace HockeyScoreboard
 
 
 
+
+
+        #endregion
+
+        #region SoundAndVideoMethods
+
+        private string GetMediaFilePath()
+        {
+            OpenFileDialog LoadMediaDialog = DefineLoadMediaDialog();
+
+            bool? result = LoadMediaDialog.ShowDialog();
+
+            switch(result)
+            {
+                case true:
+                    return LoadMediaDialog.FileName;
+                default:
+                    MessageBox.Show("You must select a file.", "Operation cancelled", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return string.Empty;
+            }
+        }
+
+        private void PlaySound(string filePath)
+        {
+            if (filePath.Length == 0)
+            {
+                MessageBox.Show("No file selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            Uri uriPath = new Uri(filePath,UriKind.Relative);
+            Vars.MPlayer.Stop();
+            Vars.MPlayer.Open(uriPath);
+            Vars.MPlayer.Play();
+        }
+        private void LoadVideo(string filePath)
+        {
+            if (filePath.Length == 0)
+            {
+                MessageBox.Show("No file selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            Uri uriPath = new Uri(filePath, UriKind.Relative);
+
+            MediaElementPlayer.IsEnabled = true;
+            MediaElementPlayer.Source = uriPath;
+            MediaElementPlayer.Play(); MediaElementPlayer.Pause();
+        }
+        private void PlayBuzzer()
+        {
+            PlaySound(Settings.Default.BuzzerSoundPath);
+        }
+
+        private void PlayHorn()
+        {
+            PlaySound(Settings.Default.HornSoundPath);
+        }
+
+        private void PlayPeriodSound()
+        {
+            PlaySound(Settings.Default.PeriodSoundPath);
+        }
+
+        private void PlayBreakSound()
+        {
+            PlaySound(Settings.Default.BreakSoundPath);
+        }
+
+        private void PlayTimeoutSound()
+        {
+            PlaySound(Settings.Default.BuzzerSoundPath);
+        }
+
+        private void UISoundUpdateAssets()
+        {
+            var truncationLength = 25;
+            #region Labels
+            LabelSoundBuzzer.Content = Utility.Truncate(Settings.Default.BuzzerSoundPath.Split('\\').Last(),truncationLength);
+            LabelSoundHorn.Content = Utility.Truncate(Settings.Default.HornSoundPath.Split('\\').Last(), truncationLength);
+            LabelSoundPeriod.Content = Utility.Truncate(Settings.Default.PeriodSoundPath.Split('\\').Last(), truncationLength);
+            LabelSoundBreak.Content = Utility.Truncate(Settings.Default.BreakSoundPath.Split('\\').Last(), truncationLength);
+            LabelSoundTimeout.Content = Utility.Truncate(Settings.Default.TimeoutSoundPath.Split('\\').Last(), truncationLength);
+            LabelSoundVid1.Content = Utility.Truncate(Settings.Default.Video1Path.Split('\\').Last(), truncationLength);
+            LabelSoundVid2.Content = Utility.Truncate(Settings.Default.Video2Path.Split('\\').Last(), truncationLength);
+            LabelSoundVid3.Content = Utility.Truncate(Settings.Default.Video3Path.Split('\\').Last(), truncationLength);
+            LabelSoundVid4.Content = Utility.Truncate(Settings.Default.Video4Path.Split('\\').Last(), truncationLength);
+            #endregion
+
+            #region Borders
+            if (File.Exists(Settings.Default.BuzzerSoundPath))
+            {
+                BorderSoundBuzzer.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundBuzzer.Background = System.Windows.Media.Brushes.Red;
+            }
+
+            if (File.Exists(Settings.Default.HornSoundPath))
+            {
+                BorderSoundHorn.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundHorn.Background = System.Windows.Media.Brushes.Red;
+            }
+            if (File.Exists(Settings.Default.PeriodSoundPath))
+            {
+                BorderSoundPeriod.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundPeriod.Background = System.Windows.Media.Brushes.Red;
+            }
+            if (File.Exists(Settings.Default.BreakSoundPath))
+            {
+                BorderSoundBreak.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundBreak.Background = System.Windows.Media.Brushes.Red;
+            }
+            if (File.Exists(Settings.Default.TimeoutSoundPath))
+            {
+                BorderSoundTimeout.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundTimeout.Background = System.Windows.Media.Brushes.Red;
+            }
+            if (File.Exists(Settings.Default.Video1Path))
+            {
+                BorderSoundVid1.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundVid1.Background = System.Windows.Media.Brushes.Red;
+            }
+            if (File.Exists(Settings.Default.Video2Path))
+            {
+                BorderSoundVid2.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundVid2.Background = System.Windows.Media.Brushes.Red;
+            }
+            if (File.Exists(Settings.Default.Video3Path))
+            {
+                BorderSoundVid3.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundVid3.Background = System.Windows.Media.Brushes.Red;
+            }
+            if (File.Exists(Settings.Default.Video4Path))
+            {
+                BorderSoundVid4.Background = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                BorderSoundVid4.Background = System.Windows.Media.Brushes.Red;
+            }
+            #endregion
+
+        }
+
+        private void SoundUpdateValues()
+        {
+            UISoundUpdateAssets();
+            Settings.Default.Save();
+        }
 
 
         #endregion
