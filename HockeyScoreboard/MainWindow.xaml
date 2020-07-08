@@ -70,6 +70,7 @@
                         <Label x:Name="LabelT1P2TimeLeftVariable" HorizontalAlignment="Left" BorderThickness="1" Margin="159,187,0,0" Content="time" VerticalAlignment="Top" Height="35" Width="70" FontSize="24" Background="{DynamicResource BrushBackgroundSecondary}" Foreground="{DynamicResource BrushTextTime}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0,0,0,0" BorderBrush="{DynamicResource BrushBorderBrush}"/>
                         <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonCancelPenaltyTeam1Player1" Click="ButtonCancelPenaltyTeam1Player1_Click" Content="Cancel Penalty" Margin="234,147,5,0" VerticalAlignment="Top" Height="35" FontSize="15" Background="{DynamicResource BrushBackgroundButton}" BorderBrush="{DynamicResource BrushBorderBrush}" Foreground="{DynamicResource BrushTextValues}" HorizontalAlignment="Left" Width="108"/>
                         <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonCancelPenaltyTeam1Player2" Click="ButtonCancelPenaltyTeam1Player2_Click" Content="Cancel Penalty" Margin="234,187,0,0" FontSize="15" Background="{DynamicResource BrushBackgroundButton}" BorderBrush="{DynamicResource BrushBorderBrush}" Foreground="{DynamicResource BrushTextValues}" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108"/>
+                        <Button Style="{DynamicResource CustomButtonStyle}" Click="ButtonSoundPlayHorn_Click" Content="Quick Horn" Margin="6,227,0,0" FontSize="15" Background="{DynamicResource BrushBackgroundButton}" BorderBrush="{DynamicResource BrushBorderBrush}" Foreground="{DynamicResource BrushTextValues}" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="336"/>
 
                         <Border BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushBackgroundSecondary}"  BorderThickness="1" Height="130" Margin="204,2,5,0" VerticalAlignment="Top">
                             <Image x:Name="ImageTeam1Logo" Stretch="Fill"/>
@@ -100,6 +101,7 @@
                         <Label x:Name="LabelT2P2TimeLeftVariable" HorizontalAlignment="Left" BorderThickness="1" Margin="159,188,0,0" Content="time" VerticalAlignment="Top" Height="35" Width="70" FontSize="24" Background="{DynamicResource BrushBackgroundSecondary}" Foreground="{DynamicResource BrushTextTime}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0,0,0,0" BorderBrush="{DynamicResource BrushBorderBrush}"/>
                         <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonCancelPenaltyTeam2Player1" Click="ButtonCancelPenaltyTeam2Player1_Click" Content="Cancel Penalty" Margin="234,147,5,0" VerticalAlignment="Top" Height="35" FontSize="15" Background="{DynamicResource BrushBackgroundButton}" BorderBrush="{DynamicResource BrushBorderBrush}" Foreground="{DynamicResource BrushTextValues}"/>
                         <Button Style="{DynamicResource CustomButtonStyle}" x:Name="ButtonCancelPenaltyTeam2Player2" Click="ButtonCancelPenaltyTeam2Player2_Click" Content="Cancel Penalty" Margin="234,188,0,0" FontSize="15" Background="{DynamicResource BrushBackgroundButton}" BorderBrush="{DynamicResource BrushBorderBrush}" Foreground="{DynamicResource BrushTextValues}" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108"/>
+                        <Button Style="{DynamicResource CustomButtonStyle}" Click="ButtonSoundPlayBuzzer_Click" Content="Quick Buzzer" Margin="5,228,0,0" FontSize="15" Background="{DynamicResource BrushBackgroundButton}" BorderBrush="{DynamicResource BrushBorderBrush}" Foreground="{DynamicResource BrushTextValues}" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="337"/>
                         <Border BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushBackgroundSecondary}" BorderThickness="1" Height="130" Margin="204,2,5,0" VerticalAlignment="Top">
                             <Image x:Name="ImageTeam2Logo" Stretch="Fill"/>
                         </Border>
@@ -253,121 +255,115 @@
                 </Viewbox>
             </TabItem>
             <TabItem Header="Sound and Video" FontSize="15" Background="{DynamicResource BrushBackgroundMain}" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Header="Sound" Grid.Column="0" Margin="10,0,10,10">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Grid.Row="0" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayHorn" Click="ButtonSoundPlayHorn_Click" Content="Horn" Style="{DynamicResource CustomButtonStyle}"/>
-                            <Button Grid.Row="1" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayBuzzer" Click="ButtonSoundPlayBuzzer_Click" Content="Buzzer" Style="{DynamicResource CustomButtonStyle}"/>
-                            <Button Grid.Row="2" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayPeriod" Click="ButtonSoundPlayPeriod_Click" Content="Period sound" Style="{DynamicResource CustomButtonStyle}"/>
-                            <Button Grid.Row="3" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayBreak" Click="ButtonSoundPlayBreak_Click" Content="Break sound" Style="{DynamicResource CustomButtonStyle}"/>
-                            <Button Grid.Row="4" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayTimeout" Click="ButtonSoundPlayTimeout_Click" Content="Timeout sound" Style="{DynamicResource CustomButtonStyle}"/>
+                <Viewbox Grid.ColumnSpan="3" Margin="10,0,10,10" Stretch="Fill">
+                    <Grid Height="388" Width="1332">
+                        <GroupBox Header="Sound" Grid.Column="0" Margin="0,0,901,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Row="0" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayHorn" Click="ButtonSoundPlayHorn_Click" Content="Horn" Style="{DynamicResource CustomButtonStyle}"/>
+                                <Button Grid.Row="1" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayBuzzer" Click="ButtonSoundPlayBuzzer_Click" Content="Buzzer" Style="{DynamicResource CustomButtonStyle}"/>
+                                <Button Grid.Row="2" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayPeriod" Click="ButtonSoundPlayPeriod_Click" Content="Period sound" Style="{DynamicResource CustomButtonStyle}"/>
+                                <Button Grid.Row="3" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayBreak" Click="ButtonSoundPlayBreak_Click" Content="Break sound" Style="{DynamicResource CustomButtonStyle}"/>
+                                <Button Grid.Row="4" Grid.Column="0" Margin="2" x:Name="ButtonSoundPlayTimeout" Click="ButtonSoundPlayTimeout_Click" Content="Timeout sound" Style="{DynamicResource CustomButtonStyle}"/>
 
-                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,0,0,45" Content="Play on goal" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
-                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,22,0,22" Content="Play on game start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
-                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,45,0,0" Content="Play game pause/start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,0,0,45"  x:Name="CheckBoxHornGoal"  Checked="CheckBoxHornGoal_Checked" Unchecked="CheckBoxHornGoal_Unchecked"  Content="Play on goal" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,22,0,22" x:Name="CheckBoxHornStart" Checked="CheckBoxHornStart_Checked" Unchecked="CheckBoxHornStart_Unchecked"  Content="Play on game start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="0" Grid.Column="1" Margin="5,45,0,0"  x:Name="CheckBoxHornStop"  Checked="CheckBoxHornStop_Checked" Unchecked="CheckBoxHornStop_Unchecked" Content="Play on game time ran out" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
 
-                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,45" Content="Play on goal" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
-                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,22,0,22" Content="Play on game start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
-                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,45,0,0" Content="Play on game pause/stop" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,45"  x:Name="CheckBoxBuzzerGoal" Checked="CheckBoxBuzzerGoal_Checked" Unchecked="CheckBoxBuzzerGoal_Unchecked" Content="Play on goal" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,22,0,22" x:Name="CheckBoxBuzzerStart"  Checked="CheckBoxBuzzerStart_Checked" Unchecked="CheckBoxBuzzerStart_Unchecked" Content="Play on game start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,45,0,0"  x:Name="CheckBoxBuzzerStop" Checked="CheckBoxBuzzerStop_Checked" Unchecked="CheckBoxBuzzerStop_Unchecked" Content="Play on game time ran out" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
 
 
-                            <CheckBox Grid.Row="2" Grid.Column="1" Margin="5" Content="Play on period change" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
-                            <CheckBox Grid.Row="3" Grid.Column="1" Margin="5,10,5,42" Content="Play on break start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="200"/>
-                            <CheckBox Grid.Row="3" Grid.Column="1" Margin="5,42,5,10" Content="Play on break end" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="200"/>
-                            <CheckBox Grid.Row="4" Grid.Column="1" Margin="5,10,5,42" Content="Play on timeout start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
-                            <CheckBox Grid.Row="4" Grid.Column="1" Margin="5,42,5,10" Content="Play on timeout end" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="2" Grid.Column="1" Margin="5"         x:Name="CheckBoxPerioChange" Checked="CheckBoxPerioChange_Checked" Unchecked="CheckBoxPerioChange_Unchecked" Content="Play on period change" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="3" Grid.Column="1" Margin="5,10,5,42" x:Name="CheckBoxBreakStart"  Checked="CheckBoxBreakStart_Checked" Unchecked="CheckBoxBreakStart_Unchecked" Content="Play on break start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="200"/>
+                                <CheckBox Grid.Row="3" Grid.Column="1" Margin="5,42,5,10" x:Name="CheckBoxBreakStop"   Checked="CheckBoxBreakStop_Checked" Unchecked="CheckBoxBreakStop_Unchecked" Content="Play on break end" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="200"/>
+                                <CheckBox Grid.Row="4" Grid.Column="1" Margin="5,10,5,42" x:Name="CheckBoxTimeoutStart" Checked="CheckBoxTimeoutStart_Checked" Unchecked="CheckBoxTimeoutStart_Unchecked" Content="Play on timeout start" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
+                                <CheckBox Grid.Row="4" Grid.Column="1" Margin="5,42,5,10" x:Name="CheckBoxTimeoutStop"  Checked="CheckBoxTimeoutStop_Checked" Unchecked="CheckBoxTimeoutStop_Unchecked" Content="Play on timeout end" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Height="20" Width="200"/>
 
 
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="Assets" Grid.Column="1" Margin="10,0,10,10">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*"/>
-                                <ColumnDefinition Width="45*"/>
-                                <ColumnDefinition Width="45*"/>
-                            </Grid.ColumnDefinitions>
-                            <Border x:Name="BorderSoundHorn" Grid.Column="0" Grid.Row="0" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border x:Name="BorderSoundBuzzer" Grid.Column="0" Grid.Row="1" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border x:Name="BorderSoundPeriod" Grid.Column="0" Grid.Row="2" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border x:Name="BorderSoundBreak" Grid.Column="0" Grid.Row="3" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border x:Name="BorderSoundTimeout" Grid.Column="0" Grid.Row="4" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border x:Name="BorderSoundVid1" Grid.Column="0" Grid.Row="5" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border x:Name="BorderSoundVid2" Grid.Column="0" Grid.Row="6" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border x:Name="BorderSoundVid3" Grid.Column="0" Grid.Row="7" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Border x:Name="BorderSoundVid4" Grid.Column="0" Grid.Row="8" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
-                            <Button Grid.Column="1" Grid.Row="0" Margin="2" Content="Change Horn" x:Name="ButtonSoundChangeHorn" Click="ButtonSoundChangeHorn_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="1" Margin="2" Content="Change Buzzer" x:Name="ButtonSoundChangeBuzzer" Click="ButtonSoundChangeBuzzer_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="2" Margin="2" Content="Change Period sound" x:Name="ButtonSoundChangePeriod" Click="ButtonSoundChangePeriod_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="3" Margin="2" Content="Change Break sound" x:Name="ButtonSoundChangeBreak" Click="ButtonSoundChangeBreak_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="4" Margin="2" Content="Change Timeout sound" x:Name="ButtonSoundChangeTimeout" Click="ButtonSoundChangeTimeout_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="5" Margin="2" Content="Change Video 1" x:Name="ButtonVideoChange1" Click="ButtonVideoChange1_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="6" Margin="2" Content="Change Video 2" x:Name="ButtonVideoChange2" Click="ButtonVideoChange2_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="7" Margin="2" Content="Change Video 3" x:Name="ButtonVideoChange3" Click="ButtonVideoChange3_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Button Grid.Column="1" Grid.Row="8" Margin="2" Content="Change Video 4" x:Name="ButtonVideoChange4" Click="ButtonVideoChange4_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
-                            <Label x:Name="LabelSoundHorn" Grid.Column="2" Grid.Row="0" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label x:Name="LabelSoundBuzzer" Grid.Column="2" Grid.Row="1" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label x:Name="LabelSoundPeriod" Grid.Column="2" Grid.Row="2" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label x:Name="LabelSoundBreak" Grid.Column="2" Grid.Row="3" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label x:Name="LabelSoundTimeout" Grid.Column="2" Grid.Row="4" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label x:Name="LabelSoundVid1" Grid.Column="2" Grid.Row="5" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label x:Name="LabelSoundVid2" Grid.Column="2" Grid.Row="6" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label x:Name="LabelSoundVid3" Grid.Column="2" Grid.Row="7" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                            <Label x:Name="LabelSoundVid4" Grid.Column="2" Grid.Row="8" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="Video" Grid.Column="2" Margin="10,0,10,10">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <Border Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushBackgroundSecondary}"
-                                    Margin="5">
-                                <MediaElement x:Name="MediaElementPlayer" LoadedBehavior="Manual" ScrubbingEnabled="True" Stretch="UniformToFill" UnloadedBehavior="Manual"/>
-                            </Border>
-                            <Slider Grid.Row="1" x:Name="SliderVideoControl" Margin="5,4,5,154"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoPlayPause" Click="ButtonVideoPlayPause_Click" fa:Awesome.Content="Play" Margin="10,30,279,100" Style="{DynamicResource CustomButtonStyle}" Height="50" Width="130"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoStop" Click="ButtonVideoStop_Click"  fa:Awesome.Content="Pause" Margin="145,30,145,100" Style="{DynamicResource CustomButtonStyle}" Width="129"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoRestart" Click="ButtonVideoRestart_Click" fa:Awesome.Content="Refresh" Margin="279,30,10,100" Style="{DynamicResource CustomButtonStyle}" Width="130"/>
-                            <CheckBox x:Name="CheckBoxShowVideo" Content="Show  Video" Margin="0,0,6,6" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="124" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" />
-                            <Button Grid.Row="1" x:Name="ButtonVideoLoad1" Click="ButtonVideoLoad1_Click" Content="Load video 1" Margin="10,87,214,43" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoLoad2" Click="ButtonVideoLoad2_Click" Content="Load video 2" Margin="214,87,10,43" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoLoad3" Click="ButtonVideoLoad3_Click" Content="Load video 3" Margin="214,135,10,9" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
-                            <Button Grid.Row="1" x:Name="ButtonVideoLoad4" Click="ButtonVideoLoad4_Click" Content="Load video 4" Margin="10,135,214,9" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
-
-
-                        </Grid>
-                    </GroupBox>
-
-                </Grid>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Assets" Margin="451,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="45*"/>
+                                    <ColumnDefinition Width="45*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="BorderSoundHorn" Grid.Column="0" Grid.Row="0" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Border x:Name="BorderSoundBuzzer" Grid.Column="0" Grid.Row="1" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Border x:Name="BorderSoundPeriod" Grid.Column="0" Grid.Row="2" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Border x:Name="BorderSoundBreak" Grid.Column="0" Grid.Row="3" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Border x:Name="BorderSoundTimeout" Grid.Column="0" Grid.Row="4" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Border x:Name="BorderSoundVid1" Grid.Column="0" Grid.Row="5" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Border x:Name="BorderSoundVid2" Grid.Column="0" Grid.Row="6" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Border x:Name="BorderSoundVid3" Grid.Column="0" Grid.Row="7" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Border x:Name="BorderSoundVid4" Grid.Column="0" Grid.Row="8" Margin="6" Background="{DynamicResource BrushIndicatorSlotOccupied}" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}"/>
+                                <Button Grid.Column="1" Grid.Row="0" Margin="2" Content="Change Horn" x:Name="ButtonSoundChangeHorn" Click="ButtonSoundChangeHorn_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Button Grid.Column="1" Grid.Row="1" Margin="2" Content="Change Buzzer" x:Name="ButtonSoundChangeBuzzer" Click="ButtonSoundChangeBuzzer_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Button Grid.Column="1" Grid.Row="2" Margin="2" Content="Change Period sound" x:Name="ButtonSoundChangePeriod" Click="ButtonSoundChangePeriod_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Button Grid.Column="1" Grid.Row="3" Margin="2" Content="Change Break sound" x:Name="ButtonSoundChangeBreak" Click="ButtonSoundChangeBreak_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Button Grid.Column="1" Grid.Row="4" Margin="2" Content="Change Timeout sound" x:Name="ButtonSoundChangeTimeout" Click="ButtonSoundChangeTimeout_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Button Grid.Column="1" Grid.Row="5" Margin="2" Content="Change Video 1" x:Name="ButtonVideoChange1" Click="ButtonVideoChange1_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Button Grid.Column="1" Grid.Row="6" Margin="2" Content="Change Video 2" x:Name="ButtonVideoChange2" Click="ButtonVideoChange2_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Button Grid.Column="1" Grid.Row="7" Margin="2" Content="Change Video 3" x:Name="ButtonVideoChange3" Click="ButtonVideoChange3_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Button Grid.Column="1" Grid.Row="8" Margin="2" Content="Change Video 4" x:Name="ButtonVideoChange4" Click="ButtonVideoChange4_Click" Style="{DynamicResource CustomButtonStyle}" HorizontalContentAlignment="Left" Padding="10,1,1,1"/>
+                                <Label x:Name="LabelSoundHorn" Grid.Column="2" Grid.Row="0" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                                <Label x:Name="LabelSoundBuzzer" Grid.Column="2" Grid.Row="1" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                                <Label x:Name="LabelSoundPeriod" Grid.Column="2" Grid.Row="2" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                                <Label x:Name="LabelSoundBreak" Grid.Column="2" Grid.Row="3" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                                <Label x:Name="LabelSoundTimeout" Grid.Column="2" Grid.Row="4" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                                <Label x:Name="LabelSoundVid1" Grid.Column="2" Grid.Row="5" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                                <Label x:Name="LabelSoundVid2" Grid.Column="2" Grid.Row="6" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                                <Label x:Name="LabelSoundVid3" Grid.Column="2" Grid.Row="7" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                                <Label x:Name="LabelSoundVid4" Grid.Column="2" Grid.Row="8" Margin="2" Content="filename.ext" Foreground="{DynamicResource BrushTextDefault}"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Video" Margin="901,0,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushBackgroundSecondary}"
+                                            Margin="5">
+                                    <MediaElement x:Name="MediaElementPlayer" LoadedBehavior="Manual" ScrubbingEnabled="True" Stretch="UniformToFill" UnloadedBehavior="Manual"/>
+                                </Border>
+                                <Slider Grid.Row="1" x:Name="SliderVideoControl" Margin="5,4,5,154"/>
+                                <Button Grid.Row="1" x:Name="ButtonVideoPlayPause" Click="ButtonVideoPlayPause_Click" fa:Awesome.Content="Play" Margin="10,30,279,100" Style="{DynamicResource CustomButtonStyle}" Height="50" Width="130"/>
+                                <Button Grid.Row="1" x:Name="ButtonVideoStop" Click="ButtonVideoStop_Click"  fa:Awesome.Content="Pause" Margin="145,30,145,100" Style="{DynamicResource CustomButtonStyle}" Width="129"/>
+                                <Button Grid.Row="1" x:Name="ButtonVideoRestart" Click="ButtonVideoRestart_Click" fa:Awesome.Content="Refresh" Margin="279,30,10,100" Style="{DynamicResource CustomButtonStyle}" Width="130"/>
+                                <CheckBox x:Name="CheckBoxShowVideo" Content="Show  Video" Margin="0,0,6,6" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Width="124" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" />
+                                <Button Grid.Row="1" x:Name="ButtonVideoLoad1" Click="ButtonVideoLoad1_Click" Content="Load video 1" Margin="10,87,214,43" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
+                                <Button Grid.Row="1" x:Name="ButtonVideoLoad2" Click="ButtonVideoLoad2_Click" Content="Load video 2" Margin="214,87,10,43" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
+                                <Button Grid.Row="1" x:Name="ButtonVideoLoad3" Click="ButtonVideoLoad3_Click" Content="Load video 3" Margin="214,135,10,9" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
+                                <Button Grid.Row="1" x:Name="ButtonVideoLoad4" Click="ButtonVideoLoad4_Click" Content="Load video 4" Margin="10,135,214,9" Style="{DynamicResource CustomButtonStyle}" Height="36"/>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </Viewbox>
             </TabItem>
             <TabItem Header="Preferences" FontSize="15" Background="{DynamicResource BrushBackgroundMain}" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}">
                 <Grid>

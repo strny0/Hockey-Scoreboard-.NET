@@ -44,6 +44,14 @@ namespace HockeyScoreboard
         }
         private void UpDownTeam1Score_ValueChanged(object sender, EventArgs e)
         {
+            if ((int)UpDownTeam1Score.Value > Vars.Team1.Score && Settings.Default.PlayHornOnGoal)
+            {
+                PlayHorn();
+            }
+            if ((int)UpDownTeam1Score.Value > Vars.Team1.Score && Settings.Default.PlayBuzzerOnGoal)
+            {
+                PlayBuzzer();
+            }
             Vars.Team1.Score = (int)UpDownTeam1Score.Value;
             Vars.SecondaryWindow.LabelScoreTeam1Variable.Content = Vars.Team1.Score.ToString(CultureInfo.InvariantCulture);
         }
@@ -54,6 +62,14 @@ namespace HockeyScoreboard
         }
         private void UpDownTeam2Score_ValueChanged(object sender, EventArgs e)
         {
+            if ((int)UpDownTeam2Score.Value > Vars.Team2.Score && Settings.Default.PlayHornOnGoal)
+            {
+                PlayHorn();
+            }
+            if ((int)UpDownTeam2Score.Value > Vars.Team2.Score && Settings.Default.PlayBuzzerOnGoal)
+            {
+                PlayBuzzer();
+            }
             Vars.Team2.Score = (int)UpDownTeam2Score.Value;
             Vars.SecondaryWindow.LabelScoreTeam2Variable.Content = Vars.Team2.Score.ToString(CultureInfo.InvariantCulture);
         }
@@ -107,6 +123,14 @@ namespace HockeyScoreboard
                         {
                             Vars.Game.StopwatchPeriod.Reset();
                             Vars.Game.TimeLeft = TimeSpan.Zero;
+                            if (Settings.Default.PlayBuzzerOnStop)
+                            {
+                                PlayBuzzer();
+                            }
+                            if (Settings.Default.PlayHornOnStop)
+                            {
+                                PlayHorn();
+                            }
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
 
@@ -123,6 +147,11 @@ namespace HockeyScoreboard
                         {
                             Vars.Game.StopwatchPeriod.Reset();
                             Vars.Game.TimeLeft = TimeSpan.Zero;
+
+                            if (Settings.Default.PlayBreakEnd)
+                            {
+                                PlayBreakSound();
+                            }
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
                         break;
@@ -132,6 +161,10 @@ namespace HockeyScoreboard
                             Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
                             Vars.Game.GameState = CustomTypes.GameState.Regular;
                             SetTime(Vars.Game.LastRegularTime);
+                            if (Settings.Default.PlayTimeoutEnd)
+                            {
+                                PlayTimeoutSound();
+                            }
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
                         break;
@@ -162,6 +195,14 @@ namespace HockeyScoreboard
             {
                 ButtonPauseTime.Content = "Pause Time";
                 Vars.Game.StopwatchPeriod.Start();
+                if (Settings.Default.PlayHornOnStart)
+                {
+                    PlayHorn();
+                }
+                if (Settings.Default.PlayBuzzerOnStart)
+                {
+                    PlayBuzzer();
+                }
             }
         }
         private void ButtonRestartTime_Click(object sender, RoutedEventArgs e)
@@ -190,12 +231,20 @@ namespace HockeyScoreboard
             {
                 Vars.Game.GameState = CustomTypes.GameState.Regular;
                 SetTime(Vars.Game.LastRegularTime);
+                if (Settings.Default.PlayBreakEnd)
+                {
+                    PlayBreakSound();
+                }
             }
             else
             {
                 Vars.Game.LastRegularTime = Vars.Game.TimeLeft;
                 Vars.Game.GameState = CustomTypes.GameState.Break;
                 SetTime(Settings.Default.BreakDuration);
+                if (Settings.Default.PlayBreakStart)
+                {
+                    PlayBreakSound();
+                }
             }
         }
         private void ButtonTimeout_Click(object sender, RoutedEventArgs e)
@@ -205,6 +254,10 @@ namespace HockeyScoreboard
                 Vars.Game.GameState = CustomTypes.GameState.Regular;
                 Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
                 SetTime(Vars.Game.LastRegularTime);
+                if (Settings.Default.PlayTimeoutStart)
+                {
+                    PlayTimeoutSound();
+                }
             }
             else
             {
@@ -213,6 +266,10 @@ namespace HockeyScoreboard
                 Vars.Game.StopwatchPeriod.Stop();
                 TimeoutDialog TD = new TimeoutDialog();
                 TD.ShowDialog();
+                if (Settings.Default.PlayTimeoutEnd)
+                {
+                    PlayTimeoutSound();
+                }
             }
         }
         private void ButtonResetTimeout_Click(object sender, RoutedEventArgs e)
@@ -469,9 +526,6 @@ namespace HockeyScoreboard
             MessageBox.Show("Successfully saved. Preferences will be loaded as they were saved next time the program runs.");
         }
 
-
-        #endregion
-
         private void ButtonPreferencesChangeFontNumbers_Click(object sender, RoutedEventArgs e)
         {
 
@@ -481,6 +535,10 @@ namespace HockeyScoreboard
         {
 
         }
+
+        #endregion
+
+
 
         private void ButtonSoundPlayBuzzer_Click(object sender, RoutedEventArgs e)
         {
@@ -602,7 +660,123 @@ namespace HockeyScoreboard
             LoadVideo(Settings.Default.Video4Path);
         }
 
+        private void CheckBoxHornGoal_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayHornOnGoal = true; Settings.Default.Save();
+        }
 
+        private void CheckBoxHornGoal_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayHornOnGoal = false; Settings.Default.Save();
+        }
+
+        private void CheckBoxHornStart_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayHornOnStart = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxHornStart_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayHornOnStart = false; Settings.Default.Save();
+        }
+
+        private void CheckBoxHornStop_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayHornOnStop = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxHornStop_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayHornOnStop = false; Settings.Default.Save();
+        }
+
+        private void CheckBoxBuzzerGoal_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBuzzerOnGoal = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxBuzzerStart_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBuzzerOnGoal = false; Settings.Default.Save();
+
+        }
+        private void CheckBoxBuzzerStart_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBuzzerOnStart = true; Settings.Default.Save();
+
+        }
+        private void CheckBoxBuzzerGoal_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBuzzerOnStart = false; Settings.Default.Save();
+        }
+
+
+
+
+        private void CheckBoxBuzzerStop_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBuzzerOnStop = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxBuzzerStop_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBuzzerOnStop = false; Settings.Default.Save();
+
+        }
+
+        private void CheckBoxPerioChange_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayOnPeriodChange = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxPerioChange_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayOnPeriodChange = false; Settings.Default.Save();
+
+        }
+
+        private void CheckBoxBreakStart_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBreakStart = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxBreakStart_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBreakStart = false; Settings.Default.Save();
+
+        }
+
+        private void CheckBoxBreakStop_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBreakEnd = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxBreakStop_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayBreakEnd = false; Settings.Default.Save();
+
+        }
+
+        private void CheckBoxTimeoutStart_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayTimeoutStart = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxTimeoutStart_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayTimeoutStart = false; Settings.Default.Save();
+
+        }
+
+        private void CheckBoxTimeoutStop_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayTimeoutEnd = true; Settings.Default.Save();
+        }
+
+        private void CheckBoxTimeoutStop_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.PlayTimeoutEnd = false; Settings.Default.Save();
+        }
     }
 }
 

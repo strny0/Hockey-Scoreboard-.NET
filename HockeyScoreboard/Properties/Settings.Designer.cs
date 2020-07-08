@@ -430,5 +430,137 @@ namespace HockeyScoreboard.Properties {
                 this["Video4Path"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayHornOnGoal {
+            get {
+                return ((bool)(this["PlayHornOnGoal"]));
+            }
+            set {
+                this["PlayHornOnGoal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayHornOnStart {
+            get {
+                return ((bool)(this["PlayHornOnStart"]));
+            }
+            set {
+                this["PlayHornOnStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayHornOnStop {
+            get {
+                return ((bool)(this["PlayHornOnStop"]));
+            }
+            set {
+                this["PlayHornOnStop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayBuzzerOnGoal {
+            get {
+                return ((bool)(this["PlayBuzzerOnGoal"]));
+            }
+            set {
+                this["PlayBuzzerOnGoal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayBuzzerOnStart {
+            get {
+                return ((bool)(this["PlayBuzzerOnStart"]));
+            }
+            set {
+                this["PlayBuzzerOnStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayBuzzerOnStop {
+            get {
+                return ((bool)(this["PlayBuzzerOnStop"]));
+            }
+            set {
+                this["PlayBuzzerOnStop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayOnPeriodChange {
+            get {
+                return ((bool)(this["PlayOnPeriodChange"]));
+            }
+            set {
+                this["PlayOnPeriodChange"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayBreakStart {
+            get {
+                return ((bool)(this["PlayBreakStart"]));
+            }
+            set {
+                this["PlayBreakStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayBreakEnd {
+            get {
+                return ((bool)(this["PlayBreakEnd"]));
+            }
+            set {
+                this["PlayBreakEnd"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayTimeoutStart {
+            get {
+                return ((bool)(this["PlayTimeoutStart"]));
+            }
+            set {
+                this["PlayTimeoutStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayTimeoutEnd {
+            get {
+                return ((bool)(this["PlayTimeoutEnd"]));
+            }
+            set {
+                this["PlayTimeoutEnd"] = value;
+            }
+        }
     }
 }

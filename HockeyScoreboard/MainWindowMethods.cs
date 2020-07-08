@@ -274,6 +274,11 @@ namespace HockeyScoreboard
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
             }
+
+            if (Settings.Default.PlayOnPeriodChange)
+            {
+                PlayPeriodSound();
+            }
         }
         #endregion
 
@@ -1355,6 +1360,7 @@ namespace HockeyScoreboard
             UISoundUpdateAssets();
             Settings.Default.Save();
         }
+        
 
 
         #endregion
