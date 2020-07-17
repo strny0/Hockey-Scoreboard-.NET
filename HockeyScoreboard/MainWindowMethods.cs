@@ -1,4 +1,5 @@
-﻿using HockeyScoreboard.Properties;
+﻿using DocumentFormat.OpenXml.Presentation;
+using HockeyScoreboard.Properties;
 using HockeyScoreboardLibrary;
 using Microsoft.Win32;
 using System;
@@ -203,7 +204,7 @@ namespace HockeyScoreboard
         {
             if (string.IsNullOrEmpty(ImagePath))
             {
-                MessageBox.Show("You must select an image.","Operation aborted",MessageBoxButton.OK,MessageBoxImage.Warning);
+                MessageBox.Show("You must select an image.", "Operation aborted", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             else
@@ -237,7 +238,7 @@ namespace HockeyScoreboard
             }
             UIUpdateGameTime();
             ButtonPauseTime.Content = "Start Time";
-        } 
+        }
         private void ChangePeriod(CustomTypes.PeriodState PeriodVariable)
         {
 
@@ -412,7 +413,7 @@ namespace HockeyScoreboard
             if (Team.Index == 1)
             {
                 ChangeImageFromPath(Team.LogoSource, ImageTeam1Logo); ChangeImageFromPath(Team.LogoSource, Vars.SecondaryWindow.ImageTeam1LogoView);
-                TextBoxTeam1Name.Text = Team.Name; UpDownTeam1Score.Value = Team.Score;  UpDownTeam1Shots.Value = Team.Shots;
+                TextBoxTeam1Name.Text = Team.Name; UpDownTeam1Score.Value = Team.Score; UpDownTeam1Shots.Value = Team.Shots;
             }
             else if (Team.Index == 2)
             {
@@ -438,7 +439,7 @@ namespace HockeyScoreboard
             TeamSavingClass LoadClass = new TeamSavingClass();
             XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
             teamLoadingFilePaths.Clear();
-            
+
             foreach (var filePath in Directory.GetFiles(searchDirectory, searchPattern))
             {
                 teamLoadingFilePaths.Add(filePath);
@@ -578,7 +579,7 @@ namespace HockeyScoreboard
                     Team.Player2.PenaltyTimeSet = TimeSet;
                     Team.Player2.PenaltyTimeLeft = TimeSet;
                     Team.Player2.PenaltyOffset = Vars.Game.StopwatchPeriod.Elapsed;
-                    
+
                     break;
             }
 
@@ -624,8 +625,8 @@ namespace HockeyScoreboard
                     Team.Player2.PenaltyRunning = false;
                     Team.Player2.PeriodIsDoubleMinor = false;
                     Team.Player1.PeriodIsMinor = false;
-                    Team.Player2.PenaltyOffset = TimeSpan.Zero; 
-                    Team.Player2.PenaltyTimeLeft = TimeSpan.Zero; 
+                    Team.Player2.PenaltyOffset = TimeSpan.Zero;
+                    Team.Player2.PenaltyTimeLeft = TimeSpan.Zero;
                     Team.Player2.PenaltyTimeSet = TimeSpan.Zero;
                     PenaltyMoveDownASlot(Team);
                     break;
@@ -650,7 +651,7 @@ namespace HockeyScoreboard
                 case true:
                     if (Team.Player1.PenaltyRunning)
                     {
-                        
+
                         if (Team.Player1.PeriodIsDoubleMinor == true)
                         {
                             if (OtherTeam.Score > Team.Player1.OtherTeamScoreAtPenaltyStart)
@@ -787,14 +788,14 @@ namespace HockeyScoreboard
         }
         private void TeamEditorRemovePlayer(ListBox EditorListBox)
         {
-            try 
-            { 
+            try
+            {
                 Vars.Game.TeamManagerTeamSavingClassInstance.PlayerList.RemoveAt(EditorListBox.SelectedIndex); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance);
             }
-            catch 
+            catch
             {
                 MessageBox.Show("No player selected. Unable to remove.");
-                return; 
+                return;
             }
         }
         private void TeamEditorClearPlayerList()
@@ -1186,11 +1187,316 @@ namespace HockeyScoreboard
             }
         }
 
+        #region Fonts
+
+        private void ChangeFontScore(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog() 
+            { 
+            Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
+
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontScore = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontScoreSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
 
 
+        private void ChangeFontTeamName(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
 
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
 
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontTeamName = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontTeamNameSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
 
+        private void ChangeFontGameTime(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
+
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontGameTime = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontGameTimeSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
+
+        private void ChangeFontPeriod(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
+
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontPeriod = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontPeriodSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
+
+        private void ChangeFontShots(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
+
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontShots = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontShotsSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
+
+        private void ChangeFontPenaltyTime(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
+
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontPenaltyTime = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontPenaltyTimeSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
+
+        private void ChangeFontPenaltyNumber(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
+
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontPenaltyNumber = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontPenaltyNumberSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
+
+        private void ChangeFontDescSmall(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
+
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontDescSmall = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontDescSmallSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
+
+        private void ChangeFontDescLarge(FontFamily origFont, double origSize)
+        {
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            };
+
+            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Settings.Default.FontDescLarge = new FontFamily(fontDialog.Font.Name);
+                Settings.Default.FontDescLargeSize = (double)fontDialog.Font.Size;
+                Settings.Default.Save();
+                UIUpdateFonts();
+                MessageBox.Show("Font changed successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Operation cancelled.");
+            }
+        }
+
+        #endregion
+
+        private void RestoreDefaultFonts()
+        {
+            string defaultFont = "Segoe UI";
+            Settings.Default.FontScore = new FontFamily(defaultFont);
+            Settings.Default.FontShots = new FontFamily(defaultFont);
+            Settings.Default.FontPeriod = new FontFamily(defaultFont);
+            Settings.Default.FontGameTime = new FontFamily(defaultFont);
+            Settings.Default.FontPenaltyTime = new FontFamily(defaultFont);
+            Settings.Default.FontPenaltyNumber = new FontFamily(defaultFont);
+            Settings.Default.FontDescSmall = new FontFamily(defaultFont);
+            Settings.Default.FontDescLarge = new FontFamily(defaultFont);
+            Settings.Default.FontTeamName = new FontFamily(defaultFont);
+
+            Settings.Default.FontScoreSize =            (double)180;
+            Settings.Default.FontShotsSize =            (double)72;
+            Settings.Default.FontPeriodSize =           (double)120;
+            Settings.Default.FontGameTimeSize =         (double)200;
+            Settings.Default.FontPenaltyTimeSize =      (double)80;
+            Settings.Default.FontPenaltyNumberSize =    (double)80;
+            Settings.Default.FontDescSmallSize =        (double)24;
+            Settings.Default.FontDescLargeSize =        (double)40;
+            Settings.Default.FontTeamNameSize =         (double)48;
+
+            Settings.Default.Save();
+            UIUpdateFonts();
+            MessageBox.Show("Default fonts restored");
+        }
+
+        private void UIUpdateFonts()
+        {
+            Vars.SecondaryWindow.LabelTimeVariable.FontFamily = Settings.Default.FontGameTime;
+            Vars.SecondaryWindow.LabelTimeVariable.FontSize = Settings.Default.FontGameTimeSize;
+
+            Vars.SecondaryWindow.LabelPeriodVariable.FontFamily = Settings.Default.FontPeriod;
+            Vars.SecondaryWindow.LabelPeriodVariable.FontSize = Settings.Default.FontPeriodSize;
+
+            Vars.SecondaryWindow.LabelScoreTeam1Variable.FontFamily = Settings.Default.FontScore;
+            Vars.SecondaryWindow.LabelScoreTeam2Variable.FontFamily = Settings.Default.FontScore;
+
+            Vars.SecondaryWindow.LabelScoreTeam1Variable.FontSize = Settings.Default.FontScoreSize;
+            Vars.SecondaryWindow.LabelScoreTeam2Variable.FontSize = Settings.Default.FontScoreSize;
+
+            Vars.SecondaryWindow.LabelShotsTeam1Variable.FontFamily = Settings.Default.FontShots;
+            Vars.SecondaryWindow.LabelShotsTeam2Variable.FontFamily = Settings.Default.FontShots;
+                                                        
+            Vars.SecondaryWindow.LabelShotsTeam1Variable.FontSize = Settings.Default.FontShotsSize;
+            Vars.SecondaryWindow.LabelShotsTeam2Variable.FontSize = Settings.Default.FontShotsSize;
+
+            Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.FontFamily = Settings.Default.FontPenaltyTime;
+            Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.FontFamily = Settings.Default.FontPenaltyTime;
+            Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.FontFamily = Settings.Default.FontPenaltyTime;
+            Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.FontFamily = Settings.Default.FontPenaltyTime;
+
+            Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.FontSize = Settings.Default.FontPenaltyTimeSize;
+            Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.FontSize = Settings.Default.FontPenaltyTimeSize;
+            Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.FontSize = Settings.Default.FontPenaltyTimeSize;
+            Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.FontSize = Settings.Default.FontPenaltyTimeSize;
+
+            Vars.SecondaryWindow.LabelT1P1NumberVariable.FontFamily = Settings.Default.FontPenaltyNumber;
+            Vars.SecondaryWindow.LabelT1P2NumberVariable.FontFamily = Settings.Default.FontPenaltyNumber;
+            Vars.SecondaryWindow.LabelT2P2NumberVariable.FontFamily = Settings.Default.FontPenaltyNumber;
+            Vars.SecondaryWindow.LabelT2P1NumberVariable.FontFamily = Settings.Default.FontPenaltyNumber;
+
+            Vars.SecondaryWindow.LabelT1P1NumberVariable.FontSize = Settings.Default.FontPenaltyNumberSize;
+            Vars.SecondaryWindow.LabelT1P2NumberVariable.FontSize = Settings.Default.FontPenaltyNumberSize;
+            Vars.SecondaryWindow.LabelT2P2NumberVariable.FontSize = Settings.Default.FontPenaltyNumberSize;
+            Vars.SecondaryWindow.LabelT2P1NumberVariable.FontSize = Settings.Default.FontPenaltyNumberSize;
+
+            Vars.SecondaryWindow.LabelPeriodText.FontFamily = Settings.Default.FontDescLarge;
+            Vars.SecondaryWindow.LabelTimeText.FontFamily = Settings.Default.FontDescLarge;
+
+            Vars.SecondaryWindow.LabelPeriodText.FontSize = Settings.Default.FontDescLargeSize;
+            Vars.SecondaryWindow.LabelTimeText.FontSize = Settings.Default.FontDescLargeSize;
+
+            Vars.SecondaryWindow.TextBlockTeam1Name.FontFamily = Settings.Default.FontTeamName;
+            Vars.SecondaryWindow.TextBlockTeam2Name.FontFamily = Settings.Default.FontTeamName;
+                                                                                            
+            Vars.SecondaryWindow.TextBlockTeam1Name.FontSize = Settings.Default.FontTeamNameSize;
+            Vars.SecondaryWindow.TextBlockTeam2Name.FontSize = Settings.Default.FontTeamNameSize;
+
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesLeft.FontFamily = Settings.Default.FontDescSmall;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesRight.FontFamily = Settings.Default.FontDescSmall;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesTimeLeft.FontFamily = Settings.Default.FontDescSmall;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesTimeRight.FontFamily = Settings.Default.FontDescSmall;
+            Vars.SecondaryWindow.TextBlockLabelScoreLeft.FontFamily = Settings.Default.FontDescSmall;
+            Vars.SecondaryWindow.TextBlockLabelScoreRight.FontFamily = Settings.Default.FontDescSmall;
+            Vars.SecondaryWindow.TextBlockLabelShotsLeft.FontFamily = Settings.Default.FontDescSmall;
+            Vars.SecondaryWindow.TextBlockLabelShotsRight.FontFamily = Settings.Default.FontDescSmall;
+
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesLeft.FontSize = Settings.Default.FontDescSmallSize;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesRight.FontSize = Settings.Default.FontDescSmallSize;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesTimeLeft.FontSize = Settings.Default.FontDescSmallSize;
+            Vars.SecondaryWindow.TextBlockLabelPenaltiesTimeRight.FontSize = Settings.Default.FontDescSmallSize;
+            Vars.SecondaryWindow.TextBlockLabelScoreLeft.FontSize = Settings.Default.FontDescSmallSize;
+            Vars.SecondaryWindow.TextBlockLabelScoreRight.FontSize = Settings.Default.FontDescSmallSize;
+            Vars.SecondaryWindow.TextBlockLabelShotsLeft.FontSize = Settings.Default.FontDescSmallSize;
+            Vars.SecondaryWindow.TextBlockLabelShotsRight.FontSize = Settings.Default.FontDescSmallSize;
+        }
 
         #endregion
 

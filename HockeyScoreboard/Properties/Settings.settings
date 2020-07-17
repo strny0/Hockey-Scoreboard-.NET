@@ -137,5 +137,59 @@
     <Setting Name="PlayTimeoutEnd" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="FontScore" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontShots" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontGameTime" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontPenaltyTime" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontPenaltyNumber" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontPeriod" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontDescSmall" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontDescLarge" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontTeamName" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Segoe UI</Value>
+    </Setting>
+    <Setting Name="FontScoreSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">180</Value>
+    </Setting>
+    <Setting Name="FontShotsSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">72</Value>
+    </Setting>
+    <Setting Name="FontGameTimeSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="FontPenaltyTimeSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="FontPenaltyNumberSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="FontPeriodSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="FontDescSmallSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">24</Value>
+    </Setting>
+    <Setting Name="FontDescLargeSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
+    <Setting Name="FontTeamNameSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">48</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

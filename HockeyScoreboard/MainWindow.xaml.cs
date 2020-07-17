@@ -295,13 +295,14 @@ namespace HockeyScoreboard
         }
         private void ButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
-            Vars.Game.Period = CustomTypes.PeriodState.First; Vars.Game.GameState = CustomTypes.GameState.Regular;
+            ChangePeriod(CustomTypes.PeriodState.First); Vars.Game.GameState = CustomTypes.GameState.Regular;
             Vars.Team1.HasTimeout = true; Vars.Team2.HasTimeout = true;
             Vars.Team1.TimeoutRunning = false; Vars.Team2.TimeoutRunning = false;
-            SetTime(TimeSpan.FromMinutes(7));
+            SetTime(Vars.Game.LastSetTime);
             PenaltyCancel(Vars.Team1, false); PenaltyCancel(Vars.Team1, true);
             PenaltyCancel(Vars.Team2, false); PenaltyCancel(Vars.Team2, true);
             Vars.Team1.Score = 0; Vars.Team2.Score = 0;
+            Vars.Team1.Name = string.Empty; Vars.Team2.Name = string.Empty;
             UpDownTeam1Score.Value = Vars.Team1.Score; UpDownTeam2Score.Value = Vars.Team2.Score;
             Vars.Team1.Shots = 0; Vars.Team2.Shots = 0;
             UpDownTeam1Shots.Value = Vars.Team1.Shots; UpDownTeam2Shots.Value = Vars.Team2.Shots;
@@ -452,68 +453,125 @@ namespace HockeyScoreboard
         {
             Settings.Default.ColorBackgroundMain = ChangeColorSetting(Settings.Default.ColorBackgroundMain);
             UIUpdateColorButton(Settings.Default.ColorBackgroundMain, BorderColorBGMain);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
+
         }
 
         private void BorderColorBGSecondary_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorBackgroundSecondary = ChangeColorSetting(Settings.Default.ColorBackgroundSecondary);
             UIUpdateColorButton(Settings.Default.ColorBackgroundSecondary, BorderColorBGSecondary);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
+
         }
 
         private void BorderColorBorder_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorBorderBrush = ChangeColorSetting(Settings.Default.ColorBorderBrush);
             UIUpdateColorButton(Settings.Default.ColorBorderBrush, BorderColorBorder);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
 
         private void BorderColorIndicatorFree_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorPenaltyIndicatorFree = ChangeColorSetting(Settings.Default.ColorPenaltyIndicatorFree);
             UIUpdateColorButton(Settings.Default.ColorPenaltyIndicatorFree, BorderColorIndicatorFree);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
 
         private void BorderColorIndicatorOccupied_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorPenaltyIndicatorOccupied = ChangeColorSetting(Settings.Default.ColorPenaltyIndicatorOccupied);
             UIUpdateColorButton(Settings.Default.ColorPenaltyIndicatorOccupied, BorderColorIndicatorOccupied);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
 
         private void BorderColorNormalText_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextMain = ChangeColorSetting(Settings.Default.ColorTextMain);
             UIUpdateColorButton(Settings.Default.ColorTextMain, BorderColorNormalText);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
 
         private void BorderColorPeriodText_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextPeriod = ChangeColorSetting(Settings.Default.ColorTextPeriod);
             UIUpdateColorButton(Settings.Default.ColorTextPeriod, BorderColorPeriodText);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
         private void BorderColorTextTime_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextTime = ChangeColorSetting(Settings.Default.ColorTextTime);
             UIUpdateColorButton(Settings.Default.ColorTextTime, BorderColorTextTime);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
 
         private void BorderColorTextValues_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextValues = ChangeColorSetting(Settings.Default.ColorTextValues);
             UIUpdateColorButton(Settings.Default.ColorTextValues, BorderColorTextValues);
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
 
         private void ButtonPreferencesRestoreDefaultColors_Click(object sender, RoutedEventArgs e)
         {
             UIRestoreDefaultColors();
-            UIUpdateSecondaryWindowColorScheme();
+            UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
+        }
+
+        #endregion
+
+        #region Fonts
+
+
+        private void ButtonPreferencesChangeFontScore_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontScore(Settings.Default.FontScore, Settings.Default.FontScoreSize);
+        }
+
+        private void ButtonPreferencesChangeFontTeamName_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontTeamName(Settings.Default.FontTeamName, Settings.Default.FontTeamNameSize);
+        }
+
+        private void ButtonPreferencesChangeFontShots_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontShots(Settings.Default.FontShots, Settings.Default.FontShotsSize);
+        }
+
+        private void ButtonPreferencesChangeFontTimePeriod_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontGameTime(Settings.Default.FontGameTime, Settings.Default.FontGameTimeSize);
+        }
+
+        private void ButtonPreferencesChangeFontPeriodNumber_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontPeriod(Settings.Default.FontPeriod, Settings.Default.FontPeriodSize);
+        }
+
+        private void ButtonPreferencesChangeFontTimePenalty_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontPenaltyTime(Settings.Default.FontPenaltyTime, Settings.Default.FontPenaltyTimeSize);
+        }
+
+        private void ButtonPreferencesChangeFontNumberPenalty_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontPenaltyNumber(Settings.Default.FontPenaltyNumber, Settings.Default.FontPenaltyNumberSize);
+        }
+
+        private void ButtonPreferencesChangeFontDescriptiveTextSmall_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontDescSmall(Settings.Default.FontDescSmall, Settings.Default.FontDescSmallSize);
+        }
+
+        private void ButtonPreferencesChangeFontResetDefault_Click(object sender, RoutedEventArgs e)
+        {
+            RestoreDefaultFonts();
+        }
+
+        private void ButtonPreferencesChangeFontDescriptiveTextLarge_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFontDescLarge(Settings.Default.FontDescLarge, Settings.Default.FontDescLargeSize);
         }
 
         #endregion
@@ -526,15 +584,6 @@ namespace HockeyScoreboard
             MessageBox.Show("Successfully saved. Preferences will be loaded as they were saved next time the program runs.");
         }
 
-        private void ButtonPreferencesChangeFontNumbers_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ButtonPreferencesChangeFontText_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         #endregion
 
@@ -777,6 +826,8 @@ namespace HockeyScoreboard
         {
             Settings.Default.PlayTimeoutEnd = false; Settings.Default.Save();
         }
+
+        
     }
 }
 

@@ -562,5 +562,221 @@ namespace HockeyScoreboard.Properties {
                 this["PlayTimeoutEnd"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontScore {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontScore"]));
+            }
+            set {
+                this["FontScore"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontShots {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontShots"]));
+            }
+            set {
+                this["FontShots"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontGameTime {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontGameTime"]));
+            }
+            set {
+                this["FontGameTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontPenaltyTime {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontPenaltyTime"]));
+            }
+            set {
+                this["FontPenaltyTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontPenaltyNumber {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontPenaltyNumber"]));
+            }
+            set {
+                this["FontPenaltyNumber"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontPeriod {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontPeriod"]));
+            }
+            set {
+                this["FontPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontDescSmall {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontDescSmall"]));
+            }
+            set {
+                this["FontDescSmall"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontDescLarge {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontDescLarge"]));
+            }
+            set {
+                this["FontDescLarge"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public global::System.Windows.Media.FontFamily FontTeamName {
+            get {
+                return ((global::System.Windows.Media.FontFamily)(this["FontTeamName"]));
+            }
+            set {
+                this["FontTeamName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
+        public double FontScoreSize {
+            get {
+                return ((double)(this["FontScoreSize"]));
+            }
+            set {
+                this["FontScoreSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("72")]
+        public double FontShotsSize {
+            get {
+                return ((double)(this["FontShotsSize"]));
+            }
+            set {
+                this["FontShotsSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public double FontGameTimeSize {
+            get {
+                return ((double)(this["FontGameTimeSize"]));
+            }
+            set {
+                this["FontGameTimeSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public double FontPenaltyTimeSize {
+            get {
+                return ((double)(this["FontPenaltyTimeSize"]));
+            }
+            set {
+                this["FontPenaltyTimeSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public double FontPenaltyNumberSize {
+            get {
+                return ((double)(this["FontPenaltyNumberSize"]));
+            }
+            set {
+                this["FontPenaltyNumberSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        public double FontPeriodSize {
+            get {
+                return ((double)(this["FontPeriodSize"]));
+            }
+            set {
+                this["FontPeriodSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("24")]
+        public double FontDescSmallSize {
+            get {
+                return ((double)(this["FontDescSmallSize"]));
+            }
+            set {
+                this["FontDescSmallSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public double FontDescLargeSize {
+            get {
+                return ((double)(this["FontDescLargeSize"]));
+            }
+            set {
+                this["FontDescLargeSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("48")]
+        public double FontTeamNameSize {
+            get {
+                return ((double)(this["FontTeamNameSize"]));
+            }
+            set {
+                this["FontTeamNameSize"] = value;
+            }
+        }
     }
 }

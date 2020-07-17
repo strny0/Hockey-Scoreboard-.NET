@@ -368,51 +368,45 @@
             <TabItem Header="Preferences" FontSize="15" Background="{DynamicResource BrushBackgroundMain}" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="37*"/>
-                        <RowDefinition Height="162*"/>
+                        <RowDefinition Height="259*"/>
+                        <RowDefinition Height="139*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="400*"/>
-                        <ColumnDefinition Width="300*"/>
-                        <ColumnDefinition Width="250*"/>
-                        <ColumnDefinition Width="180*"/>
-                        <ColumnDefinition Width="206*"/>
+                        <ColumnDefinition Width="405*"/>
+                        <ColumnDefinition Width="304*"/>
+                        <ColumnDefinition Width="253*"/>
+                        <ColumnDefinition Width="390*"/>
                     </Grid.ColumnDefinitions>
 
-                    <GroupBox Header="Toggles" Margin="10,0,10,10" Grid.Column="0" MinWidth="385" MinHeight="388" Grid.RowSpan="2">
+                    <GroupBox Header="Toggles" Margin="10,0,10,10" Grid.Column="0" Grid.Row="0">
                         <Grid>
                             <CheckBox Content="Display miliseconds below 1 minute for period clock" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="4,0,0,0"/>
                             <CheckBox Content="Display miliseconds below 1 minute for penalty clock" HorizontalAlignment="Left" Margin="4,25,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
                             <CheckBox Content="Automatically enter break mode when game ends" HorizontalAlignment="Left" Margin="4,50,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
                             <CheckBox Content="Automatically start time when entering break mode" HorizontalAlignment="Left" Margin="4,75,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
                             <CheckBox Content="Automatically start time when entering timeout" HorizontalAlignment="Left" Margin="4,100,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Content="Become sad" HorizontalAlignment="Left" Margin="4,125,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="4,150,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="4,175,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="4,200,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="4,225,0,0" VerticalAlignment="Top" Foreground="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Background="{DynamicResource BrushTextDefault}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                            <Button Content="Save and Apply all settings" x:Name="ButtonPreferencesSave" Click="ButtonPreferencesSave_Click" HorizontalAlignment="Left" Margin="4,318,0,0" VerticalAlignment="Top" Height="40" Width="371" Style="{DynamicResource CustomButtonStyle}" FontSize="14"/>
+                            <Button Content="Save and Apply all settings" x:Name="ButtonPreferencesSave" Click="ButtonPreferencesSave_Click" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top" Height="40" Width="353" Style="{DynamicResource CustomButtonStyle}" FontSize="14"/>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Time presets" Margin="10,0,10,10" Grid.Column="1" Grid.Row="1" MinWidth="284" MinHeight="314">
+                    <GroupBox Header="Time presets" Margin="10,0,10,10" Grid.Column="1" Grid.RowSpan="2" MinWidth="284" MinHeight="314">
                         <Grid x:Name="GridTimePresets">
-                            <Controls:UpDownInt x:Name="UpDownPreferencesSeconds"  Minimum="0" Maximum="59" Height="40" Margin="142,203,0,44" Width="130" MinHeight="40"/>
-                            <Controls:UpDownInt x:Name="UpDownPreferencesMinutes" Minimum="0" Maximum="999" Height="40" Margin="0,203,142,44" Width="130" MinHeight="40"/>
-                            <Button x:Name="ButtonPreferencesSetTime" Click="ButtonPreferencesSetTime_Click" Content="Set Time" Margin="0,248,0,-1" Height="40" Width="272" Style="{DynamicResource CustomButtonStyle}" FontSize="14" MinHeight="40"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPeriodA" Tag="GameTimePresetA" Content="Period Preset A: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" Margin="0,-2,1,269" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPeriodB" Tag="GameTimePresetB" Content="Period Preset B: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,18,1,249" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPeriodC" Tag="GameTimePresetC" Content="Period Preset C: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,38,1,229" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPeriodD" Tag="GameTimePresetD" Content="Period Preset D: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,58,1,209" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPenaltyA" Tag="PenaltyTimePresetA" Content="Penalty Preset A: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Margin="0,78,1,189" Width="271" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPenaltyB" Tag="PenaltyTimePresetB" Content="Penalty Preset B: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,98,1,169" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPenaltyC" Tag="PenaltyTimePresetC" Content="Penalty Preset C: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,118,0,149" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="272" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesPenaltyD" Tag="PenaltyTimePresetD" Content="Penalty Preset D: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,138,0,129" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="272" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesDefaultTimeout" Tag="TimeoutDuration" Content="Default Timeout Duration: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,158,0,109" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="272" MinHeight="20"/>
-                            <RadioButton x:Name="RadioButtonPreferencesDefaultBreak" Tag="BreakDuration" Content="Default Break Duration: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,178,0,89" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="272" MinHeight="20"/>
+                            <Controls:UpDownInt x:Name="UpDownPreferencesSeconds"  Minimum="0" Maximum="59" Height="40" Margin="142,272,0,49" Width="130" MinHeight="40"/>
+                            <Controls:UpDownInt x:Name="UpDownPreferencesMinutes" Minimum="0" Maximum="999" Height="40" Margin="0,272,142,49" Width="130" MinHeight="40"/>
+                            <Button x:Name="ButtonPreferencesSetTime" Click="ButtonPreferencesSetTime_Click" Content="Set Time" Margin="0,318,0,3" Height="40" Width="272" Style="{DynamicResource CustomButtonStyle}" FontSize="14" MinHeight="40"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPeriodA" Tag="GameTimePresetA" Content="Period Preset A: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" Margin="-1,10,2,331" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPeriodB" Tag="GameTimePresetB" Content="Period Preset B: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="-1,35,2,306" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPeriodC" Tag="GameTimePresetC" Content="Period Preset C: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="-1,60,2,281" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPeriodD" Tag="GameTimePresetD" Content="Period Preset D: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="-1,85,2,256" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPenaltyA" Tag="PenaltyTimePresetA" Content="Penalty Preset A: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Margin="-1,110,2,231" Width="271" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPenaltyB" Tag="PenaltyTimePresetB" Content="Penalty Preset B: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="-1,135,2,206" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="271" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPenaltyC" Tag="PenaltyTimePresetC" Content="Penalty Preset C: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="-1,160,1,181" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="272" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesPenaltyD" Tag="PenaltyTimePresetD" Content="Penalty Preset D: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,185,0,156" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="272" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesDefaultTimeout" Tag="TimeoutDuration" Content="Default Timeout Duration: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,210,0,131" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="272" MinHeight="20" Height="20"/>
+                            <RadioButton x:Name="RadioButtonPreferencesDefaultBreak" Tag="BreakDuration" Content="Default Break Duration: {minute}:{second}" Padding="10,0,0,0" VerticalContentAlignment="Center" Margin="0,235,0,106" Foreground="{DynamicResource BrushTextDefault}" Background="{DynamicResource BrushTextDefault}" BorderBrush="{DynamicResource BrushBorderBrush}" Width="272" MinHeight="20" Height="20"/>
 
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Color scheme of View" Margin="10,0,10,10" Grid.Column="2" MinWidth="233" MinHeight="388" Grid.RowSpan="2">
+                    <GroupBox Header="Color scheme of View" Margin="10,0,10,10" Grid.Column="2" Grid.RowSpan="2" MinWidth="233" MinHeight="388">
                         <Grid>
                             <Border x:Name="BorderColorBGMain" Background="{DynamicResource BrushBackgroundMain}" PreviewMouseLeftButtonUp="BorderColorBGMain_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="{DynamicResource BrushTextDefault}" Margin="0,0,181,331" Width="40" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Border x:Name="BorderColorBGSecondary" Background="{DynamicResource BrushBackgroundSecondary}" PreviewMouseLeftButtonUp="BorderColorBGSecondary_PreviewMouseLeftButtonUp" BorderThickness="3" BorderBrush="{DynamicResource BrushTextDefault}" Margin="0,35,181,296" Width="40" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -442,14 +436,36 @@
 
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Fonts" Margin="10,0" Grid.Column="1" MinWidth="284" MinHeight="74" Grid.Row="0">
+                    <GroupBox Header="Fonts" Margin="10,0,10,10" Grid.Column="3" Grid.Row="0">
                         <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Margin="4" x:Name="ButtonPreferencesChangeFontNumbers" Click="ButtonPreferencesChangeFontNumbers_Click" Style="{DynamicResource CustomButtonStyle}" />
-                            <Button Grid.Column="1" Margin="4" x:Name="ButtonPreferencesChangeFontText" Click="ButtonPreferencesChangeFontText_Click" Style="{DynamicResource CustomButtonStyle}"/>
+                            <Button Grid.Column="0" Grid.Row="0" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Score" x:Name="ButtonPreferencesChangeFontScore" Click="ButtonPreferencesChangeFontScore_Click" Style="{DynamicResource CustomButtonStyle}"   />
+                            <Button Grid.Column="1" Grid.Row="0" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Team Name" x:Name="ButtonPreferencesChangeFontTeamName" Click="ButtonPreferencesChangeFontTeamName_Click" Style="{DynamicResource CustomButtonStyle}" />
+                            <Button Grid.Column="0" Grid.Row="1" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Shots" x:Name="ButtonPreferencesChangeFontShots" Click="ButtonPreferencesChangeFontShots_Click" Style="{DynamicResource CustomButtonStyle}"  />
+                            <Button Grid.Column="1" Grid.Row="1" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Game Time" x:Name="ButtonPreferencesChangeFontTimePeriod" Click="ButtonPreferencesChangeFontTimePeriod_Click" Style="{DynamicResource CustomButtonStyle}" />
+                            <Button Grid.Column="0" Grid.Row="2" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Period" x:Name="ButtonPreferencesChangeFontPeriodNumber" Click="ButtonPreferencesChangeFontPeriodNumber_Click" Style="{DynamicResource CustomButtonStyle}"  />
+                            <Button Grid.Column="1" Grid.Row="2" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Penalty Time" x:Name="ButtonPreferencesChangeFontTimePenalty" Click="ButtonPreferencesChangeFontTimePenalty_Click" Style="{DynamicResource CustomButtonStyle}" />
+                            <Button Grid.Column="0" Grid.Row="3" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Penalty player number" x:Name="ButtonPreferencesChangeFontNumberPenalty" Click="ButtonPreferencesChangeFontNumberPenalty_Click" Style="{DynamicResource CustomButtonStyle}"  />
+                            <Button Grid.Column="1" Grid.Row="3" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Descriptive text small" x:Name="ButtonPreferencesChangeFontDescriptiveTextSmall" Click="ButtonPreferencesChangeFontDescriptiveTextSmall_Click" Style="{DynamicResource CustomButtonStyle}" />
+                            <Button Grid.Column="0" Grid.Row="4" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Restore default fonts" x:Name="ButtonPreferencesChangeFontResetDefault" Click="ButtonPreferencesChangeFontResetDefault_Click" Style="{DynamicResource CustomButtonStyle}" />
+                            <Button Grid.Column="1" Grid.Row="4" Margin="5,0" Height="40" VerticalAlignment="Center" Content="Descriptive text large" x:Name="ButtonPreferencesChangeFontDescriptiveTextLarge" Click="ButtonPreferencesChangeFontDescriptiveTextLarge_Click" Style="{DynamicResource CustomButtonStyle}" />
+
+
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Folder settings" Margin="10,0,10,10" Grid.Column="3" Grid.Row="1">
+                        <Grid>
+
                         </Grid>
                     </GroupBox>
                 </Grid>
