@@ -369,31 +369,41 @@ namespace HockeyScoreboard
         {
             PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(4), true, false);
         }
-        private void ComboBoxTeam1_DropDownOpened(object sender, EventArgs e)
+
+        private void ButtonChangeTeam1_Click(object sender, RoutedEventArgs e)
         {
-            UIUpdateComboBoxSelection(ComboBoxTeam1);
+            TeamEditorLoadTeam(ListBoxTeam1Players, Vars.Team1);
         }
-        private void ComboBoxTeam2_DropDownOpened(object sender, EventArgs e)
+
+        private void ButtonChangeTeam2_Click(object sender, RoutedEventArgs e)
         {
-            UIUpdateComboBoxSelection(ComboBoxTeam2);
+            TeamEditorLoadTeam(ListBoxTeam2Players, Vars.Team2);
         }
-        private void ComboBoxTeam1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ComboBoxTeam1.SelectedIndex != -1)
-            {
-                TeamEditorLoadTeamFromComboBox(ListBoxTeam1Players, ComboBoxTeam1, Vars.Team1);
-                ComboBoxTeam1.SelectedIndex = -1;
-            }
-            else return;
-        }
-        private void ComboBoxTeam2_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ComboBoxTeam2.SelectedIndex != -1)
-            {
-                TeamEditorLoadTeamFromComboBox(ListBoxTeam2Players, ComboBoxTeam2, Vars.Team2);
-                ComboBoxTeam2.SelectedIndex = -1;
-            }
-        }
+        //private void ComboBoxTeam1_DropDownOpened(object sender, EventArgs e)
+        //{
+        //    UIUpdateComboBoxSelection(ComboBoxTeam1);
+        //}
+        //private void ComboBoxTeam2_DropDownOpened(object sender, EventArgs e)
+        //{
+        //    UIUpdateComboBoxSelection(ComboBoxTeam2);
+        //}
+        //private void ComboBoxTeam1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (ComboBoxTeam1.SelectedIndex != -1)
+        //    {
+        //        TeamEditorLoadTeamFromComboBox(ListBoxTeam1Players, ComboBoxTeam1, Vars.Team1);
+        //        ComboBoxTeam1.SelectedIndex = -1;
+        //    }
+        //    else return;
+        //}
+        //private void ComboBoxTeam2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (ComboBoxTeam2.SelectedIndex != -1)
+        //    {
+        //        TeamEditorLoadTeamFromComboBox(ListBoxTeam2Players, ComboBoxTeam2, Vars.Team2);
+        //        ComboBoxTeam2.SelectedIndex = -1;
+        //    }
+        //}
         private void ListBoxTeam1Players_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ListBoxTeam1Players.SelectedIndex = -1;
@@ -670,11 +680,15 @@ namespace HockeyScoreboard
             Settings.Default.Video4Path = GetMediaFilePath(); SoundUpdateValues();
 
         }
+        #region Video player
 
         private void ButtonVideoPlayPause_Click(object sender, RoutedEventArgs e)
         {
-            try { MediaElementPlayer.Play(); }
-            catch { MessageBox.Show("No video loaded.", "Error",MessageBoxButton.OK,MessageBoxImage.Error); }
+            try
+            {
+                MediaElementPlayer.Play();
+            }
+            catch { MessageBox.Show("No video loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void ButtonVideoStop_Click(object sender, RoutedEventArgs e)
@@ -687,6 +701,10 @@ namespace HockeyScoreboard
         {
             try { MediaElementPlayer.Stop(); }
             catch { MessageBox.Show("No video loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+        }
+        private void SliderVideoScrubbingControl_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            MediaElementPlayer.Position = TimeSpan.FromSeconds(SliderVideoScrubbingControl.Value);
         }
 
         private void ButtonVideoLoad1_Click(object sender, RoutedEventArgs e)
@@ -708,7 +726,7 @@ namespace HockeyScoreboard
         {
             LoadVideo(Settings.Default.Video4Path);
         }
-
+        #endregion
         private void CheckBoxHornGoal_Checked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayHornOnGoal = true; Settings.Default.Save();
@@ -827,7 +845,7 @@ namespace HockeyScoreboard
             Settings.Default.PlayTimeoutEnd = false; Settings.Default.Save();
         }
 
-        
+
     }
 }
 

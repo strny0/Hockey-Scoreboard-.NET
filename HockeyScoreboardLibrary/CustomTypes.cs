@@ -10,6 +10,7 @@
             Extension = 4,
             SN = 5,
         }
+
         public enum GameState
         {
             Regular = 0,

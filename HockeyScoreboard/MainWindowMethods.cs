@@ -19,7 +19,6 @@ namespace HockeyScoreboard
     public partial class MainWindow : Window
     {
         #region Constants and Variables
-        private readonly List<string> teamLoadingFilePaths = new List<string>();
         private const string ListboxFormat = "{0} - {1}";
         private readonly Brush cBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
         private readonly Brush cBrush2 = new SolidColorBrush(Color.FromRgb(51, 51, 51));
@@ -127,7 +126,7 @@ namespace HockeyScoreboard
             {
                 Title = "Load Image",
                 FilterIndex = 6,
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+                //InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
             };
 
             string sep = string.Empty;
@@ -151,7 +150,7 @@ namespace HockeyScoreboard
                 Title = "Save Team",
                 AddExtension = true,
                 FilterIndex = 1,
-                InitialDirectory = Properties.Settings.Default.DefaultTeamDirectory,
+                //InitialDirectory = Properties.Settings.Default.DefaultTeamDirectory,
                 Filter = "XML files(.xml) | *.xml",
                 DefaultExt = ".xml"
             };
@@ -164,7 +163,7 @@ namespace HockeyScoreboard
             {
                 Title = "Load Team",
                 FilterIndex = 1,
-                InitialDirectory = Properties.Settings.Default.DefaultTeamDirectory,
+                //InitialDirectory = Properties.Settings.Default.DefaultTeamDirectory,
                 Filter = "XML files(.xml) | *.xml",
                 DefaultExt = ".xml"
             };
@@ -176,7 +175,7 @@ namespace HockeyScoreboard
             {
                 Title = "Load Sound",
                 FilterIndex = 10,
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                //InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                 Filter = "All Media Files|*.wav;*.aac;*.wma;*.wmv;*.avi;*.mpg;*.mpeg;*.m1v;*.mp2;*.mp3;*.mpa;*.mpe;*.m3u;*.mp4;*.mov;*.3g2;*.3gp2;*.3gp;*.3gpp;*.m4a;*.cda;*.aif;*.aifc;*.aiff;*.mid;*.midi;*.rmi;*.mkv;*.WAV;*.AAC;*.WMA;*.WMV;*.AVI;*.MPG;*.MPEG;*.M1V;*.MP2;*.MP3;*.MPA;*.MPE;*.M3U;*.MP4;*.MOV;*.3G2;*.3GP2;*.3GP;*.3GPP;*.M4A;*.CDA;*.AIF;*.AIFC;*.AIFF;*.MID;*.MIDI;*.RMI;*.MKV",
                 DefaultExt = ".mp3"
             };
@@ -240,8 +239,7 @@ namespace HockeyScoreboard
             ButtonPauseTime.Content = "Start Time";
         }
         private void ChangePeriod(CustomTypes.PeriodState PeriodVariable)
-        {
-
+        { 
             switch (PeriodVariable)
             {
                 case CustomTypes.PeriodState.First:
@@ -431,25 +429,25 @@ namespace HockeyScoreboard
                 _ = UpdatedListbox.Items.Add(string.Format(ListboxFormat, ListType.Number, ListType.Name, CultureInfo.InvariantCulture));
             }
         }
-        private void UIUpdateComboBoxSelection(ComboBox RefreshedBox)
-        {
-            RefreshedBox.Items.Clear();
-            string searchDirectory = Properties.Settings.Default.DefaultTeamDirectory;
-            string searchPattern = "*.xml";
-            TeamSavingClass LoadClass = new TeamSavingClass();
-            XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
-            teamLoadingFilePaths.Clear();
+        //private void UIUpdateComboBoxSelection(ComboBox RefreshedBox)
+        //{
+        //    RefreshedBox.Items.Clear();
+        //    string searchDirectory = Properties.Settings.Default.DefaultTeamDirectory;
+        //    string searchPattern = "*.xml";
+        //    TeamSavingClass LoadClass = new TeamSavingClass();
+        //    XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
+        //    teamLoadingFilePaths.Clear();
 
-            foreach (var filePath in Directory.GetFiles(searchDirectory, searchPattern))
-            {
-                teamLoadingFilePaths.Add(filePath);
-                using (StreamReader streamReader = new StreamReader(filePath))
-                {
-                    LoadClass = (TeamSavingClass)xmlSerializer.Deserialize(streamReader);
-                }
-                RefreshedBox.Items.Add(LoadClass.TeamName);
-            }
-        }
+        //    foreach (var filePath in Directory.GetFiles(searchDirectory, searchPattern))
+        //    {
+        //        teamLoadingFilePaths.Add(filePath);
+        //        using (StreamReader streamReader = new StreamReader(filePath))
+        //        {
+        //            LoadClass = (TeamSavingClass)xmlSerializer.Deserialize(streamReader);
+        //        }
+        //        RefreshedBox.Items.Add(LoadClass.TeamName);
+        //    }
+        //}
         private void UIUpdateAllMainControls() // ALL UI
         {
             if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime)
@@ -624,7 +622,7 @@ namespace HockeyScoreboard
                     Team.Player2.Number = String.Empty;
                     Team.Player2.PenaltyRunning = false;
                     Team.Player2.PeriodIsDoubleMinor = false;
-                    Team.Player1.PeriodIsMinor = false;
+                    Team.Player2.PeriodIsMinor = false;
                     Team.Player2.PenaltyOffset = TimeSpan.Zero;
                     Team.Player2.PenaltyTimeLeft = TimeSpan.Zero;
                     Team.Player2.PenaltyTimeSet = TimeSpan.Zero;
@@ -756,22 +754,24 @@ namespace HockeyScoreboard
         {
             if (Team.Player2.PenaltyRunning == true && Team.Player1.PenaltyRunning == false)
             {
-                Team.Player1.PeriodIsDoubleMinor = Team.Player2.PeriodIsDoubleMinor;
-                Team.Player2.PeriodIsDoubleMinor = false;
-                Team.Player1.PeriodIsMinor = Team.Player2.PeriodIsMinor;
-                Team.Player2.PeriodIsMinor = false;
+                Team.Player1.PeriodIsDoubleMinor = Team.Player2.PeriodIsDoubleMinor; Team.Player2.PeriodIsDoubleMinor = false;
+                Team.Player1.PeriodIsMinor = Team.Player2.PeriodIsMinor; Team.Player2.PeriodIsMinor = false;
                 Team.Player1.OtherTeamScoreAtPenaltyStart = Team.Player2.OtherTeamScoreAtPenaltyStart;
+
                 Team.Player1.PenaltyTimeLeft = Team.Player2.PenaltyTimeLeft;
                 Team.Player1.PenaltyTimeSet = Team.Player2.PenaltyTimeLeft;
                 Team.Player2.PenaltyTimeLeft = TimeSpan.Zero;
+
                 Team.Player1.Number = Team.Player2.Number;
                 Team.Player2.Number = String.Empty;
-                Team.Player1.PenaltyRunning = true;
-                Team.Player2.PenaltyRunning = false;
+
+                Team.Player1.PenaltyRunning = true; Team.Player2.PenaltyRunning = false;
+
+                Team.Player1.PeriodIsDoubleMinor = Team.Player2.PeriodIsDoubleMinor; Team.Player2.PeriodIsDoubleMinor = false;
+                Team.Player1.PeriodIsMinor = Team.Player2.PeriodIsMinor; Team.Player2.PeriodIsMinor = false;
+
                 Team.Player2.PenaltyOffset = TimeSpan.Zero;
                 Team.Player1.PenaltyOffset = Vars.Game.StopwatchPeriod.Elapsed;
-
-
             }
         }
         #endregion
@@ -841,52 +841,58 @@ namespace HockeyScoreboard
                 UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance); ;
             }
         }
-        private void TeamEditorLoadTeamFromComboBox(ListBox OutputListBox, ComboBox InputComboBox, TeamClass Team)
+        private void TeamEditorLoadTeam(ListBox OutputListBox, TeamClass Team)
         {
-            MessageBoxResult result = MessageBox.Show("This will override your current team setup. Do you wish to continue?",
+            MessageBoxResult result = MessageBox.Show("This will override your current team setup. Do you want to proceed?",
                                           "Confirmation",
                                           MessageBoxButton.YesNo,
                                           MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                OutputListBox.Items.Clear();
                 TeamSavingClass LoadClass = new TeamSavingClass();
-                XmlSerializer Xser = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
-                using (StreamReader streamReader = new StreamReader(teamLoadingFilePaths[InputComboBox.SelectedIndex]))
+                OpenFileDialog LoadTeamDialog = DefineLoadXmlDialog();
+                Nullable<bool> Result = LoadTeamDialog.ShowDialog();
+                XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
+                if (Result == true)
                 {
-                    LoadClass = (TeamSavingClass)Xser.Deserialize(streamReader);
+                    using (StreamReader streamReader = new StreamReader(LoadTeamDialog.FileName))
+                    {
+                        LoadClass = (TeamSavingClass)xmlSerializer.Deserialize(streamReader);
+                    }
+                    Vars.Game.TeamManagerTeamSavingClassInstance = LoadClass;
+                    UIUpdateListbox(OutputListBox, Vars.Game.TeamManagerTeamSavingClassInstance);
+                    Team.Name = LoadClass.TeamName;
+                    Team.LogoSource = LoadClass.TeamLogoPath;
+                    Team.Score = 0;
+                    Team.Shots = 0;
+                    Team.TimeoutRunning = false;
+                    Team.HasTimeout = true;
+                    Team.Player1 = new PlayerClass
+                    {
+                        Number = "",
+                        PenaltyTimeLeft = TimeSpan.Zero,
+                        PenaltyTimeSet = TimeSpan.Zero,
+                        PeriodIsDoubleMinor = false,
+                        PenaltyOffset = TimeSpan.Zero,
+                        PenaltyRunning = false,
+                        OtherTeamScoreAtPenaltyStart = 0
+                    };
+                    Team.Player2 = new PlayerClass
+                    {
+                        Number = "",
+                        PenaltyTimeLeft = TimeSpan.Zero,
+                        PenaltyTimeSet = TimeSpan.Zero,
+                        PeriodIsDoubleMinor = false,
+                        PenaltyOffset = TimeSpan.Zero,
+                        PenaltyRunning = false,
+                        OtherTeamScoreAtPenaltyStart = 0
+
+                    };
+                    Team.SelectedTeamList = LoadClass.PlayerList;
+                    UIUpdateListbox(OutputListBox, LoadClass);
+                    UIReloadControlsValues(Team); UIUpdateAllMainControls();
                 }
-
-                Team.Name = LoadClass.TeamName;
-                Team.LogoSource = LoadClass.TeamLogoPath;
-                Team.Score = 0;
-                Team.Shots = 0;
-                Team.TimeoutRunning = false;
-                Team.HasTimeout = true;
-                Team.Player1 = new PlayerClass
-                {
-                    Number = "",
-                    PenaltyTimeLeft = TimeSpan.Zero,
-                    PenaltyTimeSet = TimeSpan.Zero,
-                    PeriodIsDoubleMinor = false,
-                    PenaltyOffset = TimeSpan.Zero,
-                    PenaltyRunning = false,
-                    OtherTeamScoreAtPenaltyStart = 0
-                };
-                Team.Player2 = new PlayerClass
-                {
-                    Number = "",
-                    PenaltyTimeLeft = TimeSpan.Zero,
-                    PenaltyTimeSet = TimeSpan.Zero,
-                    PeriodIsDoubleMinor = false,
-                    PenaltyOffset = TimeSpan.Zero,
-                    PenaltyRunning = false,
-                    OtherTeamScoreAtPenaltyStart = 0
-
-                };
-                Team.SelectedTeamList = LoadClass.PlayerList;
-                UIUpdateListbox(OutputListBox, LoadClass);
-                UIReloadControlsValues(Team); UIUpdateAllMainControls();
+                
             }
             else return;
         }
@@ -1541,7 +1547,9 @@ namespace HockeyScoreboard
 
             MediaElementPlayer.IsEnabled = true;
             MediaElementPlayer.Source = uriPath;
+            SliderVideoScrubbingControl.Minimum = 0.0;
             MediaElementPlayer.Play(); MediaElementPlayer.Pause();
+            
         }
         private void PlayBuzzer()
         {
