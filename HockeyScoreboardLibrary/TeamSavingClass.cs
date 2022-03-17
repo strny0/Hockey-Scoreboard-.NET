@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace HockeyScoreboard
 {
     public class TeamSavingClass
@@ -14,6 +13,5 @@ namespace HockeyScoreboard
         public string TeamName { get; set; }
         public string TeamLogoPath { get; set; }
         public List<PlayerTeamListType> PlayerList { get; set; }
-
     }
 }

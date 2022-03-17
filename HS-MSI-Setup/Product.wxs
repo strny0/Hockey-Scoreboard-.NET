@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <!--  Grant uniqe IDs to each platform-->
+  <?if $(var.Platform)=x64?>
+  <?define ProductCode =  "{B863B199-B051-41C7-BC0F-304C95C7633D}"?>
+  <?else?>
+  <?define ProductCode =  "{391E211D-4437-4F27-A246-A274571BA5E3}"?>
+  <?endif?>
+  <!--  Define version of the installer/program-->
+  <?define BuildVersion = 1.0.26?>
+  
+  <?define UpgradeCode = "{011ED8F6-D865-4E7B-8645-C2D4DCD34295}"?>
+  
+  <!--  Package Details-->
+	<Product Id="$(var.ProductCode)" 
+           Name="!(loc.ProductName_$(var.Platform))" 
+           Language="!(loc.Language)" 
+           Version="$(var.BuildVersion)" 
+           Manufacturer="!(loc.Manufacturer)" 
+           UpgradeCode="$(var.UpgradeCode)">
+    
+		<Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine" 
+             Platform="$(var.Platform)" 
+             Manufacturer="!(loc.Manufacturer)"
+             Description="!(loc.Description)"
+             Comments="!(loc.Comments)"
+             Keywords="!(loc.Keywords)"
+             Languages="!(loc.Language)"/>
+
+    <!--Downgrade error message-->
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+    
+    <!-- Include cab file in .msi-->
+		<MediaTemplate EmbedCab="yes"/>
+
+    <!--Define installer icon and other details-->
+    <Icon Id="icon.ico" SourceFile="$(var.UIHockeyScoreboard.ProjectDir)\Resources\DefaultIcon.ico"/>
+    <Property Id="APPPRODUCTICON">icon.ico</Property>
+    <Property Id="APPURLINFOABOUT">https://ojstrnad.com</Property>
+    
+    <!--UI definiton-->
+    <UIRef Id="WixUI_Minimal"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Assets\License.rtf"/>
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\Background.bmp"/>
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\Banner.bmp"/>
+
+		<Feature Id="ProductFeature" Title="!(loc.ProductName_$(var.Platform))" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	
+
+
+</Wix>

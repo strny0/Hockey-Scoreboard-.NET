@@ -32,12 +32,6 @@
     <Setting Name="PenaltyTimePresetD" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:10:00</Value>
     </Setting>
-    <Setting Name="AutomaticallyStartBreak" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="DefaultTeamDirectory" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\\Documents\\Hockey Scoreboard\\Teams\\</Value>
-    </Setting>
     <Setting Name="UsedTeamDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

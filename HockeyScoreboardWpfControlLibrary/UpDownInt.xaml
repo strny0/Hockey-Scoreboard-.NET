@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="HockeyScoreboardWpfControlLibrary.UpDownInt"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"  x:Name="root_UpDownInt"
              d:DesignHeight="40" d:DesignWidth="100">
@@ -16,45 +16,45 @@
         <Color x:Key="ColorTextValues">#FFF1CD46</Color>
 
         <!-- Normal state -->
-        <SolidColorBrush x:Key="Button.Static.Background" Color="{StaticResource ColorBackgroundButton}"/>
-        <SolidColorBrush x:Key="Button.Static.Border" Color="{StaticResource ColorBorderBrush}"/>
-        <SolidColorBrush x:Key="Button.Static.Foreground" Color="{StaticResource ColorTextValues}"/>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="{StaticResource ColorBackgroundButton}" />
+        <SolidColorBrush x:Key="Button.Static.Border" Color="{StaticResource ColorBorderBrush}" />
+        <SolidColorBrush x:Key="Button.Static.Foreground" Color="{StaticResource ColorTextValues}" />
         <!-- Mouse over -->
-        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="{StaticResource ColorMouseOver}"/>
-        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="{StaticResource ColorBorderBrush}"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="{StaticResource ColorMouseOver}" />
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="{StaticResource ColorBorderBrush}" />
         <!-- Pressed -->
-        <SolidColorBrush x:Key="Button.Pressed.Background" Color="{StaticResource ColorKeyPressed}"/>
-        <SolidColorBrush x:Key="Button.Pressed.Border" Color="{StaticResource ColorBorderBrush}"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="{StaticResource ColorKeyPressed}" />
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="{StaticResource ColorBorderBrush}" />
         <!-- Checked -->
-        <SolidColorBrush x:Key="Button.Checked.Background" Color="{StaticResource ColorBackgroundButton}"/>
-        <SolidColorBrush x:Key="Button.Checked.Border" Color="{StaticResource ColorBorderBrush}"/>
+        <SolidColorBrush x:Key="Button.Checked.Background" Color="{StaticResource ColorBackgroundButton}" />
+        <SolidColorBrush x:Key="Button.Checked.Border" Color="{StaticResource ColorBorderBrush}" />
         <!-- Disabled -->
-        <SolidColorBrush x:Key="Button.Disabled.Background" Color="{StaticResource ColorBackgroundSecondary}"/>
-        <SolidColorBrush x:Key="Button.Disabled.Border" Color="{StaticResource ColorBorderBrush}"/>
-        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="{StaticResource ColorMouseOver}"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="{StaticResource ColorBackgroundSecondary}" />
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="{StaticResource ColorBorderBrush}" />
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="{StaticResource ColorMouseOver}" />
 
         <!--Button Control Template-->
         <ControlTemplate x:Key="RepeatButtonControlTemplate" TargetType="{x:Type RepeatButton}">
             <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}" />
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}" />
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}" />
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}" />
                 </Trigger>
                 <Trigger Property="ToggleButton.IsChecked" Value="True">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Checked.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Checked.Border}"/>
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Checked.Background}" />
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Checked.Border}" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                    <Setter Property="Foreground" Value="{StaticResource Button.Disabled.Foreground}"/>
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}" />
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}" />
+                    <Setter Property="Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -62,19 +62,19 @@
         <!--TextBox Control Template-->
         <ControlTemplate x:Key="TextBoxControlTemplate" TargetType="{x:Type TextBox}">
             <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Static.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Static.Background}" />
                 </Trigger>
                 <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Static.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Static.Background}" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                    <Setter Property="Foreground" Value="{StaticResource Button.Disabled.Foreground}"/>
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}" />
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}" />
+                    <Setter Property="Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -82,31 +82,31 @@
     <!-- Usercontrol -->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <RepeatButton x:Name="RbuttonUp" 
+        <RepeatButton x:Name="RbuttonUp"
                       x:FieldModifier="private"
                       Template="{DynamicResource RepeatButtonControlTemplate}"
                       Click="RbuttonUp_Click" Grid.Row="0" Grid.Column="1">
             <RepeatButton.Foreground>
-                <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
+                <SolidColorBrush Color="{DynamicResource ColorTextValues}" />
             </RepeatButton.Foreground>
             <RepeatButton.BorderBrush>
-                <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
+                <SolidColorBrush Color="{DynamicResource ColorBorderBrush}" />
             </RepeatButton.BorderBrush>
             <RepeatButton.Background>
-                <SolidColorBrush Color="{DynamicResource ColorBackgroundButton}"/>
+                <SolidColorBrush Color="{DynamicResource ColorBackgroundButton}" />
             </RepeatButton.Background>
             <RepeatButton.Content>
                 <Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="M4,0 L0,4 L8,4 z" Height="7" Stretch="Fill" Width="18">
                     <Path.Fill>
-                        <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
+                        <SolidColorBrush Color="{DynamicResource ColorTextValues}" />
                     </Path.Fill>
                 </Path>
             </RepeatButton.Content>
@@ -116,18 +116,18 @@
                       Template="{DynamicResource RepeatButtonControlTemplate}"
                       Click="RbuttonDown_Click" Grid.Row="1" Grid.Column="1">
             <RepeatButton.Foreground>
-                <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
+                <SolidColorBrush Color="{DynamicResource ColorTextValues}" />
             </RepeatButton.Foreground>
             <RepeatButton.BorderBrush>
-                <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
+                <SolidColorBrush Color="{DynamicResource ColorBorderBrush}" />
             </RepeatButton.BorderBrush>
             <RepeatButton.Background>
-                <SolidColorBrush Color="{DynamicResource ColorBackgroundButton}"/>
+                <SolidColorBrush Color="{DynamicResource ColorBackgroundButton}" />
             </RepeatButton.Background>
             <RepeatButton.Content>
                 <Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,0 L8,0 L4,10 z" Height="7" Stretch="Fill" Width="18">
                     <Path.Fill>
-                        <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
+                        <SolidColorBrush Color="{DynamicResource ColorTextValues}" />
                     </Path.Fill>
                 </Path>
             </RepeatButton.Content>
@@ -144,18 +144,17 @@
                  PreviewMouseWheel="TextBoxValue_PreviewMouseWheel"
                  Loaded="TextBoxValue_Loaded" TextChanged="TextBoxValue_TextChanged">
             <TextBox.SelectionBrush>
-                <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
+                <SolidColorBrush Color="{DynamicResource ColorTextValues}" />
             </TextBox.SelectionBrush>
             <TextBox.Foreground>
-                <SolidColorBrush Color="{DynamicResource ColorTextValues}"/>
+                <SolidColorBrush Color="{DynamicResource ColorTextValues}" />
             </TextBox.Foreground>
             <TextBox.BorderBrush>
-                <SolidColorBrush Color="{DynamicResource ColorBorderBrush}"/>
+                <SolidColorBrush Color="{DynamicResource ColorBorderBrush}" />
             </TextBox.BorderBrush>
             <TextBox.Background>
-                <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}"/>
+                <SolidColorBrush Color="{DynamicResource ColorBackgroundSecondary}" />
             </TextBox.Background>
         </TextBox>
-
     </Grid>
 </UserControl>

@@ -12,8 +12,8 @@ namespace HockeyScoreboardWpfControlLibrary
     /// </summary>
     public partial class UpDownFloat : UserControl
     {
-
         public event EventHandler ValueChanged;
+
         public event EventHandler PropertyChanged;
 
         public UpDownFloat()
@@ -42,6 +42,7 @@ namespace HockeyScoreboardWpfControlLibrary
         }
 
         #region Dependency properties
+
         public float Value
         {
             get { return (float)GetValue(ValueProperty); }
@@ -98,7 +99,6 @@ namespace HockeyScoreboardWpfControlLibrary
                 if (value < Minimum)
                     Minimum = value;
                 SetValue(MaximumProperty, value);
-
             }
         }
 
@@ -113,8 +113,8 @@ namespace HockeyScoreboardWpfControlLibrary
 
         public static readonly DependencyProperty DecimalsProperty =
             DependencyProperty.Register("Decimals", typeof(int), typeof(UpDownFloat), new PropertyMetadata(2));
-        #endregion
 
+        #endregion Dependency properties
 
         private void RbuttonUp_Click(object sender, RoutedEventArgs e)
         {

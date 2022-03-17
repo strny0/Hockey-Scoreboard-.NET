@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HockeyScoreboardLibrary
+﻿namespace HockeyScoreboardLibrary
 {
     public static class Utility
     {
@@ -12,6 +6,5 @@ namespace HockeyScoreboardLibrary
         {
             return value.Length <= maxChars ? value : $"{value.Substring(0, maxChars)}...";
         }
-
     }
 }

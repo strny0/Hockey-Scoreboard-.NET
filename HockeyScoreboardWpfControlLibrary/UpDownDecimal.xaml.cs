@@ -12,8 +12,8 @@ namespace HockeyScoreboardWpfControlLibrary
     /// </summary>
     public partial class UpDownDecimal : UserControl
     {
-
         public event EventHandler ValueChanged;
+
         public event EventHandler PropertyChanged;
 
         public UpDownDecimal()
@@ -42,10 +42,11 @@ namespace HockeyScoreboardWpfControlLibrary
         }
 
         #region Dependency properties
+
         public decimal Value
         {
             get { return (decimal)GetValue(ValueProperty); }
-            set 
+            set
             {
                 if (value < Minimum)
                 {
@@ -67,8 +68,8 @@ namespace HockeyScoreboardWpfControlLibrary
         public decimal Step
         {
             get { return (decimal)GetValue(StepProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(StepProperty, value);
             }
         }
@@ -79,11 +80,11 @@ namespace HockeyScoreboardWpfControlLibrary
         public decimal Minimum
         {
             get { return (decimal)GetValue(MinimumProperty); }
-            set 
+            set
             {
                 if (value > Maximum)
                     Maximum = value;
-                SetValue(MinimumProperty, value); 
+                SetValue(MinimumProperty, value);
             }
         }
 
@@ -93,12 +94,11 @@ namespace HockeyScoreboardWpfControlLibrary
         public decimal Maximum
         {
             get { return (decimal)GetValue(MaximumProperty); }
-            set 
-            { 
+            set
+            {
                 if (value < Minimum)
                     Minimum = value;
                 SetValue(MaximumProperty, value);
-
             }
         }
 
@@ -113,19 +113,17 @@ namespace HockeyScoreboardWpfControlLibrary
 
         public static readonly DependencyProperty DecimalsProperty =
             DependencyProperty.Register("Decimals", typeof(int), typeof(UpDownDecimal), new PropertyMetadata(2));
-        #endregion
 
+        #endregion Dependency properties
 
         private void RbuttonUp_Click(object sender, RoutedEventArgs e)
         {
             Value += Step;
-
         }
 
         private void RbuttonDown_Click(object sender, RoutedEventArgs e)
         {
             Value -= Step;
-
         }
 
         private void TextBoxValue_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -133,12 +131,10 @@ namespace HockeyScoreboardWpfControlLibrary
             if (e.Delta > 0)
             {
                 Value += Step;
-    
             }
             else if (e.Delta < 0)
             {
                 Value -= Step;
-    
             }
         }
 

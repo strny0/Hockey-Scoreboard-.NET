@@ -12,7 +12,7 @@ namespace HockeyScoreboard.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -140,30 +140,6 @@ namespace HockeyScoreboard.Properties {
             }
             set {
                 this["PenaltyTimePresetD"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutomaticallyStartBreak {
-            get {
-                return ((bool)(this["AutomaticallyStartBreak"]));
-            }
-            set {
-                this["AutomaticallyStartBreak"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\\\Documents\\\\Hockey Scoreboard\\\\Teams\\\\")]
-        public string DefaultTeamDirectory {
-            get {
-                return ((string)(this["DefaultTeamDirectory"]));
-            }
-            set {
-                this["DefaultTeamDirectory"] = value;
             }
         }
         

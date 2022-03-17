@@ -1,8 +1,9 @@
-﻿using System;
+﻿using HockeyScoreboard.Properties;
+using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Globalization;
-using HockeyScoreboard.Properties;
+using System.Windows.Input;
 
 namespace HockeyScoreboard
 {
@@ -11,8 +12,8 @@ namespace HockeyScoreboard
     /// </summary>
     public partial class MainWindow : Window
     {
-
         #region InitializationEvents
+
         public MainWindow()
         {
             InitializeComponent();
@@ -24,11 +25,13 @@ namespace HockeyScoreboard
             UIUpdateAllMainControls();
             UIUpdateAllRadioButtons();
             UIUpdateTimePresetButtonsPenalty("Major"); UIUpdateTimePresetButtonsPeriod();
+            UIUpdatePreferencesCheckboxes();
             Vars.SecondaryWindow.Show(); // launch and load view window
             DefineDefaultProgramState();
             InitializeTimer();
         }
-        #endregion
+
+        #endregion InitializationEvents
 
         #region TeamManagementEvents
 
@@ -37,11 +40,13 @@ namespace HockeyScoreboard
             Vars.Team1.Name = TextBoxTeam1Name.Text;
             Vars.SecondaryWindow.TextBlockTeam1Name.Text = Vars.Team1.Name;
         }
+
         private void TextBoxTeam2Name_TextChanged(object sender, TextChangedEventArgs e)
         {
             Vars.Team2.Name = TextBoxTeam2Name.Text;
             Vars.SecondaryWindow.TextBlockTeam2Name.Text = Vars.Team2.Name;
         }
+
         private void UpDownTeam1Score_ValueChanged(object sender, EventArgs e)
         {
             if ((int)UpDownTeam1Score.Value > Vars.Team1.Score && Settings.Default.PlayHornOnGoal)
@@ -55,11 +60,13 @@ namespace HockeyScoreboard
             Vars.Team1.Score = (int)UpDownTeam1Score.Value;
             Vars.SecondaryWindow.LabelScoreTeam1Variable.Content = Vars.Team1.Score.ToString(CultureInfo.InvariantCulture);
         }
+
         private void UpDownTeam1Shots_ValueChanged(object sender, EventArgs e)
         {
             Vars.Team1.Shots = (int)UpDownTeam1Shots.Value;
             Vars.SecondaryWindow.LabelShotsTeam1Variable.Content = Vars.Team1.Shots.ToString(CultureInfo.InvariantCulture);
         }
+
         private void UpDownTeam2Score_ValueChanged(object sender, EventArgs e)
         {
             if ((int)UpDownTeam2Score.Value > Vars.Team2.Score && Settings.Default.PlayHornOnGoal)
@@ -73,42 +80,48 @@ namespace HockeyScoreboard
             Vars.Team2.Score = (int)UpDownTeam2Score.Value;
             Vars.SecondaryWindow.LabelScoreTeam2Variable.Content = Vars.Team2.Score.ToString(CultureInfo.InvariantCulture);
         }
+
         private void UpDownTeam2Shots_ValueChanged(object sender, EventArgs e)
         {
             Vars.Team2.Shots = (int)UpDownTeam2Shots.Value;
             Vars.SecondaryWindow.LabelShotsTeam2Variable.Content = Vars.Team2.Shots.ToString(CultureInfo.InvariantCulture);
         }
+
         private void ButtonTeam1SelectImage_Click(object sender, RoutedEventArgs e)
         {
             Vars.Team1.LogoSource = ReturnImageSourcePath();
             ChangeImageFromPath(Vars.Team1.LogoSource, ImageTeam1Logo);
             ChangeImageFromPath(Vars.Team1.LogoSource, Vars.SecondaryWindow.ImageTeam1LogoView);
-
         }
+
         private void ButtonTeam2SelectImage_Click(object sender, RoutedEventArgs e)
         {
             Vars.Team2.LogoSource = ReturnImageSourcePath();
             ChangeImageFromPath(Vars.Team2.LogoSource, ImageTeam2Logo);
             ChangeImageFromPath(Vars.Team2.LogoSource, Vars.SecondaryWindow.ImageTeam2LogoView);
         }
+
         private void ButtonCancelPenaltyTeam1Player1_Click(object sender, RoutedEventArgs e)
         {
             PenaltyCancel(Vars.Team1, true);
         }
+
         private void ButtonCancelPenaltyTeam1Player2_Click(object sender, RoutedEventArgs e)
         {
             PenaltyCancel(Vars.Team1, false);
         }
+
         private void ButtonCancelPenaltyTeam2Player1_Click(object sender, RoutedEventArgs e)
         {
             PenaltyCancel(Vars.Team2, true);
         }
+
         private void ButtonCancelPenaltyTeam2Player2_Click(object sender, RoutedEventArgs e)
         {
             PenaltyCancel(Vars.Team2, false);
         }
-        
-        #endregion
+
+        #endregion TeamManagementEvents
 
         #region GameManagementEvents
 
@@ -142,6 +155,7 @@ namespace HockeyScoreboard
                         PenaltyTimeProgression(Vars.Team1, Vars.Team2, true); PenaltyTimeProgression(Vars.Team1, Vars.Team2, false);   // Tick Time Down
                         PenaltyTimeProgression(Vars.Team2, Vars.Team1, true); PenaltyTimeProgression(Vars.Team2, Vars.Team1, false);   // Function checks if penalties for each player are running
                         break;
+
                     case CustomTypes.GameState.Break:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
                         {
@@ -155,6 +169,7 @@ namespace HockeyScoreboard
                         }
                         else Vars.Game.TimeLeft = Vars.Game.LastSetTime - Vars.Game.StopwatchPeriod.Elapsed;
                         break;
+
                     case CustomTypes.GameState.Timeout:
                         if (Vars.Game.StopwatchPeriod.Elapsed > Vars.Game.LastSetTime) // if run out, stop counting
                         {
@@ -170,20 +185,25 @@ namespace HockeyScoreboard
                         break;
                 }
             }
+            UpdateViewMediaModule();
             UIUpdateAllMainControls(); ; // UI UPDATE
         }
+
         private void ButtonSetTime_Click(object sender, RoutedEventArgs e)
         {
             SetTime(TimeSpan.FromMinutes(Vars.Game.InputMinute) + TimeSpan.FromSeconds(Vars.Game.InputSecond));
         }
+
         private void UpDownSeconds_ValueChanged(object sender, EventArgs e)
         {
             Vars.Game.InputSecond = (int)UpDownSeconds.Value;
         }
+
         private void UpDownMinutes_ValueChanged(object sender, EventArgs e)
         {
             Vars.Game.InputMinute = (int)UpDownMinutes.Value;
         }
+
         private void ButtonPauseTime_Click(object sender, RoutedEventArgs e)
         {
             if (Vars.Game.StopwatchPeriod.IsRunning)
@@ -205,26 +225,32 @@ namespace HockeyScoreboard
                 }
             }
         }
+
         private void ButtonRestartTime_Click(object sender, RoutedEventArgs e)
         {
             SetTime(Vars.Game.LastSetTime);
         }
+
         private void ButtonSetTimePresetA_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
             SetTime(Settings.Default.PeriodPresetA);
         }
+
         private void ButtonSetTimePresetB_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
             SetTime(Settings.Default.PeriodPresetB);
         }
+
         private void ButtonSetTimePresetC_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
             SetTime(Settings.Default.PeriodPresetC);
         }
+
         private void ButtonSetTimePresetD_Click(object sender, RoutedEventArgs e) // PRESET [X]
         {
             SetTime(Settings.Default.PeriodPresetD);
         }
+
         private void ButtonBreakMode_Click(object sender, RoutedEventArgs e)
         {
             if (Vars.Game.GameState == CustomTypes.GameState.Break)
@@ -247,6 +273,7 @@ namespace HockeyScoreboard
                 }
             }
         }
+
         private void ButtonTimeout_Click(object sender, RoutedEventArgs e)
         {
             if (Vars.Game.GameState == CustomTypes.GameState.Timeout)
@@ -272,20 +299,24 @@ namespace HockeyScoreboard
                 }
             }
         }
+
         private void ButtonResetTimeout_Click(object sender, RoutedEventArgs e)
         {
             Vars.Team1.HasTimeout = true; Vars.Team2.HasTimeout = true;
         }
+
         private void ButtonPeriodPlus_Click(object sender, RoutedEventArgs e)
         {
             Vars.Game.Period++;
             ChangePeriod(Vars.Game.Period);
         }
+
         private void ButtonPeriodMinus_Click(object sender, RoutedEventArgs e)
         {
             Vars.Game.Period--;
             ChangePeriod(Vars.Game.Period);
         }
+
         private void ButtonNewView_Click(object sender, RoutedEventArgs e)
         {
             Vars.SecondaryWindow.Close();
@@ -293,6 +324,7 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.Show();
             UIUpdateSecondaryWindowColorScheme();
         }
+
         private void ButtonNewGame_Click(object sender, RoutedEventArgs e)
         {
             ChangePeriod(CustomTypes.PeriodState.First); Vars.Game.GameState = CustomTypes.GameState.Regular;
@@ -308,8 +340,8 @@ namespace HockeyScoreboard
             UpDownTeam1Shots.Value = Vars.Team1.Shots; UpDownTeam2Shots.Value = Vars.Team2.Shots;
             UIUpdateAllMainControls();
         }
-        
-        #endregion
+
+        #endregion GameManagementEvents
 
         #region PenaltyTabEvents
 
@@ -317,54 +349,67 @@ namespace HockeyScoreboard
         {
             PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, (TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam1.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam1.Value)), false, false);
         }
+
         private void ButtonSetPenaltyTeam1A_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, Settings.Default.PenaltyTimePresetA, false, false);
         }
+
         private void ButtonSetPenaltyTeam1B_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, Settings.Default.PenaltyTimePresetB, false, false);
         }
+
         private void ButtonSetPenaltyTeam1C_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, Settings.Default.PenaltyTimePresetC, false, false);
         }
+
         private void ButtonSetPenaltyTeam1D_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, Settings.Default.PenaltyTimePresetD, false, false);
         }
+
         private void ButtonSetMinorPenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(2), false, true);
         }
+
         private void ButtonSetDoubleMinorPenaltyTeam1_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team1, Vars.Team2, ListBoxTeam1Players, TimeSpan.FromMinutes(4), true, false);
         }
+
         private void ButtonSetSpecificPenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, (TimeSpan.FromMinutes((int)UpDownMinutesPenaltyTeam2.Value) + TimeSpan.FromSeconds((int)UpDownSecondsPenaltyTeam2.Value)), false, false);
         }
+
         private void ButtonSetPenaltyTeam2A_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, Settings.Default.PenaltyTimePresetA, false, false);
         }
+
         private void ButtonSetPenaltyTeam2B_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, Settings.Default.PenaltyTimePresetB, false, false);
         }
+
         private void ButtonSetPenaltyTeam2C_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, Settings.Default.PenaltyTimePresetC, false, false);
         }
+
         private void ButtonSetPenaltyTeam2D_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, Settings.Default.PenaltyTimePresetD, false, false);
         }
+
         private void ButtonSetMinorPenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(2), false, true);
         }
+
         private void ButtonSetDoubleMinorPenaltyTeam2_Click(object sender, RoutedEventArgs e)
         {
             PenaltyAssignToRightPlayer(Vars.Team2, Vars.Team1, ListBoxTeam2Players, TimeSpan.FromMinutes(4), true, false);
@@ -379,6 +424,7 @@ namespace HockeyScoreboard
         {
             TeamEditorLoadTeam(ListBoxTeam2Players, Vars.Team2);
         }
+
         //private void ComboBoxTeam1_DropDownOpened(object sender, EventArgs e)
         //{
         //    UIUpdateComboBoxSelection(ComboBoxTeam1);
@@ -408,12 +454,13 @@ namespace HockeyScoreboard
         {
             ListBoxTeam1Players.SelectedIndex = -1;
         }
+
         private void ListBoxTeam2Players_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ListBoxTeam2Players.SelectedIndex = -1;
         }
-        
-        #endregion
+
+        #endregion PenaltyTabEvents
 
         #region TeamManagerEvents
 
@@ -421,35 +468,42 @@ namespace HockeyScoreboard
         {
             TeamEditorAddPlayer(TextBoxPlayerNameManager.Text, UpDownTeamManager.Value.ToString(CultureInfo.InvariantCulture));
         }
+
         private void ButtonTeamManagerRemovePlayer_Click(object sender, RoutedEventArgs e)
         {
             TeamEditorRemovePlayer(ListBoxTeamManager);
         }
+
         private void ButtonTeamManagerClearList_Click(object sender, RoutedEventArgs e)
         {
             TeamEditorClearPlayerList();
         }
+
         private void ListBoxTeamManager_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             TeamEditorRemovePlayer(ListBoxTeamManager);
         }
+
         private void ButtonTeamManagerSaveTeam_Click(object sender, RoutedEventArgs e)
         {
             TeamEditorSave(TextBoxTeamNameManager.Text);
         }
+
         private void ButtonTeamManagerLoadTeam_Click(object sender, RoutedEventArgs e)
         {
             TeamEditorLoad();
         }
+
         private void ButtonTeamManagerSelectImage_Click(object sender, RoutedEventArgs e)
         {
             Vars.Game.TeamManagerTeamSavingClassInstance.TeamLogoPath = ReturnImageSourcePath();
             ChangeImageFromPath(Vars.Game.TeamManagerTeamSavingClassInstance.TeamLogoPath, ImageTeamManagerLogo);
         }
 
-        #endregion
+        #endregion TeamManagerEvents
 
         #region PreferencesEvents
+
         private void ButtonPreferencesSetTime_Click(object sender, RoutedEventArgs e)
         {
             PreferencesChangeTimeSetting(TimeSpan.FromMinutes((int)UpDownPreferencesMinutes.Value) + TimeSpan.FromSeconds((int)UpDownPreferencesSeconds.Value));
@@ -459,12 +513,12 @@ namespace HockeyScoreboard
         }
 
         #region Colors
+
         private void BorderColorBGMain_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorBackgroundMain = ChangeColorSetting(Settings.Default.ColorBackgroundMain);
             UIUpdateColorButton(Settings.Default.ColorBackgroundMain, BorderColorBGMain);
             UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
-
         }
 
         private void BorderColorBGSecondary_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -472,7 +526,6 @@ namespace HockeyScoreboard
             Settings.Default.ColorBackgroundSecondary = ChangeColorSetting(Settings.Default.ColorBackgroundSecondary);
             UIUpdateColorButton(Settings.Default.ColorBackgroundSecondary, BorderColorBGSecondary);
             UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
-
         }
 
         private void BorderColorBorder_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -509,6 +562,7 @@ namespace HockeyScoreboard
             UIUpdateColorButton(Settings.Default.ColorTextPeriod, BorderColorPeriodText);
             UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
+
         private void BorderColorTextTime_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Settings.Default.ColorTextTime = ChangeColorSetting(Settings.Default.ColorTextTime);
@@ -529,10 +583,9 @@ namespace HockeyScoreboard
             UIUpdateSecondaryWindowColorScheme(); Settings.Default.Save();
         }
 
-        #endregion
+        #endregion Colors
 
         #region Fonts
-
 
         private void ButtonPreferencesChangeFontScore_Click(object sender, RoutedEventArgs e)
         {
@@ -584,21 +637,11 @@ namespace HockeyScoreboard
             ChangeFontDescLarge(Settings.Default.FontDescLarge, Settings.Default.FontDescLargeSize);
         }
 
-        #endregion
-        private void ButtonPreferencesSave_Click(object sender, RoutedEventArgs e)
-        {
-            Settings.Default.Save();
-            UIUpdateSecondaryWindowColorScheme();
-            UIUpdateAllRadioButtons();
-
-            MessageBox.Show("Successfully saved. Preferences will be loaded as they were saved next time the program runs.");
-        }
+        #endregion Fonts
 
 
-        #endregion
-
-
-
+        #endregion PreferencesEvents
+        #region Audio-Video buttons
         private void ButtonSoundPlayBuzzer_Click(object sender, RoutedEventArgs e)
         {
             PlaySound(Settings.Default.BuzzerSoundPath);
@@ -607,19 +650,16 @@ namespace HockeyScoreboard
         private void ButtonSoundPlayHorn_Click(object sender, RoutedEventArgs e)
         {
             PlaySound(Settings.Default.HornSoundPath);
-
         }
 
         private void ButtonSoundPlayPeriod_Click(object sender, RoutedEventArgs e)
         {
             PlaySound(Settings.Default.PeriodSoundPath);
-
         }
 
         private void ButtonSoundPlayBreak_Click(object sender, RoutedEventArgs e)
         {
             PlaySound(Settings.Default.BreakSoundPath);
-
         }
 
         private void ButtonSoundPlayTimeout_Click(object sender, RoutedEventArgs e)
@@ -630,81 +670,90 @@ namespace HockeyScoreboard
         private void ButtonSoundChangeHorn_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.HornSoundPath = GetMediaFilePath(); SoundUpdateValues();
-
         }
 
         private void ButtonSoundChangeBuzzer_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.BuzzerSoundPath = GetMediaFilePath(); SoundUpdateValues();
-
         }
 
         private void ButtonSoundChangePeriod_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.PeriodSoundPath = GetMediaFilePath(); SoundUpdateValues();
-
         }
 
         private void ButtonSoundChangeBreak_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.BreakSoundPath = GetMediaFilePath(); SoundUpdateValues();
-
         }
 
         private void ButtonSoundChangeTimeout_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.TimeoutSoundPath = GetMediaFilePath(); SoundUpdateValues();
-
         }
 
         private void ButtonVideoChange1_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.Video1Path = GetMediaFilePath(); SoundUpdateValues();
-
         }
 
         private void ButtonVideoChange2_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.Video2Path = GetMediaFilePath(); SoundUpdateValues();
-
         }
 
         private void ButtonVideoChange3_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.Video3Path = GetMediaFilePath(); SoundUpdateValues();
-
         }
 
         private void ButtonVideoChange4_Click(object sender, RoutedEventArgs e)
         {
             Settings.Default.Video4Path = GetMediaFilePath(); SoundUpdateValues();
-
         }
+        #endregion
         #region Video player
 
         private void ButtonVideoPlayPause_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (Vars.SecondaryWindow.MediaElementView.IsLoaded)
             {
-                MediaElementPlayer.Play();
+                Vars.SecondaryWindow.MediaElementView.Play();
             }
-            catch { MessageBox.Show("No video loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            else
+            {
+                MessageBox.Show("No video loaded.", mBoxCaptionError, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ButtonVideoStop_Click(object sender, RoutedEventArgs e)
         {
-            try { MediaElementPlayer.Pause(); }
-            catch { MessageBox.Show("No video loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            if (Vars.SecondaryWindow.MediaElementView.IsLoaded)
+            {
+                Vars.SecondaryWindow.MediaElementView.Pause();
+            }
+            else
+            {
+                MessageBox.Show("No video loaded.", mBoxCaptionError, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void ButtonVideoRestart_Click(object sender, RoutedEventArgs e)
         {
-            try { MediaElementPlayer.Stop(); }
-            catch { MessageBox.Show("No video loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            if (Vars.SecondaryWindow.MediaElementView.IsLoaded)
+            {
+                Vars.SecondaryWindow.MediaElementView.Stop();
+            }
+            else
+            {
+                MessageBox.Show("No video loaded.", mBoxCaptionError, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
         private void SliderVideoScrubbingControl_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            MediaElementPlayer.Position = TimeSpan.FromSeconds(SliderVideoScrubbingControl.Value);
+            Vars.SecondaryWindow.MediaElementView.Position = TimeSpan.FromSeconds(SliderVideoScrubbingControl.Value);
         }
 
         private void ButtonVideoLoad1_Click(object sender, RoutedEventArgs e)
@@ -726,7 +775,10 @@ namespace HockeyScoreboard
         {
             LoadVideo(Settings.Default.Video4Path);
         }
-        #endregion
+
+        #endregion Video player
+        #region Audio-Video prefs
+
         private void CheckBoxHornGoal_Checked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayHornOnGoal = true; Settings.Default.Save();
@@ -765,20 +817,17 @@ namespace HockeyScoreboard
         private void CheckBoxBuzzerStart_Unchecked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayBuzzerOnGoal = false; Settings.Default.Save();
-
         }
+
         private void CheckBoxBuzzerStart_Checked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayBuzzerOnStart = true; Settings.Default.Save();
-
         }
+
         private void CheckBoxBuzzerGoal_Unchecked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayBuzzerOnStart = false; Settings.Default.Save();
         }
-
-
-
 
         private void CheckBoxBuzzerStop_Checked(object sender, RoutedEventArgs e)
         {
@@ -788,7 +837,6 @@ namespace HockeyScoreboard
         private void CheckBoxBuzzerStop_Unchecked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayBuzzerOnStop = false; Settings.Default.Save();
-
         }
 
         private void CheckBoxPerioChange_Checked(object sender, RoutedEventArgs e)
@@ -799,7 +847,6 @@ namespace HockeyScoreboard
         private void CheckBoxPerioChange_Unchecked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayOnPeriodChange = false; Settings.Default.Save();
-
         }
 
         private void CheckBoxBreakStart_Checked(object sender, RoutedEventArgs e)
@@ -810,7 +857,6 @@ namespace HockeyScoreboard
         private void CheckBoxBreakStart_Unchecked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayBreakStart = false; Settings.Default.Save();
-
         }
 
         private void CheckBoxBreakStop_Checked(object sender, RoutedEventArgs e)
@@ -821,7 +867,6 @@ namespace HockeyScoreboard
         private void CheckBoxBreakStop_Unchecked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayBreakEnd = false; Settings.Default.Save();
-
         }
 
         private void CheckBoxTimeoutStart_Checked(object sender, RoutedEventArgs e)
@@ -832,7 +877,6 @@ namespace HockeyScoreboard
         private void CheckBoxTimeoutStart_Unchecked(object sender, RoutedEventArgs e)
         {
             Settings.Default.PlayTimeoutStart = false; Settings.Default.Save();
-
         }
 
         private void CheckBoxTimeoutStop_Checked(object sender, RoutedEventArgs e)
@@ -844,8 +888,15 @@ namespace HockeyScoreboard
         {
             Settings.Default.PlayTimeoutEnd = false; Settings.Default.Save();
         }
+        #endregion
+
+        #region Hotkeys
+
+        
+
+
+        #endregion
 
 
     }
 }
-

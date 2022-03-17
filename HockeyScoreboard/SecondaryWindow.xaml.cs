@@ -11,7 +11,5 @@ namespace HockeyScoreboard
         {
             InitializeComponent();
         }
-
-
     }
 }

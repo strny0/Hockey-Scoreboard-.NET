@@ -6,33 +6,32 @@
         xmlns:Controls="clr-namespace:HockeyScoreboardWpfControlLibrary;assembly=HockeyScoreboardWpfControlLibrary"
         mc:Ignorable="d"
         Title="Give timeout" Height="256" Width="373"
-        Loaded="Window_Loaded" 
-        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-        ResizeMode="NoResize" WindowStartupLocation="CenterOwner" 
+        Loaded="Window_Loaded"
+        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         Icon="Resources/DefaultIcon.ico" Closed="Window_Closed">
     <Window.Background>
-        <SolidColorBrush Color="{DynamicResource ColorBackgroundMain}"/>
+        <SolidColorBrush Color="{DynamicResource ColorBackgroundMain}" />
     </Window.Background>
     <Grid>
         <Label Content="Select Team to grant Timeout to:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="343" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="39" FontSize="20" Margin="10,0,14,0">
             <Label.Foreground>
-                <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
+                <SolidColorBrush Color="{DynamicResource ColorTextDefault}" />
             </Label.Foreground>
         </Label>
-        <Button Content="Team 1" x:Name="ButtonSelectTeam1" Click="ButtonSelectTeam1_Click" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Height="70" Width="169" Style="{DynamicResource CustomButtonStyle}" FontSize="20"/>
-        <Button Content="Team 2" x:Name="ButtonSelectTeam2" Click="ButtonSelectTeam2_Click" HorizontalAlignment="Left" Margin="184,39,0,0" VerticalAlignment="Top" Height="69" Width="169" Style="{DynamicResource CustomButtonStyle}" FontSize="20"/>
+        <Button Content="Team 1" x:Name="ButtonSelectTeam1" Click="ButtonSelectTeam1_Click" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Height="70" Width="169" Style="{DynamicResource CustomButtonStyle}" FontSize="20" />
+        <Button Content="Team 2" x:Name="ButtonSelectTeam2" Click="ButtonSelectTeam2_Click" HorizontalAlignment="Left" Margin="184,39,0,0" VerticalAlignment="Top" Height="69" Width="169" Style="{DynamicResource CustomButtonStyle}" FontSize="20" />
         <Label Content="Timeout length: (default 1:30)" x:Name="LabelMessage" HorizontalAlignment="Center" Margin="10,114,14,0" VerticalAlignment="Top" Width="343" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="41" FontSize="20">
             <Label.Foreground>
-                <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
+                <SolidColorBrush Color="{DynamicResource ColorTextDefault}" />
             </Label.Foreground>
         </Label>
-        <Controls:UpDownInt x:Name="UpDownMinutes" Value="1" Step="1" Minimum="0" HorizontalAlignment="Left" Height="50" Margin="10,171,0,0" VerticalAlignment="Top" Width="169"/>
-        <Controls:UpDownInt x:Name="UpDownSeconds" Value="30" Step="1" Minimum="0" Maximum="59" HorizontalAlignment="Left" Height="50" Margin="184,171,0,0" VerticalAlignment="Top" Width="169"/>
+        <Controls:UpDownInt x:Name="UpDownMinutes" Value="1" Step="1" Minimum="0" HorizontalAlignment="Left" Height="50" Margin="10,171,0,0" VerticalAlignment="Top" Width="169" />
+        <Controls:UpDownInt x:Name="UpDownSeconds" Value="30" Step="1" Minimum="0" Maximum="59" HorizontalAlignment="Left" Height="50" Margin="184,171,0,0" VerticalAlignment="Top" Width="169" />
         <Label Content=":" HorizontalAlignment="Center" Margin="177,175,181,0" VerticalAlignment="Top" Width="9" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Height="49" FontSize="20" Padding="0,0,0,0">
             <Label.Foreground>
-                <SolidColorBrush Color="{DynamicResource ColorTextDefault}"/>
+                <SolidColorBrush Color="{DynamicResource ColorTextDefault}" />
             </Label.Foreground>
         </Label>
-
     </Grid>
 </Window>

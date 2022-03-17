@@ -1,7 +1,5 @@
-﻿using DocumentFormat.OpenXml.Presentation;
-using HockeyScoreboard.Properties;
+﻿using HockeyScoreboard.Properties;
 using HockeyScoreboardLibrary;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,15 +17,18 @@ namespace HockeyScoreboard
     public partial class MainWindow : Window
     {
         #region Constants and Variables
+
         private const string ListboxFormat = "{0} - {1}";
+        private const string mBoxCaptionError = "Error";
         private readonly Brush cBrush1 = new SolidColorBrush(Color.FromRgb(241, 205, 70));
         private readonly Brush cBrush2 = new SolidColorBrush(Color.FromRgb(51, 51, 51));
 
-        #endregion
+        #endregion Constants and Variables
 
         #region Methods
 
         #region InitializationMethods
+
         private void InitializeTimer()
         {
             DispatcherTimer MainTimer = new DispatcherTimer(DispatcherPriority.Background)
@@ -38,19 +39,19 @@ namespace HockeyScoreboard
             MainTimer.Start();
             MainTimer.Tick += MainTimer_Tick;
         }
+
         private void DefineDefaultProgramState()
         {
-            Properties.Settings.Default.DefaultTeamDirectory = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Hockey Scoreboard\\Teams\\";
             DefaultVariableValues();
             UIUpdateAllColorButtons();
             UIUpdateSecondaryWindowColorScheme();
+            UIUpdatePreferencesCheckboxes();
 
             ButtonPeriodMinus.IsEnabled = false;
-
         }
+
         private void DefaultVariableValues()
         {
-
             Vars.Team1.Index = 1;
             Vars.Team2.Index = 2;
             Vars.Team1.Name = "Team 1";
@@ -120,9 +121,10 @@ namespace HockeyScoreboard
             Vars.Team1.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
             Vars.Team2.SelectedTeamList = new List<TeamSavingClass.PlayerTeamListType>();
         }
-        private OpenFileDialog DefineImageFileDialog()
+
+        private System.Windows.Forms.OpenFileDialog DefineImageFileDialog()
         {
-            OpenFileDialog LoadImageDialog = new OpenFileDialog
+            System.Windows.Forms.OpenFileDialog LoadImageDialog = new System.Windows.Forms.OpenFileDialog
             {
                 Title = "Load Image",
                 FilterIndex = 6,
@@ -143,9 +145,10 @@ namespace HockeyScoreboard
 
             return LoadImageDialog;
         }
-        private SaveFileDialog DefineSaveXmlDialog()
+
+        private System.Windows.Forms.SaveFileDialog DefineSaveXmlDialog()
         {
-            SaveFileDialog SaveXmlDialog = new SaveFileDialog
+            System.Windows.Forms.SaveFileDialog SaveXmlDialog = new System.Windows.Forms.SaveFileDialog
             {
                 Title = "Save Team",
                 AddExtension = true,
@@ -155,11 +158,11 @@ namespace HockeyScoreboard
                 DefaultExt = ".xml"
             };
             return SaveXmlDialog;
-
         }
-        private OpenFileDialog DefineLoadXmlDialog()
+
+        private System.Windows.Forms.OpenFileDialog DefineLoadXmlDialog()
         {
-            OpenFileDialog LoadXmlDialog = new OpenFileDialog
+            System.Windows.Forms.OpenFileDialog LoadXmlDialog = new System.Windows.Forms.OpenFileDialog
             {
                 Title = "Load Team",
                 FilterIndex = 1,
@@ -169,9 +172,10 @@ namespace HockeyScoreboard
             };
             return LoadXmlDialog;
         }
-        private OpenFileDialog DefineLoadMediaDialog()
+
+        private System.Windows.Forms.OpenFileDialog DefineLoadMediaDialog()
         {
-            OpenFileDialog LoadMediaDialog = new OpenFileDialog
+            System.Windows.Forms.OpenFileDialog LoadMediaDialog = new System.Windows.Forms.OpenFileDialog
             {
                 Title = "Load Sound",
                 FilterIndex = 10,
@@ -183,22 +187,23 @@ namespace HockeyScoreboard
             return LoadMediaDialog;
         }
 
-        #endregion
+        #endregion InitializationMethods
 
         #region GameManagementMethods
+
         private string ReturnImageSourcePath()
         {
-            OpenFileDialog ImageDialog = DefineImageFileDialog();
+            System.Windows.Forms.OpenFileDialog ImageDialog = DefineImageFileDialog();
 
-            bool? result = ImageDialog.ShowDialog();
+            System.Windows.Forms.DialogResult result = ImageDialog.ShowDialog();
 
-
-            if (result == true)
+            if (result == System.Windows.Forms.DialogResult.OK)
             {
                 return ImageDialog.FileName;
             }
             else return string.Empty;
         }
+
         private void ChangeImageFromPath(string ImagePath, Image ImageToChange)
         {
             if (string.IsNullOrEmpty(ImagePath))
@@ -215,6 +220,7 @@ namespace HockeyScoreboard
                 ImageToChange.Source = bitmap;
             }
         }
+
         private void SetTime(TimeSpan InputTime) // SET TIME
         {
             switch (Vars.Game.GameState)
@@ -228,9 +234,11 @@ namespace HockeyScoreboard
                     Vars.Team2.Player1.PenaltyTimeSet = Vars.Team2.Player1.PenaltyTimeLeft; Vars.Team2.Player1.PenaltyOffset = TimeSpan.Zero;
                     Vars.Team2.Player2.PenaltyTimeSet = Vars.Team2.Player2.PenaltyTimeLeft; Vars.Team2.Player2.PenaltyOffset = TimeSpan.Zero;
                     break;
+
                 case CustomTypes.GameState.Break:
                     Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
                     break;
+
                 case CustomTypes.GameState.Timeout:
                     Vars.Game.StopwatchPeriod.Reset(); Vars.Game.LastSetTime = InputTime; Vars.Game.TimeLeft = InputTime;
                     break;
@@ -238,8 +246,9 @@ namespace HockeyScoreboard
             UIUpdateGameTime();
             ButtonPauseTime.Content = "Start Time";
         }
+
         private void ChangePeriod(CustomTypes.PeriodState PeriodVariable)
-        { 
+        {
             switch (PeriodVariable)
             {
                 case CustomTypes.PeriodState.First:
@@ -248,24 +257,28 @@ namespace HockeyScoreboard
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = false;
                     break;
+
                 case CustomTypes.PeriodState.Second:
                     LabelPeriod.Content = "2";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "2";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
+
                 case CustomTypes.PeriodState.Third:
                     LabelPeriod.Content = "3";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "3";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
+
                 case CustomTypes.PeriodState.Extension:
                     LabelPeriod.Content = "P";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "P";
                     ButtonPeriodPlus.IsEnabled = true;
                     ButtonPeriodMinus.IsEnabled = true;
                     break;
+
                 case CustomTypes.PeriodState.SN:
                     LabelPeriod.Content = "Sn";
                     Vars.SecondaryWindow.LabelPeriodVariable.Content = "Sn";
@@ -279,9 +292,11 @@ namespace HockeyScoreboard
                 PlayPeriodSound();
             }
         }
-        #endregion
+
+        #endregion GameManagementMethods
 
         #region UIUpdate'GameManagement, Secondary Window and Penalties'Methods
+
         private void UIUpdateGameTime()
         {
             if (Vars.Game.TimeLeft < TimeSpan.FromMinutes(1))
@@ -294,8 +309,10 @@ namespace HockeyScoreboard
                 LabelTime.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture); // update time Main window
                 Vars.SecondaryWindow.LabelTimeVariable.Content = Vars.Game.TimeLeft.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture); // update time Secondary window
             }
+            LabelInverseTime.Content = (Vars.Game.LastSetTime - Vars.Game.TimeLeft).ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture); // update tiny time 
             ProgressBarGameTime.Maximum = Vars.Game.LastSetTime.TotalSeconds; ProgressBarGameTime.Value = Vars.Game.TimeLeft.TotalSeconds;
         }
+
         private void UIUpdatePenaltyMainWindow()
         {
             if (Vars.Team1.Player1.PenaltyRunning)
@@ -310,7 +327,6 @@ namespace HockeyScoreboard
                 LabelT1P1TimeLeftVariable.Content = "";
                 Team1Indicator1.Background = Brushes.Green;
             }
-
 
             if (Vars.Team1.Player2.PenaltyRunning)
             {
@@ -351,6 +367,7 @@ namespace HockeyScoreboard
                 Team2Indicator2.Background = Brushes.Green;
             }
         }
+
         private void UIUpdatePenaltySecondaryWindow()
         {
             if (Vars.Team1.Player1.PenaltyRunning)
@@ -365,7 +382,6 @@ namespace HockeyScoreboard
                 Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.Content = "";
                 Vars.SecondaryWindow.Team1Indicator1.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree);
             }
-
 
             if (Vars.Team1.Player2.PenaltyRunning)
             {
@@ -406,6 +422,7 @@ namespace HockeyScoreboard
                 Vars.SecondaryWindow.Team2Indicator2.Background = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree); ;
             }
         }
+
         private void UIReloadControlsValues(TeamClass Team)
         {
             if (Team.Index == 1)
@@ -419,16 +436,20 @@ namespace HockeyScoreboard
                 TextBoxTeam2Name.Text = Team.Name; UpDownTeam2Score.Value = Team.Score; UpDownTeam2Shots.Value = Team.Shots;
             }
             else return;
-
         }
+
         private void UIUpdateListbox(ListBox UpdatedListbox, TeamSavingClass LoadClass)
         {
             UpdatedListbox.Items.Clear();
             foreach (TeamSavingClass.PlayerTeamListType ListType in LoadClass.PlayerList)
             {
-                _ = UpdatedListbox.Items.Add(string.Format(ListboxFormat, ListType.Number, ListType.Name, CultureInfo.InvariantCulture));
+                _ = UpdatedListbox.Items.Add(newItem: string.Format(ListboxFormat,
+                                                                    ListType.Number,
+                                                                    ListType.Name,
+                                                                    CultureInfo.InvariantCulture));
             }
         }
+
         //private void UIUpdateComboBoxSelection(ComboBox RefreshedBox)
         //{
         //    RefreshedBox.Items.Clear();
@@ -515,6 +536,7 @@ namespace HockeyScoreboard
                     ButtonTimeout.IsEnabled = true;
                     ButtonBreakMode.IsEnabled = true;
                     break;
+
                 case CustomTypes.GameState.Break:
                     LabelTimeText.Content = "Break"; Vars.SecondaryWindow.LabelTimeText.Content = "Break";
                     ButtonBreakMode.Content = "Leave Break Mode";
@@ -522,6 +544,7 @@ namespace HockeyScoreboard
                     ButtonBreakMode.IsEnabled = true;
                     ButtonTimeout.IsEnabled = false;
                     break;
+
                 case CustomTypes.GameState.Timeout:
                     LabelTimeText.Content = "Timeout"; Vars.SecondaryWindow.LabelTimeText.Content = "Timeout";
                     ButtonBreakMode.Content = "Enter Break Mode";
@@ -532,12 +555,13 @@ namespace HockeyScoreboard
             }
             UIUpdateGameTime();
         }
-        #endregion
+
+        #endregion UIUpdate'GameManagement, Secondary Window and Penalties'Methods
 
         #region PenaltyMethods
+
         private string PenaltySelectPlayer(TeamClass Team, ListBox Listbox)
         {
-
             if (Team.SelectedTeamList.Count != 0 && Listbox.SelectedItems.Count != 0)
             {
                 int SelectedIndex = Listbox.SelectedIndex;
@@ -554,6 +578,7 @@ namespace HockeyScoreboard
                 };
             }
         }
+
         private void PenaltySet(TeamClass Team, TeamClass OtherTeam, bool AppliesToPlayer1, TimeSpan TimeSet, string PlayerNumber, bool IsDoubleMinor, bool IsMinor)
         {
             switch (AppliesToPlayer1)
@@ -568,6 +593,7 @@ namespace HockeyScoreboard
                     Team.Player1.PenaltyTimeLeft = TimeSet;
                     Team.Player1.PenaltyOffset = Vars.Game.StopwatchPeriod.Elapsed;
                     break;
+
                 case false:
                     Team.Player2.Number = PlayerNumber;
                     Team.Player2.PenaltyRunning = true;
@@ -583,6 +609,7 @@ namespace HockeyScoreboard
 
             UIUpdatePenaltyMainWindow(); UIUpdatePenaltySecondaryWindow();
         }
+
         private void PenaltyAssignToRightPlayer(TeamClass Team, TeamClass OtherTeam, ListBox Listbox, TimeSpan TimeSet, bool IsDoubleMinor, bool IsMinor)
         {
             if (Team.Player1.PenaltyRunning == false && Team.Player2.PenaltyRunning == false)
@@ -605,6 +632,7 @@ namespace HockeyScoreboard
                 PenaltyMatchMilisecondOffset(Team, true);
             }
         }
+
         private void PenaltyCancel(TeamClass Team, bool AppliesToPlayer1)
         {
             switch (AppliesToPlayer1)
@@ -618,6 +646,7 @@ namespace HockeyScoreboard
                     Team.Player1.PenaltyTimeLeft = TimeSpan.Zero;
                     Team.Player1.PenaltyTimeSet = TimeSpan.Zero;
                     break;
+
                 case false:
                     Team.Player2.Number = String.Empty;
                     Team.Player2.PenaltyRunning = false;
@@ -631,6 +660,7 @@ namespace HockeyScoreboard
             }
             UIUpdatePenaltyMainWindow(); UIUpdatePenaltySecondaryWindow();
         }
+
         private void PenaltyMatchMilisecondOffset(TeamClass Team, bool AppliesToPlayer1)
         {
             if (Team.Player1.PenaltyOffset.Milliseconds != Vars.Game.StopwatchPeriod.Elapsed.Milliseconds && AppliesToPlayer1 == true)
@@ -642,6 +672,7 @@ namespace HockeyScoreboard
                 Team.Player2.PenaltyOffset = TimeSpan.FromHours(Team.Player2.PenaltyOffset.Hours) + TimeSpan.FromMinutes(Team.Player2.PenaltyOffset.Minutes) + TimeSpan.FromSeconds(Team.Player2.PenaltyOffset.Seconds) + TimeSpan.FromMilliseconds(Vars.Game.StopwatchPeriod.Elapsed.Milliseconds);
             }
         }
+
         private void PenaltyTimeProgression(TeamClass Team, TeamClass OtherTeam, bool AppliesToPlayer1)
         {
             switch (AppliesToPlayer1)
@@ -649,7 +680,6 @@ namespace HockeyScoreboard
                 case true:
                     if (Team.Player1.PenaltyRunning)
                     {
-
                         if (Team.Player1.PeriodIsDoubleMinor == true)
                         {
                             if (OtherTeam.Score > Team.Player1.OtherTeamScoreAtPenaltyStart)
@@ -689,6 +719,7 @@ namespace HockeyScoreboard
                         }
                     }
                     break;
+
                 case false:
                     if (Team.Player2.PenaltyRunning)
                     {
@@ -733,6 +764,7 @@ namespace HockeyScoreboard
                     break;
             }
         }
+
         private void PenaltyStopIfRanOutOfTime(TeamClass Team, bool Player1)
         {
             switch (Player1)
@@ -743,13 +775,14 @@ namespace HockeyScoreboard
                         PenaltyCancel(Team, true);
                     }
                     break;
+
                 case false:
                     if ((Vars.Game.StopwatchPeriod.Elapsed - Team.Player2.PenaltyOffset) > Team.Player2.PenaltyTimeSet)
                         PenaltyCancel(Team, false);
                     break;
             }
-
         }
+
         private void PenaltyMoveDownASlot(TeamClass Team)
         {
             if (Team.Player2.PenaltyRunning == true && Team.Player1.PenaltyRunning == false)
@@ -774,9 +807,11 @@ namespace HockeyScoreboard
                 Team.Player1.PenaltyOffset = Vars.Game.StopwatchPeriod.Elapsed;
             }
         }
-        #endregion
+
+        #endregion PenaltyMethods
 
         #region TeamEditorMethods
+
         private void TeamEditorAddPlayer(string InputName, string InputNumber)
         {
             TeamSavingClass.PlayerTeamListType TempPlayer = new TeamSavingClass.PlayerTeamListType
@@ -786,46 +821,50 @@ namespace HockeyScoreboard
             };
             Vars.Game.TeamManagerTeamSavingClassInstance.PlayerList.Add(TempPlayer); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance);
         }
+
         private void TeamEditorRemovePlayer(ListBox EditorListBox)
         {
-            try
+            if (Vars.Game.TeamManagerTeamSavingClassInstance.PlayerList.Count > 0)
             {
-                Vars.Game.TeamManagerTeamSavingClassInstance.PlayerList.RemoveAt(EditorListBox.SelectedIndex); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance);
+                Vars.Game.TeamManagerTeamSavingClassInstance.PlayerList.RemoveAt(EditorListBox.SelectedIndex);
+                UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance);
+                EditorListBox.SelectedIndex = -1;
             }
-            catch
+            else
             {
                 MessageBox.Show("No player selected. Unable to remove.");
                 return;
             }
         }
+
         private void TeamEditorClearPlayerList()
         {
             Vars.Game.TeamManagerTeamSavingClassInstance.PlayerList.Clear(); UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance); ;
         }
+
         private void TeamEditorSave(string InputTeamName)
         {
             Vars.Game.TeamManagerTeamSavingClassInstance.TeamName = InputTeamName;
-            Directory.CreateDirectory(Properties.Settings.Default.DefaultTeamDirectory);
-            SaveFileDialog SaveTeamDialog = DefineSaveXmlDialog();
+            System.Windows.Forms.SaveFileDialog SaveTeamDialog = DefineSaveXmlDialog();
             SaveTeamDialog.FileName = InputTeamName;
-            Nullable<bool> Result = SaveTeamDialog.ShowDialog();
+            System.Windows.Forms.DialogResult dResult = SaveTeamDialog.ShowDialog();
             XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
-            if (Result == true)
+            if (dResult == System.Windows.Forms.DialogResult.OK)
             {
                 using (StreamWriter streamWriter = new StreamWriter(SaveTeamDialog.FileName))
                 {
-
                     xmlSerializer.Serialize(streamWriter, Vars.Game.TeamManagerTeamSavingClassInstance);
                 }
             }
         }
+
         private void TeamEditorLoad()
         {
             TeamSavingClass LoadClass = new TeamSavingClass();
-            OpenFileDialog LoadTeamDialog = DefineLoadXmlDialog();
-            Nullable<bool> Result = LoadTeamDialog.ShowDialog();
+            System.Windows.Forms.OpenFileDialog LoadTeamDialog = DefineLoadXmlDialog();
+            System.Windows.Forms.DialogResult dResult = LoadTeamDialog.ShowDialog();
             XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
-            if (Result == true)
+            if (dResult == System.Windows.Forms.DialogResult.OK)
             {
                 using (StreamReader streamReader = new StreamReader(LoadTeamDialog.FileName))
                 {
@@ -841,6 +880,7 @@ namespace HockeyScoreboard
                 UIUpdateListbox(ListBoxTeamManager, Vars.Game.TeamManagerTeamSavingClassInstance); ;
             }
         }
+
         private void TeamEditorLoadTeam(ListBox OutputListBox, TeamClass Team)
         {
             MessageBoxResult result = MessageBox.Show("This will override your current team setup. Do you want to proceed?",
@@ -850,10 +890,10 @@ namespace HockeyScoreboard
             if (result == MessageBoxResult.Yes)
             {
                 TeamSavingClass LoadClass = new TeamSavingClass();
-                OpenFileDialog LoadTeamDialog = DefineLoadXmlDialog();
-                Nullable<bool> Result = LoadTeamDialog.ShowDialog();
+                System.Windows.Forms.OpenFileDialog LoadTeamDialog = DefineLoadXmlDialog();
+                System.Windows.Forms.DialogResult dResult = LoadTeamDialog.ShowDialog();
                 XmlSerializer xmlSerializer = new XmlSerializer(Vars.Game.TeamManagerTeamSavingClassInstance.GetType());
-                if (Result == true)
+                if (dResult == System.Windows.Forms.DialogResult.OK)
                 {
                     using (StreamReader streamReader = new StreamReader(LoadTeamDialog.FileName))
                     {
@@ -886,19 +926,19 @@ namespace HockeyScoreboard
                         PenaltyOffset = TimeSpan.Zero,
                         PenaltyRunning = false,
                         OtherTeamScoreAtPenaltyStart = 0
-
                     };
                     Team.SelectedTeamList = LoadClass.PlayerList;
                     UIUpdateListbox(OutputListBox, LoadClass);
                     UIReloadControlsValues(Team); UIUpdateAllMainControls();
                 }
-                
             }
             else return;
         }
-        #endregion
+
+        #endregion TeamEditorMethods
 
         #region PreferencesMethods
+
         private System.Drawing.Color ChangeColorSetting(System.Drawing.Color origColor)
         {
             System.Windows.Forms.ColorDialog cDialog = new System.Windows.Forms.ColorDialog();
@@ -909,11 +949,13 @@ namespace HockeyScoreboard
             }
             else return origColor;
         }
+
         private void UIUpdateColorButton(System.Drawing.Color colorInput, Border borderChanged)
         {
             SolidColorBrush sBrush = new SolidColorBrush(Color.FromRgb(colorInput.R, colorInput.G, colorInput.B));
             borderChanged.Background = sBrush;
         }
+
         private void UIUpdateAllColorButtons()
         {
             UIUpdateColorButton(Settings.Default.ColorBackgroundMain, BorderColorBGMain);
@@ -926,6 +968,7 @@ namespace HockeyScoreboard
             UIUpdateColorButton(Settings.Default.ColorTextTime, BorderColorTextTime);
             UIUpdateColorButton(Settings.Default.ColorTextValues, BorderColorTextValues);
         }
+
         private void UIRestoreDefaultColors()
         {
             Settings.Default.ColorBackgroundMain = System.Drawing.Color.FromArgb(51, 51, 51);
@@ -940,14 +983,17 @@ namespace HockeyScoreboard
             UIUpdateAllColorButtons();
             MessageBox.Show("Colors successfully restored.");
         }
+
         private SolidColorBrush ReturnSBrushFromColor(System.Drawing.Color colorInput)
         {
             SolidColorBrush outputBrush = new SolidColorBrush(Color.FromRgb(colorInput.R, colorInput.G, colorInput.B));
             return outputBrush;
         }
+
         private void UIUpdateSecondaryWindowColorScheme()
         {
             #region Color: Normal text
+
             SolidColorBrush normalTextBrush = ReturnSBrushFromColor(Settings.Default.ColorTextMain);
             Vars.SecondaryWindow.LabelPeriodText.Foreground = normalTextBrush;
             Vars.SecondaryWindow.LabelTimeText.Foreground = normalTextBrush;
@@ -961,8 +1007,11 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.TextBlockLabelShotsRight.Foreground = normalTextBrush;
             Vars.SecondaryWindow.TextBlockTeam1Name.Foreground = normalTextBrush;
             Vars.SecondaryWindow.TextBlockTeam2Name.Foreground = normalTextBrush;
-            #endregion
+
+            #endregion Color: Normal text
+
             #region Color: Values text
+
             SolidColorBrush valuesTextBrush = ReturnSBrushFromColor(Settings.Default.ColorTextValues);
             Vars.SecondaryWindow.LabelScoreTeam1Variable.Foreground = valuesTextBrush;
             Vars.SecondaryWindow.LabelScoreTeam2Variable.Foreground = valuesTextBrush;
@@ -972,12 +1021,18 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.LabelT1P2NumberVariable.Foreground = valuesTextBrush;
             Vars.SecondaryWindow.LabelT2P2NumberVariable.Foreground = valuesTextBrush;
             Vars.SecondaryWindow.LabelT2P1NumberVariable.Foreground = valuesTextBrush;
-            #endregion
+
+            #endregion Color: Values text
+
             #region Color: Period text
+
             SolidColorBrush periodTextBrush = ReturnSBrushFromColor(Settings.Default.ColorTextPeriod);
             Vars.SecondaryWindow.LabelPeriodVariable.Foreground = periodTextBrush;
-            #endregion
+
+            #endregion Color: Period text
+
             #region Color: Time text
+
             SolidColorBrush timeTextBrush = ReturnSBrushFromColor(Settings.Default.ColorTextTime);
             Vars.SecondaryWindow.LabelTimeVariable.Foreground = timeTextBrush;
             Vars.SecondaryWindow.LabelT1P1TimeLeftVariable.Foreground = timeTextBrush;
@@ -986,8 +1041,11 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.Foreground = timeTextBrush;
             Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam1.Foreground = timeTextBrush;
             Vars.SecondaryWindow.LabelTimeoutAvailableIndicatorTeam2.Foreground = timeTextBrush;
-            #endregion
+
+            #endregion Color: Time text
+
             #region Color: Main BG, Timeout and Indicators
+
             SolidColorBrush mainBGBrush = ReturnSBrushFromColor(Settings.Default.ColorBackgroundMain);
             Vars.SecondaryWindow.GridSecondaryWindow.Background = mainBGBrush;
             if (Vars.Team1.TimeoutRunning)
@@ -997,7 +1055,6 @@ namespace HockeyScoreboard
             else
             {
                 Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam1.Foreground = mainBGBrush;
-
             }
             if (Vars.Team2.TimeoutRunning)
             {
@@ -1006,10 +1063,12 @@ namespace HockeyScoreboard
             else
             {
                 Vars.SecondaryWindow.LabelTimeoutRunningIndicatorTeam2.Foreground = mainBGBrush;
-
             }
-            #endregion
+
+            #endregion Color: Main BG, Timeout and Indicators
+
             #region Color: Secondary BG
+
             SolidColorBrush secondaryBGBrush = ReturnSBrushFromColor(Settings.Default.ColorBackgroundSecondary);
             Vars.SecondaryWindow.LabelTimeVariable.Background = secondaryBGBrush;
             Vars.SecondaryWindow.LabelPeriodVariable.Background = secondaryBGBrush;
@@ -1027,8 +1086,11 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.LabelT1P2TimeLeftVariable.Background = secondaryBGBrush;
             Vars.SecondaryWindow.LabelT2P1TimeLeftVariable.Background = secondaryBGBrush;
             Vars.SecondaryWindow.LabelT2P2TimeLeftVariable.Background = secondaryBGBrush;
-            #endregion
+
+            #endregion Color: Secondary BG
+
             #region Color: Border
+
             SolidColorBrush borderBrush = ReturnSBrushFromColor(Settings.Default.ColorBorderBrush);
             Vars.SecondaryWindow.LabelTimeVariable.BorderBrush = borderBrush;
             Vars.SecondaryWindow.LabelPeriodVariable.BorderBrush = borderBrush;
@@ -1050,8 +1112,11 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.Team1Indicator2.BorderBrush = borderBrush;
             Vars.SecondaryWindow.Team2Indicator1.BorderBrush = borderBrush;
             Vars.SecondaryWindow.Team2Indicator2.BorderBrush = borderBrush;
-            #endregion
+
+            #endregion Color: Border
+
             #region Color: Indicators
+
             SolidColorBrush indicatorBrushFree = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorFree);
             SolidColorBrush indicatorBrushOccupied = ReturnSBrushFromColor(Settings.Default.ColorPenaltyIndicatorOccupied);
             if (Vars.Team1.Player1.PenaltyRunning)
@@ -1061,7 +1126,6 @@ namespace HockeyScoreboard
             else
             {
                 Vars.SecondaryWindow.Team1Indicator1.Background = indicatorBrushFree;
-
             }
             if (Vars.Team1.Player2.PenaltyRunning)
             {
@@ -1070,7 +1134,6 @@ namespace HockeyScoreboard
             else
             {
                 Vars.SecondaryWindow.Team1Indicator2.Background = indicatorBrushFree;
-
             }
             if (Vars.Team2.Player1.PenaltyRunning)
             {
@@ -1079,7 +1142,6 @@ namespace HockeyScoreboard
             else
             {
                 Vars.SecondaryWindow.Team2Indicator1.Background = indicatorBrushFree;
-
             }
             if (Vars.Team2.Player2.PenaltyRunning)
             {
@@ -1088,33 +1150,44 @@ namespace HockeyScoreboard
             else
             {
                 Vars.SecondaryWindow.Team2Indicator2.Background = indicatorBrushFree;
-
             }
-            #endregion
+
+            #endregion Color: Indicators
         }
+
         private void UIUpdateRadioButton(RadioButton buttonToUpdate, string buttonContent, TimeSpan buttonValue)
         {
             buttonToUpdate.Content = $"{buttonContent}: {buttonValue.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
         }
+
         private void UIUpdateAllRadioButtons()
         {
             #region Game Time Radio buttons
+
             UIUpdateRadioButton(RadioButtonPreferencesPeriodA, "Period Preset A", Settings.Default.PeriodPresetA);
             UIUpdateRadioButton(RadioButtonPreferencesPeriodB, "Period Preset B", Settings.Default.PeriodPresetB);
             UIUpdateRadioButton(RadioButtonPreferencesPeriodC, "Period Preset C", Settings.Default.PeriodPresetC);
             UIUpdateRadioButton(RadioButtonPreferencesPeriodD, "Period Preset D", Settings.Default.PeriodPresetD);
-            #endregion
+
+            #endregion Game Time Radio buttons
+
             #region Penalty Time Radio buttons
+
             UIUpdateRadioButton(RadioButtonPreferencesPenaltyA, "Penalty Preset A", Settings.Default.PenaltyTimePresetA);
             UIUpdateRadioButton(RadioButtonPreferencesPenaltyB, "Penalty Preset B", Settings.Default.PenaltyTimePresetB);
             UIUpdateRadioButton(RadioButtonPreferencesPenaltyC, "Penalty Preset C", Settings.Default.PenaltyTimePresetC);
             UIUpdateRadioButton(RadioButtonPreferencesPenaltyD, "Penalty Preset D", Settings.Default.PenaltyTimePresetD);
-            #endregion
+
+            #endregion Penalty Time Radio buttons
+
             #region Other Radio buttons
+
             UIUpdateRadioButton(RadioButtonPreferencesDefaultTimeout, "Default Timeout Duration", Settings.Default.TimeoutDuration);
             UIUpdateRadioButton(RadioButtonPreferencesDefaultBreak, "Default Break Duration", Settings.Default.BreakDuration);
-            #endregion
+
+            #endregion Other Radio buttons
         }
+
         private void UIUpdateTimePresetButtonsPeriod()
         {
             ButtonSetTimePresetA.Content = Settings.Default.PeriodPresetA.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
@@ -1122,6 +1195,7 @@ namespace HockeyScoreboard
             ButtonSetTimePresetC.Content = Settings.Default.PeriodPresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
             ButtonSetTimePresetD.Content = Settings.Default.PeriodPresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture);
         }
+
         private void UIUpdateTimePresetButtonsPenalty(string format)
         {
             ButtonSetPenaltyTeam1A.Content = $"{format} {Settings.Default.PenaltyTimePresetA.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
@@ -1133,6 +1207,7 @@ namespace HockeyScoreboard
             ButtonSetPenaltyTeam2C.Content = $"{format} {Settings.Default.PenaltyTimePresetC.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
             ButtonSetPenaltyTeam2D.Content = $"{format} {Settings.Default.PenaltyTimePresetD.ToString(Vars.Game.TimespanFormatRegular, CultureInfo.InvariantCulture)}";
         }
+
         private void PreferencesChangeTimeSetting(TimeSpan timeToSet)
         {
             foreach (RadioButton rB in GridTimePresets.Children.OfType<RadioButton>())
@@ -1146,50 +1221,40 @@ namespace HockeyScoreboard
                     else if (rB == RadioButtonPreferencesDefaultTimeout)
                     {
                         Settings.Default.TimeoutDuration = timeToSet;
-
                     }
                     else if (rB == RadioButtonPreferencesPenaltyA)
                     {
                         Settings.Default.PenaltyTimePresetA = timeToSet;
-
                     }
                     else if (rB == RadioButtonPreferencesPenaltyB)
                     {
                         Settings.Default.PenaltyTimePresetB = timeToSet;
-
                     }
                     else if (rB == RadioButtonPreferencesPenaltyC)
                     {
                         Settings.Default.PenaltyTimePresetC = timeToSet;
-
                     }
                     else if (rB == RadioButtonPreferencesPenaltyD)
                     {
                         Settings.Default.PenaltyTimePresetD = timeToSet;
-
                     }
                     else if (rB == RadioButtonPreferencesPeriodA)
                     {
                         Settings.Default.PeriodPresetA = timeToSet;
-
                     }
                     else if (rB == RadioButtonPreferencesPeriodB)
                     {
                         Settings.Default.PeriodPresetB = timeToSet;
-
                     }
                     else if (rB == RadioButtonPreferencesPeriodC)
                     {
                         Settings.Default.PeriodPresetC = timeToSet;
-
                     }
                     else if (rB == RadioButtonPreferencesPeriodD)
                     {
                         Settings.Default.PeriodPresetD = timeToSet;
                     }
-
                 }
-
             }
         }
 
@@ -1197,9 +1262,9 @@ namespace HockeyScoreboard
 
         private void ChangeFontScore(FontFamily origFont, double origSize)
         {
-            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog() 
-            { 
-            Font = new System.Drawing.Font(origFont.Source, (float)origSize)
+            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            {
+                Font = new System.Drawing.Font(origFont.Source, (float)origSize)
             };
 
             System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
@@ -1217,7 +1282,6 @@ namespace HockeyScoreboard
                 MessageBox.Show("Operation cancelled.");
             }
         }
-
 
         private void ChangeFontTeamName(FontFamily origFont, double origSize)
         {
@@ -1313,97 +1377,101 @@ namespace HockeyScoreboard
 
         private void ChangeFontPenaltyTime(FontFamily origFont, double origSize)
         {
-            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            using (System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
             {
                 Font = new System.Drawing.Font(origFont.Source, (float)origSize)
-            };
-
-            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK)
+            })
             {
-                Settings.Default.FontPenaltyTime = new FontFamily(fontDialog.Font.Name);
-                Settings.Default.FontPenaltyTimeSize = (double)fontDialog.Font.Size;
-                Settings.Default.Save();
-                UIUpdateFonts();
-                MessageBox.Show("Font changed successfully.");
-            }
-            else
-            {
-                MessageBox.Show("Operation cancelled.");
+                System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    Settings.Default.FontPenaltyTime = new FontFamily(fontDialog.Font.Name);
+                    Settings.Default.FontPenaltyTimeSize = (double)fontDialog.Font.Size;
+                    Settings.Default.Save();
+                    UIUpdateFonts();
+                    MessageBox.Show("Font changed successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Operation cancelled.");
+                }
             }
         }
 
         private void ChangeFontPenaltyNumber(FontFamily origFont, double origSize)
         {
-            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            using (System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
             {
                 Font = new System.Drawing.Font(origFont.Source, (float)origSize)
-            };
-
-            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK)
+            })
             {
-                Settings.Default.FontPenaltyNumber = new FontFamily(fontDialog.Font.Name);
-                Settings.Default.FontPenaltyNumberSize = (double)fontDialog.Font.Size;
-                Settings.Default.Save();
-                UIUpdateFonts();
-                MessageBox.Show("Font changed successfully.");
-            }
-            else
-            {
-                MessageBox.Show("Operation cancelled.");
+                System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    Settings.Default.FontPenaltyNumber = new FontFamily(fontDialog.Font.Name);
+                    Settings.Default.FontPenaltyNumberSize = (double)fontDialog.Font.Size;
+                    Settings.Default.Save();
+                    UIUpdateFonts();
+                    MessageBox.Show("Font changed successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Operation cancelled.");
+                }
             }
         }
 
         private void ChangeFontDescSmall(FontFamily origFont, double origSize)
         {
-            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            using (System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
             {
                 Font = new System.Drawing.Font(origFont.Source, (float)origSize)
-            };
-
-            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK)
+            })
             {
-                Settings.Default.FontDescSmall = new FontFamily(fontDialog.Font.Name);
-                Settings.Default.FontDescSmallSize = (double)fontDialog.Font.Size;
-                Settings.Default.Save();
-                UIUpdateFonts();
-                MessageBox.Show("Font changed successfully.");
-            }
-            else
-            {
-                MessageBox.Show("Operation cancelled.");
+                System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    Settings.Default.FontDescSmall = new FontFamily(fontDialog.Font.Name);
+                    Settings.Default.FontDescSmallSize = (double)fontDialog.Font.Size;
+                    Settings.Default.Save();
+                    UIUpdateFonts();
+                    MessageBox.Show("Font changed successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Operation cancelled.");
+                }
             }
         }
 
         private void ChangeFontDescLarge(FontFamily origFont, double origSize)
         {
-            System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
+            using (System.Windows.Forms.FontDialog fontDialog = new System.Windows.Forms.FontDialog()
             {
                 Font = new System.Drawing.Font(origFont.Source, (float)origSize)
-            };
-
-            System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK)
+            })
             {
-                Settings.Default.FontDescLarge = new FontFamily(fontDialog.Font.Name);
-                Settings.Default.FontDescLargeSize = (double)fontDialog.Font.Size;
-                Settings.Default.Save();
-                UIUpdateFonts();
-                MessageBox.Show("Font changed successfully.");
-            }
-            else
-            {
-                MessageBox.Show("Operation cancelled.");
+                System.Windows.Forms.DialogResult result = fontDialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    Settings.Default.FontDescLarge = new FontFamily(fontDialog.Font.Name);
+                    Settings.Default.FontDescLargeSize = (double)fontDialog.Font.Size;
+                    Settings.Default.Save();
+                    UIUpdateFonts();
+                    MessageBox.Show("Font changed successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Operation cancelled.");
+                }
             }
         }
 
-        #endregion
+        #endregion Fonts
 
         private void RestoreDefaultFonts()
         {
@@ -1418,15 +1486,15 @@ namespace HockeyScoreboard
             Settings.Default.FontDescLarge = new FontFamily(defaultFont);
             Settings.Default.FontTeamName = new FontFamily(defaultFont);
 
-            Settings.Default.FontScoreSize =            (double)180;
-            Settings.Default.FontShotsSize =            (double)72;
-            Settings.Default.FontPeriodSize =           (double)120;
-            Settings.Default.FontGameTimeSize =         (double)200;
-            Settings.Default.FontPenaltyTimeSize =      (double)80;
-            Settings.Default.FontPenaltyNumberSize =    (double)80;
-            Settings.Default.FontDescSmallSize =        (double)24;
-            Settings.Default.FontDescLargeSize =        (double)40;
-            Settings.Default.FontTeamNameSize =         (double)48;
+            Settings.Default.FontScoreSize = (double)180;
+            Settings.Default.FontShotsSize = (double)72;
+            Settings.Default.FontPeriodSize = (double)120;
+            Settings.Default.FontGameTimeSize = (double)200;
+            Settings.Default.FontPenaltyTimeSize = (double)80;
+            Settings.Default.FontPenaltyNumberSize = (double)80;
+            Settings.Default.FontDescSmallSize = (double)24;
+            Settings.Default.FontDescLargeSize = (double)40;
+            Settings.Default.FontTeamNameSize = (double)48;
 
             Settings.Default.Save();
             UIUpdateFonts();
@@ -1449,7 +1517,7 @@ namespace HockeyScoreboard
 
             Vars.SecondaryWindow.LabelShotsTeam1Variable.FontFamily = Settings.Default.FontShots;
             Vars.SecondaryWindow.LabelShotsTeam2Variable.FontFamily = Settings.Default.FontShots;
-                                                        
+
             Vars.SecondaryWindow.LabelShotsTeam1Variable.FontSize = Settings.Default.FontShotsSize;
             Vars.SecondaryWindow.LabelShotsTeam2Variable.FontSize = Settings.Default.FontShotsSize;
 
@@ -1481,7 +1549,7 @@ namespace HockeyScoreboard
 
             Vars.SecondaryWindow.TextBlockTeam1Name.FontFamily = Settings.Default.FontTeamName;
             Vars.SecondaryWindow.TextBlockTeam2Name.FontFamily = Settings.Default.FontTeamName;
-                                                                                            
+
             Vars.SecondaryWindow.TextBlockTeam1Name.FontSize = Settings.Default.FontTeamNameSize;
             Vars.SecondaryWindow.TextBlockTeam2Name.FontSize = Settings.Default.FontTeamNameSize;
 
@@ -1504,23 +1572,44 @@ namespace HockeyScoreboard
             Vars.SecondaryWindow.TextBlockLabelShotsRight.FontSize = Settings.Default.FontDescSmallSize;
         }
 
-        #endregion
+        private void UIUpdatePreferencesCheckboxes()
+        {
+            CheckBoxHornGoal.IsChecked = Settings.Default.PlayHornOnGoal;
+            CheckBoxHornStart.IsChecked = Settings.Default.PlayHornOnStart;
+            CheckBoxHornStop.IsChecked = Settings.Default.PlayHornOnStop;
+
+            CheckBoxBuzzerGoal.IsChecked = Settings.Default.PlayBuzzerOnGoal;
+            CheckBoxBuzzerStart.IsChecked = Settings.Default.PlayBuzzerOnStart;
+            CheckBoxBuzzerStop.IsChecked = Settings.Default.PlayBuzzerOnStop;
+
+            CheckBoxBreakStart.IsChecked = Settings.Default.PlayBreakStart;
+            CheckBoxBreakStop.IsChecked = Settings.Default.PlayBreakEnd;
+
+            CheckBoxPerioChange.IsChecked = Settings.Default.PlayOnPeriodChange;
+
+            CheckBoxTimeoutStart.IsChecked = Settings.Default.PlayTimeoutStart;
+            CheckBoxTimeoutStop.IsChecked = Settings.Default.PlayTimeoutEnd;
+        }
+
+        #endregion PreferencesMethods
 
         #region SoundAndVideoMethods
 
         private string GetMediaFilePath()
         {
-            OpenFileDialog LoadMediaDialog = DefineLoadMediaDialog();
-
-            bool? result = LoadMediaDialog.ShowDialog();
-
-            switch(result)
+            using (System.Windows.Forms.OpenFileDialog LoadMediaDialog = DefineLoadMediaDialog())
             {
-                case true:
-                    return LoadMediaDialog.FileName;
-                default:
-                    MessageBox.Show("You must select a file.", "Operation cancelled", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return string.Empty;
+                System.Windows.Forms.DialogResult result = LoadMediaDialog.ShowDialog();
+
+                switch (result)
+                {
+                    case System.Windows.Forms.DialogResult.OK:
+                        return LoadMediaDialog.FileName;
+
+                    default:
+                        MessageBox.Show("You must select a file.", "Operation cancelled", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return string.Empty;
+                }
             }
         }
 
@@ -1528,29 +1617,30 @@ namespace HockeyScoreboard
         {
             if (filePath.Length == 0)
             {
-                MessageBox.Show("No file selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show("No file selected.", mBoxCaptionError, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            Uri uriPath = new Uri(filePath,UriKind.Relative);
+            Uri uriPath = new Uri(filePath, UriKind.Relative);
             Vars.MPlayer.Stop();
             Vars.MPlayer.Open(uriPath);
             Vars.MPlayer.Play();
         }
+
         private void LoadVideo(string filePath)
         {
             if (filePath.Length == 0)
             {
-                MessageBox.Show("No file selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show("No file selected.", mBoxCaptionError, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             Uri uriPath = new Uri(filePath, UriKind.Relative);
 
-            MediaElementPlayer.IsEnabled = true;
-            MediaElementPlayer.Source = uriPath;
+            Vars.SecondaryWindow.MediaElementView.IsEnabled = true;
+            Vars.SecondaryWindow.MediaElementView.Source = uriPath;
             SliderVideoScrubbingControl.Minimum = 0.0;
-            MediaElementPlayer.Play(); MediaElementPlayer.Pause();
-            
+            Vars.SecondaryWindow.MediaElementView.Play(); Vars.SecondaryWindow.MediaElementView.Pause();
         }
+
         private void PlayBuzzer()
         {
             PlaySound(Settings.Default.BuzzerSoundPath);
@@ -1579,8 +1669,10 @@ namespace HockeyScoreboard
         private void UISoundUpdateAssets()
         {
             var truncationLength = 25;
+
             #region Labels
-            LabelSoundBuzzer.Content = Utility.Truncate(Settings.Default.BuzzerSoundPath.Split('\\').Last(),truncationLength);
+
+            LabelSoundBuzzer.Content = Utility.Truncate(Settings.Default.BuzzerSoundPath.Split('\\').Last(), truncationLength);
             LabelSoundHorn.Content = Utility.Truncate(Settings.Default.HornSoundPath.Split('\\').Last(), truncationLength);
             LabelSoundPeriod.Content = Utility.Truncate(Settings.Default.PeriodSoundPath.Split('\\').Last(), truncationLength);
             LabelSoundBreak.Content = Utility.Truncate(Settings.Default.BreakSoundPath.Split('\\').Last(), truncationLength);
@@ -1589,9 +1681,11 @@ namespace HockeyScoreboard
             LabelSoundVid2.Content = Utility.Truncate(Settings.Default.Video2Path.Split('\\').Last(), truncationLength);
             LabelSoundVid3.Content = Utility.Truncate(Settings.Default.Video3Path.Split('\\').Last(), truncationLength);
             LabelSoundVid4.Content = Utility.Truncate(Settings.Default.Video4Path.Split('\\').Last(), truncationLength);
-            #endregion
+
+            #endregion Labels
 
             #region Borders
+
             if (File.Exists(Settings.Default.BuzzerSoundPath))
             {
                 BorderSoundBuzzer.Background = System.Windows.Media.Brushes.Green;
@@ -1665,8 +1759,8 @@ namespace HockeyScoreboard
             {
                 BorderSoundVid4.Background = System.Windows.Media.Brushes.Red;
             }
-            #endregion
 
+            #endregion Borders
         }
 
         private void SoundUpdateValues()
@@ -1674,11 +1768,21 @@ namespace HockeyScoreboard
             UISoundUpdateAssets();
             Settings.Default.Save();
         }
-        
 
+        private void UpdateViewMediaModule()
+        {
+            if (CheckBoxShowVideo.IsChecked == true)
+            {
+                Vars.SecondaryWindow.MediaElementView.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Vars.SecondaryWindow.MediaElementView.Visibility = Visibility.Hidden;
+            }
+        }
 
-        #endregion
+        #endregion SoundAndVideoMethods
 
-        #endregion
+        #endregion Methods
     }
 }

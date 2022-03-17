@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define UIHockeyScoreboard_TargetDir=$(var.UIHockeyScoreboard.TargetDir)?><?define HockeyScoreboardWpfControlLibrary_TargetDir=$(var.HockeyScoreboardWpfControlLibrary.TargetDir)?><?define HockeyScoreboardLibrary_TargetDir=$(var.HockeyScoreboardLibrary.TargetDir)?>
+		<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="HockeyScoreboard.exe" Guid="3f126c40-3224-46f4-9fe9-bb330c0e3468">
+			  <File Id="HockeyScoreboard.exe" Name="HockeyScoreboard.exe" Source="$(var.UIHockeyScoreboard_TargetDir)HockeyScoreboard.exe" />
+			</Component>
+			<Component Id="HockeyScoreboard.exe.config" Guid="a43563c9-bf08-46ff-afec-0fa87650809d">
+			  <File Id="HockeyScoreboard.exe.config" Name="HockeyScoreboard.exe.config" Source="$(var.UIHockeyScoreboard_TargetDir)HockeyScoreboard.exe.config" />
+			</Component>
+			<Component Id="FontAwesome.WPF.dll" Guid="6755db1e-a584-432b-a87b-14baf904cc12">
+			  <File Id="FontAwesome.WPF.dll" Name="FontAwesome.WPF.dll" Source="$(var.UIHockeyScoreboard_TargetDir)FontAwesome.WPF.dll" />
+			</Component>
+			<Component Id="HockeyScoreboardWpfControlLibrary.dll" Guid="28141a92-967c-4463-9ad8-94aababccbd0">
+			  <File Id="HockeyScoreboardWpfControlLibrary.dll" Name="HockeyScoreboardWpfControlLibrary.dll" Source="$(var.HockeyScoreboardWpfControlLibrary_TargetDir)HockeyScoreboardWpfControlLibrary.dll" />
+			</Component>
+			<Component Id="HockeyScoreboardLibrary.dll" Guid="90cb4f95-56b0-415f-959b-3edea82fa1de">
+			  <File Id="HockeyScoreboardLibrary.dll" Name="HockeyScoreboardLibrary.dll" Source="$(var.HockeyScoreboardLibrary_TargetDir)HockeyScoreboardLibrary.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

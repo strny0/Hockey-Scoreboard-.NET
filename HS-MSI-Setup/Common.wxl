@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	<String Id="ProductName_x86">Hockey Scorebaord .NET (32b)</String>
+  <String Id="ProductName_x64">Hockey Scorebaord .NET (64b)</String>
+  <String Id="Language">1033</String>
+  <String Id="Manufacturer">Jakub Strnad</String>
+  <String Id="Description">desc</String>
+  <String Id="Comments">comment</String>
+  <String Id="Keywords">scoreboard</String>
+  <String Id="DowngradeErrorMessage">A newer version of Hockey Scorebaord .NET is already installed.</String>
+  
+  
+</WixLocalization>

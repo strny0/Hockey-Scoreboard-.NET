@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HockeyScoreboardWpfControlLibrary
 {
@@ -21,8 +12,8 @@ namespace HockeyScoreboardWpfControlLibrary
     /// </summary>
     public partial class UpDownInt : UserControl
     {
-
         public event EventHandler ValueChanged;
+
         public event EventHandler PropertyChanged;
 
         public UpDownInt()
@@ -53,6 +44,7 @@ namespace HockeyScoreboardWpfControlLibrary
         }
 
         #region Dependency properties
+
         public int Value
         {
             get { return (int)GetValue(ValueProperty); }
@@ -114,26 +106,22 @@ namespace HockeyScoreboardWpfControlLibrary
                 }
 
                 SetValue(MaximumProperty, value);
-
             }
         }
 
         public static readonly DependencyProperty MaximumProperty =
             DependencyProperty.Register("Maximum", typeof(int), typeof(UpDownInt), new PropertyMetadata(int.MaxValue));
 
-        #endregion
-
+        #endregion Dependency properties
 
         private void RbuttonUp_Click(object sender, RoutedEventArgs e)
         {
             Value += Step;
-
         }
 
         private void RbuttonDown_Click(object sender, RoutedEventArgs e)
         {
             Value -= Step;
-
         }
 
         private void TextBoxValue_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -141,12 +129,10 @@ namespace HockeyScoreboardWpfControlLibrary
             if (e.Delta > 0)
             {
                 Value += Step;
-    
             }
             else if (e.Delta < 0)
             {
                 Value -= Step;
-    
             }
         }
 

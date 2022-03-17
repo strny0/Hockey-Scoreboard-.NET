@@ -12,8 +12,8 @@ namespace HockeyScoreboardWpfControlLibrary
     /// </summary>
     public partial class UpDownTimeSpan : UserControl
     {
-
         public event EventHandler ValueChanged;
+
         public event EventHandler PropertyChanged;
 
         public UpDownTimeSpan()
@@ -41,6 +41,7 @@ namespace HockeyScoreboardWpfControlLibrary
         }
 
         #region Dependency properties
+
         public int Value
         {
             get { return (int)GetValue(ValueProperty); }
@@ -96,26 +97,22 @@ namespace HockeyScoreboardWpfControlLibrary
                 if (value < Minimum)
                     Minimum = value;
                 SetValue(MaximumProperty, value);
-
             }
         }
 
         public static readonly DependencyProperty MaximumProperty =
             DependencyProperty.Register("Maximum", typeof(int), typeof(UpDownTimeSpan), new PropertyMetadata(int.MaxValue));
 
-        #endregion
-
+        #endregion Dependency properties
 
         private void RbuttonUp_Click(object sender, RoutedEventArgs e)
         {
             Value += Step;
-
         }
 
         private void RbuttonDown_Click(object sender, RoutedEventArgs e)
         {
             Value -= Step;
-
         }
 
         private void TextBoxValue_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -123,12 +120,10 @@ namespace HockeyScoreboardWpfControlLibrary
             if (e.Delta > 0)
             {
                 Value += Step;
-
             }
             else if (e.Delta < 0)
             {
                 Value -= Step;
-
             }
         }
 
